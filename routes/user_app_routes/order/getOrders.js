@@ -1,0 +1,45 @@
+const express = require('express');
+const Order = require('../../../models/Order');
+const Shop = require('../../../models/Shop')
+const router = express.Router();
+
+router.get('/user/getOrders',async (req,res)=>{
+    const userId = req.query.userId;
+    const orders = await Order.find({userId: userId});
+    const mappedOrders = await mapOrderWithShopDetails(orders);
+
+    res.json(mappedOrders);
+})
+
+async function mapOrderWithShopDetails(orders){
+    return new Promise(async (resolve,reject)=>{
+        let mappedOrders = [];
+        for(let i=0;i<orders.length;i++){
+            const order = orders[i];
+            const shopData = await Shop.findOne({_id: order.shopID});
+            
+            mappedOrders.push({
+                _id: order._id,
+                orderItems: order.orderItems,
+                isPaid: order.isPaid,
+                shopID: order.shopID,
+                deliveryAddress: order.deliveryAddress,
+                userId: order.userId,
+                shopCategory: order.shopCategory,
+                billingDetails: order.billingDetails,
+                orderStatus: order.orderStatus,
+                cancelled: order.cancelled,
+                shopData: {
+                    name: shopData.name,
+                    bannerImage: shopData.bannerImage,
+                    addressData: shopData.addressData
+                },
+                created_at: order.created_at
+            });
+        }
+        resolve(mappedOrders);
+    })
+}
+
+
+module.exports = router;

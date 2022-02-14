@@ -37,6 +37,8 @@ app.use('/',require('./routes/user_app_routes/auth/sendOtpRoute'));
 app.use('/',require('./routes/user_app_routes/auth/verifyOtp'));
 app.use('/',require('./routes/user_app_routes/auth/registerUser'));
 app.use('/',require('./routes/user_app_routes/auth/checkPassword'));
+app.use('/',require('./routes/user_app_routes/order/getOrders'))
+
 
 
 app.listen(5000,()=>{
