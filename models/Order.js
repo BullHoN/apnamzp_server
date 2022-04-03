@@ -27,7 +27,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         index: true
     },
-    shopCategory: String,
+    shopCategory: {
+        type: String,
+        index: true
+    },
     billingDetails: {
         deliveryCharge: Number,
         isDeliveryService: Boolean,
