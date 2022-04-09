@@ -47,7 +47,8 @@ const orderSchema = new mongoose.Schema({
     cancelled: {
         type: Boolean,
         default: false
-    }
+    },
+    assignedDeliveryBoy: String
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const Order = mongoose.model('order',orderSchema);

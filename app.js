@@ -6,7 +6,10 @@ const SearchDB = require('./util/searchbarconfig');
 const admin = require("firebase-admin");
 const secretFile = require("./apnamzp-firebase-adminsdk-q1tsc-cd41009e94.json")
 const cors = require('cors')
+
+// utils
 SearchDB.loadData();
+require('./util/localDB/localDB')
 
 // configure firebase admin
 admin.initializeApp({
@@ -51,10 +54,12 @@ app.use('/',require('./routes/user_app_routes/order/getOrders'));
 
 // delivery boy routes
 app.use('/',require('./routes/delivery_sathi/getDeliveryPricing'));
+app.use('/',require('./routes/delivery_sathi/sendLocationUpdates'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
 app.use('/', require('./routes/partner_routes/orders/updateOrderStatus'));
+app.use('/', require('./routes/partner_routes/orders/assignDeliverySathi'))
 
 
 app.listen(5000,()=>{
