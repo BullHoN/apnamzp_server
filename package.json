@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.23.0",
+    "cloudinary": "^1.29.0",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "csvtojson": "^2.0.10",

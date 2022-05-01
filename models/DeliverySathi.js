@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
 const deliverySathiSchema = new mongoose.Schema({
-    phoneNo:String
+    earnings: Number,
+    incentives: Number
 })
+
+const DeliverySathi = User.discriminator('DeliverySathi',deliverySathiSchema);
+module.exports = DeliverySathi;

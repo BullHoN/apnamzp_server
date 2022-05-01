@@ -4,8 +4,20 @@ const print = require('./util/printFullObject');
 const connectDB = require('./util/dbconfig');
 const SearchDB = require('./util/searchbarconfig');
 const admin = require("firebase-admin");
-const secretFile = require("./apnamzp-firebase-adminsdk-q1tsc-cd41009e94.json")
+const secretFile = require("./firebase_secretkey.json")
 const cors = require('cors')
+const cloudinary = require('cloudinary').v2;
+
+// Environement variables
+require('dotenv').config();
+
+// configure image storage
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
+});
 
 // utils
 SearchDB.loadData();
@@ -20,13 +32,14 @@ admin.initializeApp({
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cors());
-require('dotenv').config();
+
 
 // mongoDB Connect
 connectDB();
 
-// const fcmToken = "dGTkytWJQcel_IVb8zqAVC:APA91bEoi7W0xmedf__jx5wbUBxsEOpeHJ9TTcWGGINY0nK0QLsNITFdW33ezPLqDyx0Dp_hlxQG9IqDRQNRPWPa0wdYfS9IcAxR-gBWATFXubdUPNWasU05UIeyauQLqC23AU9G5Clf"
-// require("./util/sendNotification")(fcmToken,{"title": "zeher"})
+// const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bGINq_QWhNrkVHAwnC2PZORP_DvX8sohz8t4PzuCtQaHWNsLdqVlL3PSVTiRUEgSDrwKWfhu4brwpqouDrLiYIOu1Sp3PYOw6GRof-oHeUyc0ra6qRgbTV4vh-eDyReRH9Fhky4";
+// const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bGrVjYvREJ01pW19kac7xX02cVbQaKflQSjv9QJLbb2GoI2f-dJhNHJ-LjPdAruXT769eX5Fll0GHyY6X38R_64i4ocw91JbyLp8dr28yWev8wCnoAmh0Pp4cdFmo6IsEyNA_X2"
+// require("./util/sendNotification")(partnerFCMToken,{"title": "zeher"})
 
 // const Review = require('./models/Review');
 // const review = new Review({
@@ -36,6 +49,19 @@ connectDB();
 //     shopName: "Up63 Cafe"
 // }).save();
 
+// test
+// const ShopPartner = require('./models/ShopPartner');
+// const shopPartner = new ShopPartner({
+//     phoneNo: "9997403324",
+//     isVerified: true,
+//     password: "vaibhav",
+//     shopId: "6174fea0dbb0b2e38f7de2ad"
+// }).save().then(()=>{
+//     console.log("savled");
+// }).catch((err)=>{
+//     console.log(err);
+// })
+// const patner = new 
 
 // user app routes
 app.use('/',require('./routes/user_app_routes/getCategoryItems'));
@@ -54,7 +80,8 @@ app.use('/',require('./routes/user_app_routes/order/getOrders'));
 
 // delivery boy routes
 app.use('/',require('./routes/delivery_sathi/getDeliveryPricing'));
-app.use('/',require('./routes/delivery_sathi/sendLocationUpdates'))
+app.use('/',require('./routes/delivery_sathi/sendLocationUpdates'));
+app.use('/',require('./routes/delivery_sathi/getDeliveryOrders'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
