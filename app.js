@@ -77,6 +77,7 @@ app.use('/',require('./routes/user_app_routes/auth/verifyOtp'));
 app.use('/',require('./routes/user_app_routes/auth/registerUser'));
 app.use('/',require('./routes/user_app_routes/auth/checkPassword'));
 app.use('/',require('./routes/user_app_routes/order/getOrders'));
+app.use('/',require('./routes/user_app_routes/updateFCMToken'));
 
 // delivery boy routes
 app.use('/',require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -86,8 +87,9 @@ app.use('/',require('./routes/delivery_sathi/getDeliveryOrders'))
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
 app.use('/', require('./routes/partner_routes/orders/updateOrderStatus'));
-app.use('/', require('./routes/partner_routes/orders/assignDeliverySathi'))
-
+app.use('/', require('./routes/partner_routes/orders/assignDeliverySathi'));
+app.use('/',require('./routes/partner_routes/orders/rejectOrder'));
+app.use('/',require('./routes/partner_routes/orders/acceptOrder'));
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");

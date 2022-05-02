@@ -4,7 +4,10 @@ const userSchema = new mongoose.Schema({
     phoneNo: String,
     name: String,
     password: String,
-    fcmId: String,
+    fcmId: {
+        type: String,
+        default: ""
+    },
     isVerified: {
         type: Boolean,
         default: false

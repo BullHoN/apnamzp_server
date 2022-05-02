@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+// {"Order Placed","Order Confirmed","Order In Preparetion","Rider Assign",
+//         "Rider Reached Shop","Rider On The Way","Order Arrived","Order Delivered","Order Cancelled"};
+
+
+
+
 const Pricing = new mongoose.Schema({
     type: String,
     price: String
