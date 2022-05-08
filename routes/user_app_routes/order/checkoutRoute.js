@@ -20,7 +20,8 @@ router.post('/checkout',async (req,res)=>{
         "orderItems":  JSON.stringify(req.body.orderItems),
         "_id": order._id.toString(),
         "userId": req.body.userId,
-        "type": "new_order"
+        "type": "new_order",
+        "totalPay": (req.body.billingDetails.totalPay + "")
     })
 
     res.json(true);
