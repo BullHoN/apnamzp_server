@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-// {"Order Placed","Order Confirmed","Order In Preparetion","Rider Assign",
-//         "Rider Reached Shop","Rider On The Way","Order Arrived","Order Delivered","Order Cancelled"};
-
+// {"Order Placed","Order Confirmed","Order In Preperation",
+// "Rider Assign","Rider Reached Shop","Rider On The Way","Order Delivered","Order Cancelled"};      "Rider Reached Shop","Rider On The Way","Order Arrived","Order Delivered","Order Cancelled"};
 
 
 

@@ -12,7 +12,8 @@ router.get('/partner/reject_order',async (req,res)=>{
     const cancel_reason = req.query.cancel_reason;
 
     const order = await Order.findOne({_id: order_id});
-    order.orderStatus = 8;
+    order.cancelled = true;
+    order.orderStatus = 7;
     order.cancelReason = cancel_reason;
     order.save();
 

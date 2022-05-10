@@ -7,6 +7,8 @@ const sendNotification = require('../../../util/sendNotification')
 router.post('/partner/order/updateStatus',async (req,res)=>{
     const {orderId, orderStatus} = req.query; 
 
+    console.log(orderId,orderStatus);
+
     const order = await Order.findOne({_id: orderId});
     order.orderStatus = orderStatus;
     order.save();
@@ -20,7 +22,7 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
         "orderId": orderId
     })
 
-    res.json({status: true});
+    res.json({success: true});
 })
 
 
