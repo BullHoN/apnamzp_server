@@ -35,6 +35,7 @@ async function mapOrderWithShopDetails(order){
                     bannerImage: shopData.bannerImage,
                     addressData: shopData.addressData
                 },
+                cancelReason: order.cancelReason,
                 created_at: order.created_at
             });
         resolve(mappedOrders[0]);

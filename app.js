@@ -8,6 +8,8 @@ const secretFile = require("./firebase_secretkey.json")
 const cors = require('cors')
 const cloudinary = require('cloudinary').v2;
 const morgan = require('morgan')
+const compression = require('compression');
+
 
 // Environement variables
 require('dotenv').config();
@@ -34,19 +36,21 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cors());
 app.use(morgan('dev'))
+app.use(compression());
+
 
 
 // mongoDB Connect
 connectDB();
 
-// const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bGINq_QWhNrkVHAwnC2PZORP_DvX8sohz8t4PzuCtQaHWNsLdqVlL3PSVTiRUEgSDrwKWfhu4brwpqouDrLiYIOu1Sp3PYOw6GRof-oHeUyc0ra6qRgbTV4vh-eDyReRH9Fhky4";
-// const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bGrVjYvREJ01pW19kac7xX02cVbQaKflQSjv9QJLbb2GoI2f-dJhNHJ-LjPdAruXT769eX5Fll0GHyY6X38R_64i4ocw91JbyLp8dr28yWev8wCnoAmh0Pp4cdFmo6IsEyNA_X2"
+// const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
+const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_OmkoqyHf3KafdIHpg9vhei1P1kVgpKUqexJjQcebm2RzKHBeNcACa7JRC2tPuMlcePZ2lYTIGDWJJKDRdVy4KegWkfq2Dwu19l2qj2ZAlYZYospEXK"
 // const userFCMToken = "do3y0UeGTRexGvWfAnbGGK:APA91bGZNs3u0Hg3VTCtQtZO0eIrCp6oq8I0FIyrJN_E3S98MDfIrMAjqTi-mt20wB8BE29VQ3w1PxN-tAzHSsEFUkaJUB746_mMBt92aaAD9Bo19W1Lu7HsDurqhyDPG7CB6h1aZpyu"
-// require("./util/sendNotification")(userFCMToken,{
+// require("./util/sendNotification")(partnerFCMToken,{
 //     "data":"zeher",
-//     "type": "order_status_accept",
-//     "title": "ha bol diya bhai",
-//     "desc": "khana to aa hi jayga",
+//     "type": "new_order",
+//     "title": "nya order aa gya bhai",
+//     "desc": "jake de aa order bhai",
 //     "orderId": "6271219c625ead8bbe08e671"
 // })
 
@@ -59,12 +63,11 @@ connectDB();
 // }).save();
 
 // test
-// const ShopPartner = require('./models/ShopPartner');
+// const ShopPartner = require('./models/DeliverySathi');
 // const shopPartner = new ShopPartner({
-//     phoneNo: "9997403324",
+//     phoneNo: "1234567890",
 //     isVerified: true,
-//     password: "vaibhav",
-//     shopId: "6174fea0dbb0b2e38f7de2ad"
+//     password: "vaibhav"
 // }).save().then(()=>{
 //     console.log("savled");
 // }).catch((err)=>{
@@ -93,6 +96,7 @@ app.use('/',require('./routes/user_app_routes/order/getOrder'))
 app.use('/',require('./routes/delivery_sathi/getDeliveryPricing'));
 app.use('/',require('./routes/delivery_sathi/sendLocationUpdates'));
 app.use('/',require('./routes/delivery_sathi/getDeliveryOrders'))
+app.use('/',require('./routes/delivery_sathi/getDeliverySathiInfo'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));

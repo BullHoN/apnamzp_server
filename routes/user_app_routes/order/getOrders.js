@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/user/getOrders',async (req,res)=>{
     const userId = req.query.userId;
-    const orders = await Order.find({userId: userId});
+    const orders = await Order.find({userId: userId}).sort({ created_at: -1 });
     const mappedOrders = await mapOrderWithShopDetails(orders);
 
     res.json(mappedOrders);
@@ -34,6 +34,8 @@ async function mapOrderWithShopDetails(orders){
                     bannerImage: shopData.bannerImage,
                     addressData: shopData.addressData
                 },
+                cancelReason: order.cancelReason,
+                assignedDeliveryBoy: order.assignedDeliveryBoy,
                 created_at: order.created_at
             });
         }

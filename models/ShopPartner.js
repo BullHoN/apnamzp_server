@@ -4,7 +4,8 @@ const User = require('./User');
 
 const partnerSchema = new mongoose.Schema({
     shopId: String,
-    noOfOrders: Number
+    noOfOrders: Number,
+    shopType: String
 })
 
 const ShopPartner = User.discriminator('ShopPartner',partnerSchema);

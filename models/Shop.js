@@ -34,7 +34,10 @@ const shopSchema = new mongoose.Schema({
         index: true
     },
     phoneNO: String,
-        
+    taxPercentage: {
+        default: "0",
+        type: String
+    }
 });
 
 

@@ -2,9 +2,18 @@ const mongoose = require('mongoose');
 const User = require('./User');
 
 const deliverySathiSchema = new mongoose.Schema({
-    earnings: Number,
-    incentives: Number,
-    rating: Number
+    earnings: {
+        type: Number,
+        default: 0
+    },
+    incentives: {
+        type: Number,
+        default: 0
+    },
+    rating: {
+        type: Number,
+        default: 0
+    }
 })
 
 const DeliverySathi = User.discriminator('DeliverySathi',deliverySathiSchema);

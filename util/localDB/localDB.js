@@ -20,12 +20,17 @@ class localDB {
         })
     }
 
-    pushDeliveryBoys(key,data){
+    pushDeliveryBoys(key,data,action){
         return new Promise(async (resolve,reject)=>{
             let oldData = await this.get(key);
             oldData = JSON.parse(oldData);
-
-            oldData[data.phoneNo] = data;
+            
+            if(action == "del"){
+                delete oldData[data.phoneNo];
+            }
+            else {
+                oldData[data.phoneNo] = data;
+            }
 
             this.db.put(key,JSON.stringify(oldData)).then(()=>{
                 resolve({

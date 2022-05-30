@@ -43,7 +43,8 @@ const orderSchema = new mongoose.Schema({
         offerDiscountedAmount: Number,
         totalDiscount: Number,
         totalTaxesAndPackingCharge: Number,
-        totalPay: Number
+        totalPay: Number,
+        taxPercentage: Number
     },
     orderStatus: {
         type: Number,
