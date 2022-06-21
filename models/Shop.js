@@ -37,6 +37,10 @@ const shopSchema = new mongoose.Schema({
     taxPercentage: {
         default: "0",
         type: String
+    },
+    increasePriceByPercentage: {
+        type: String,
+        default: "0"
     }
 });
 

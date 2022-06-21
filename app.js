@@ -90,7 +90,8 @@ app.use('/',require('./routes/user_app_routes/auth/registerUser'));
 app.use('/',require('./routes/user_app_routes/auth/checkPassword'));
 app.use('/',require('./routes/user_app_routes/order/getOrders'));
 app.use('/',require('./routes/user_app_routes/updateFCMToken'));
-app.use('/',require('./routes/user_app_routes/order/getOrder'))
+app.use('/',require('./routes/user_app_routes/order/getOrder'));
+app.use('/',require('./routes/user_app_routes/getCartMetaData'))
 
 // delivery boy routes
 app.use('/',require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -104,6 +105,7 @@ app.use('/', require('./routes/partner_routes/orders/updateOrderStatus'));
 app.use('/', require('./routes/partner_routes/orders/assignDeliverySathi'));
 app.use('/',require('./routes/partner_routes/orders/rejectOrder'));
 app.use('/',require('./routes/partner_routes/orders/acceptOrder'));
+app.use('/',require('./routes/partner_routes/menu_items/getShopItems'))
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");

@@ -44,6 +44,7 @@ const orderSchema = new mongoose.Schema({
         totalDiscount: Number,
         totalTaxesAndPackingCharge: Number,
         totalPay: Number,
+        itemsOnTheWayTotalCost: Number,
         taxPercentage: Number
     },
     orderStatus: {
@@ -54,6 +55,8 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    offerCode: String,
+    itemsOnTheWay: [String],
     assignedDeliveryBoy: String,
     expectedDeliveryTime: String,
     cancelReason: String
