@@ -23,8 +23,8 @@ router.get('/login',async (req,res)=>{
 
     if(user.password == password){
         // condition for different users
-        console.log(user);
-        res.json(true);
+        // console.log(user);
+        res.json(user);
     }
     else {
         res.json(false);

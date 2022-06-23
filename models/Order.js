@@ -40,12 +40,22 @@ const orderSchema = new mongoose.Schema({
         deliveryCharge: Number,
         isDeliveryService: Boolean,
         itemTotal: Number,
-        offerDiscountedAmount: Number,
-        totalDiscount: Number,
-        totalTaxesAndPackingCharge: Number,
-        totalPay: Number,
-        itemsOnTheWayTotalCost: Number,
-        taxPercentage: Number
+        offerDiscountedAmount: {
+            type: Number,
+            default: 0
+        },
+        totalDiscount: Number, // total disocunt on each item
+        totalTaxesAndPackingCharge: Number, // tax & packing charge
+        totalPay: Number, // actual amount to pay 
+        itemsOnTheWayTotalCost: {
+            type: Number,
+            default: 0
+        }, // total delivery cost
+        itemsOnTheWayActualCost: {
+            type: Number,
+            default: 0
+        }, // total actual items cost
+        taxPercentage: Number // tax percentage by shop
     },
     orderStatus: {
         type: Number,
@@ -57,6 +67,10 @@ const orderSchema = new mongoose.Schema({
     },
     offerCode: String,
     itemsOnTheWay: [String],
+    itemsOnTheWayCancelled: {
+        type: Boolean,
+        default: false
+    },
     assignedDeliveryBoy: String,
     expectedDeliveryTime: String,
     cancelReason: String

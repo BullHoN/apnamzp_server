@@ -94,18 +94,20 @@ app.use('/',require('./routes/user_app_routes/order/getOrder'));
 app.use('/',require('./routes/user_app_routes/getCartMetaData'))
 
 // delivery boy routes
-app.use('/',require('./routes/delivery_sathi/getDeliveryPricing'));
-app.use('/',require('./routes/delivery_sathi/sendLocationUpdates'));
-app.use('/',require('./routes/delivery_sathi/getDeliveryOrders'))
-app.use('/',require('./routes/delivery_sathi/getDeliverySathiInfo'))
+app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
+app.use('/', require('./routes/delivery_sathi/sendLocationUpdates'));
+app.use('/', require('./routes/delivery_sathi/getDeliveryOrders'))
+app.use('/', require('./routes/delivery_sathi/getDeliverySathiInfo'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
 app.use('/', require('./routes/partner_routes/orders/updateOrderStatus'));
 app.use('/', require('./routes/partner_routes/orders/assignDeliverySathi'));
-app.use('/',require('./routes/partner_routes/orders/rejectOrder'));
-app.use('/',require('./routes/partner_routes/orders/acceptOrder'));
-app.use('/',require('./routes/partner_routes/menu_items/getShopItems'))
+app.use('/', require('./routes/partner_routes/orders/rejectOrder'));
+app.use('/', require('./routes/partner_routes/orders/acceptOrder'));
+app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
+app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
+app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'))
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");

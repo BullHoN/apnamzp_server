@@ -29,6 +29,8 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res)=>{
                 phoneNo: order.userId,
                 rawAddress: order.deliveryAddress.rawAddress
             },
+            itemsOnTheWay: order.itemsOnTheWay,
+            // TODO: add the total price to take along with items on the way
             orderStatus: order.orderStatus
         })
     }
