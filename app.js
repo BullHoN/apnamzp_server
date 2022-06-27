@@ -107,7 +107,8 @@ app.use('/', require('./routes/partner_routes/orders/rejectOrder'));
 app.use('/', require('./routes/partner_routes/orders/acceptOrder'));
 app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
 app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
-app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'))
+app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
+app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'))
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");
