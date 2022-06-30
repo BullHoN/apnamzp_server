@@ -138,6 +138,8 @@ app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
 app.use('/', require('./routes/delivery_sathi/sendLocationUpdates'));
 app.use('/', require('./routes/delivery_sathi/getDeliveryOrders'))
 app.use('/', require('./routes/delivery_sathi/getDeliverySathiInfo'))
+app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
+app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
@@ -146,9 +148,8 @@ app.use('/', require('./routes/partner_routes/orders/assignDeliverySathi'));
 app.use('/', require('./routes/partner_routes/orders/rejectOrder'));
 app.use('/', require('./routes/partner_routes/orders/acceptOrder'));
 app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
-app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
-app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
-app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'))
+app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'));
+app.use('/', require('./routes/partner_routes/menu_items/createNewCategory'))
 
 
 // app.post('/upload/test',upload.single('item_image'),async (req,res)=>{
