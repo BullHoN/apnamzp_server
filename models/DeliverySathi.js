@@ -13,6 +13,10 @@ const deliverySathiSchema = new mongoose.Schema({
     rating: {
         type: Number,
         default: 0
+    },
+    cashInHand: {
+        type: Number,
+        default: 0
     }
 })
 

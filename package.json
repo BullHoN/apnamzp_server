@@ -9,6 +9,7 @@
   "author": "vaibhav bhardwaj",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1164.0",
     "axios": "^0.23.0",
     "cloudinary": "^1.29.0",
     "compression": "^1.7.4",
@@ -23,6 +24,7 @@
     "levelup": "^5.1.1",
     "mongoose": "^6.0.8",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "unirest": "^0.6.0"
   }
 }

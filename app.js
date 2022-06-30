@@ -9,6 +9,25 @@ const cors = require('cors')
 const cloudinary = require('cloudinary').v2;
 const morgan = require('morgan')
 const compression = require('compression');
+const multer  = require('multer')
+const AWS = require('aws-sdk')
+
+
+
+
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null, 'uploads/')
+//     },
+//     filename: function (req, file, cb) {
+//       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//       cb(null, file.fieldname + '-' + uniqueSuffix + '.jpg')
+//     }
+//   })
+  
+// const upload = multer({ storage: storage })
+// TODO: USE THE BELOW ONE
+const upload = multer()
 
 
 // Environement variables
@@ -30,6 +49,27 @@ require('./util/localDB/localDB')
 admin.initializeApp({
     credential: admin.credential.cert(secretFile)
 });
+
+
+AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+})
+
+const s3 = new AWS.S3();
+
+// var params = {
+//     Bucket: 'process.env.bucketname',
+//     Body : 'hello i am vaibhav',
+//     Key : 'myfile.txt'
+// };
+
+// s3.upload(params,(err,data)=>{
+//     if(err) throw err;
+//     console.log(data);
+// })
+
 
 
 app.use(express.json());
@@ -109,6 +149,37 @@ app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
 app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
 app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
 app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'))
+
+
+// app.post('/upload/test',upload.single('item_image'),async (req,res)=>{
+//     console.log(req.file);
+
+//     const shopItemData = JSON.parse(req.body.shopItemData);
+//     console.log(shopItemData);
+
+//     try{
+//         if(req.file){
+//             var params = {
+//                 Bucket: 'process.env.bucketname',
+//                 Body : req.file.buffer,
+//                 Key : req.file.originalname
+//             };
+            
+//             const ImageData = await s3.upload(params);
+//             console.log(ImageData);
+//         }
+//     }
+//     catch(error){
+//         console.log(error);
+//     }
+
+
+//     res.json({
+//         success: true
+//     })
+// })
+
+
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");
