@@ -6,8 +6,20 @@ const router = express.Router();
 router.get('/sathi/orders/:delivery_sathi',async (req,res)=>{
     const delivery_sathi = req.params.delivery_sathi;
     const order_status = req.query.order_status;
-    const orders = await Order.find({assignedDeliveryBoy: delivery_sathi,orderStatus: order_status});
-    
+
+    let orders;
+    if(order_status == 5){
+        orders = await Order.find({assignedDeliveryBoy: delivery_sathi,
+            orderStatus: Number.parseInt(order_status)});
+    }
+    else {
+        orders = await Order.find({assignedDeliveryBoy: delivery_sathi,
+            orderStatus: {
+                $lte: Number.parseInt(order_status)
+        }});
+    }
+
+
     let mappedOrders = []
     for(let i=0;i<orders.length;i++){
         const order = orders[i];

@@ -10,8 +10,26 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
     console.log(orderId,orderStatus);
 
     const order = await Order.findOne({_id: orderId});
-    order.orderStatus = orderStatus;
+    order.orderStatus = Number.parseInt(orderStatus);
     order.save();
+
+    if(order.orderStatus == 6){
+        // update the cash in the hand of the deliveyr sathi
+        const deliverySathi = await User.findOne({phoneNo: order.assignedDeliveryBoy})
+        if(order.isPaid){
+            let amountPaidToResturant = order.billingDetails.itemTotal + order.billingDetails.totalTaxesAndPackingCharge - order.billingDetails.totalDiscount
+            if(!order.offerCode.includes("APNAMZP")){
+                amountPaidToResturant -= order.billingDetails.offerDiscountedAmount
+            }
+
+            deliverySathi.cashInHand -= amountPaidToResturant
+        }
+        else {
+            deliverySathi.cashInHand += order.billingDetails.deliveryCharge + order.billingDetails.itemsOnTheWayTotalCost
+        }
+
+        await deliverySathi.save();
+    }
 
     const user = await User.findOne({phoneNo: order.userId});
     sendNotification(user.fcmId,{
@@ -24,6 +42,7 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
 
     res.json({success: true});
 })
+
 
 
 module.exports = router;

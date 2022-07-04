@@ -140,6 +140,7 @@ app.use('/', require('./routes/delivery_sathi/getDeliveryOrders'))
 app.use('/', require('./routes/delivery_sathi/getDeliverySathiInfo'))
 app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
 app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
+app.use('/', require('./routes/delivery_sathi/getCashInHand'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
