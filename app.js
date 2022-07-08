@@ -150,7 +150,8 @@ app.use('/', require('./routes/partner_routes/orders/rejectOrder'));
 app.use('/', require('./routes/partner_routes/orders/acceptOrder'));
 app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
 app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'));
-app.use('/', require('./routes/partner_routes/menu_items/createNewCategory'))
+app.use('/', require('./routes/partner_routes/menu_items/createNewCategory'));
+app.use('/', require('./routes/partner_routes/updateShopData'))
 
 
 // app.post('/upload/test',upload.single('item_image'),async (req,res)=>{
