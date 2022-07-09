@@ -4,6 +4,7 @@ const User = require('./User');
 
 const partnerSchema = new mongoose.Schema({
     shopId: String,
+    shopItemsId: String,
     noOfOrders: Number,
     shopType: String
 })

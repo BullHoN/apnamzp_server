@@ -152,7 +152,7 @@ app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
 app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'));
 app.use('/', require('./routes/partner_routes/menu_items/createNewCategory'));
 app.use('/', require('./routes/partner_routes/updateShopData'))
-
+app.use('/', require('./routes/partner_routes/auth/login'))
 
 // app.post('/upload/test',upload.single('item_image'),async (req,res)=>{
 //     console.log(req.file);
