@@ -141,7 +141,8 @@ app.use('/', require('./routes/delivery_sathi/getDeliverySathiInfo'))
 app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
 app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
 app.use('/', require('./routes/delivery_sathi/getCashInHand'));
-app.use('/', require('./routes/delivery_sathi/auth/login'))
+app.use('/', require('./routes/delivery_sathi/auth/login'));
+app.use('/', require('./routes/delivery_sathi/earnings/getDeliverySathiDayInfo'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
@@ -154,6 +155,8 @@ app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'));
 app.use('/', require('./routes/partner_routes/menu_items/createNewCategory'));
 app.use('/', require('./routes/partner_routes/updateShopData'))
 app.use('/', require('./routes/partner_routes/auth/login'))
+app.use('/', require('./routes/partner_routes/offers/getShopOffers'))
+app.use('/', require('./routes/partner_routes/offers/putOffers'))
 
 // app.post('/upload/test',upload.single('item_image'),async (req,res)=>{
 //     console.log(req.file);
@@ -183,7 +186,8 @@ app.use('/', require('./routes/partner_routes/auth/login'))
 //     })
 // })
 
-
+const sendOtp = require('./routes/user_app_routes/auth/sendOtp');
+// sendOtp("9565810009","1234")
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");

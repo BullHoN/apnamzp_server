@@ -8,7 +8,6 @@ const User = require('../../../models/User');
 router.get('/login',async (req,res)=>{
     const phoneNo = req.query.phoneNo;
     const password = req.query.password;
-    const user_type = req.query.user_type;
 
     // if(user_type == "partner"){
 
@@ -22,9 +21,7 @@ router.get('/login',async (req,res)=>{
     }
 
     if(user.password == password){
-        // condition for different users
-        // console.log(user);
-        res.json(user);
+        res.json(true);
     }
     else {
         res.json(false);

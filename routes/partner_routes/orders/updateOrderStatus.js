@@ -18,7 +18,7 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
         const deliverySathi = await User.findOne({phoneNo: order.assignedDeliveryBoy})
         if(order.isPaid){
             let amountPaidToResturant = order.billingDetails.itemTotal + order.billingDetails.totalTaxesAndPackingCharge - order.billingDetails.totalDiscount
-            if(!order.offerCode.includes("APNAMZP")){
+            if(order.offerCode != null && order.offerCode != '' && !order.offerCode.includes("APNAMZP")){
                 amountPaidToResturant -= order.billingDetails.offerDiscountedAmount
             }
 

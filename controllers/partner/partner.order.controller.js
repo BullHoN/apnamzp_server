@@ -30,6 +30,13 @@ module.exports = {
     
         })
     
+        if(assignedDeliveryBoy.phoneNo == null){
+            console.log("No Delivery Sathi was available");
+            // TODO: Throw error here
+            res.sendStatus(404);
+            return;
+        }
+
         await Order.findByIdAndUpdate({_id: orderId},{assignedDeliveryBoy: assignedDeliveryBoy.phoneNo});
     
         sendNotification(assignedDeliveryBoy.fcmId,{

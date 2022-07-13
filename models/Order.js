@@ -72,9 +72,13 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    assignedDeliveryBoy: String,
+    assignedDeliveryBoy: {
+        type: String,
+        index: true
+    },
     expectedDeliveryTime: String,
-    cancelReason: String
+    cancelReason: String,
+    actualDistance: String
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const Order = mongoose.model('order',orderSchema);
