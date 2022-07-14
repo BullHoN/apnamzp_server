@@ -17,6 +17,10 @@ const deliverySathiSchema = new mongoose.Schema({
     cashInHand: {
         type: Number,
         default: 0
+    },
+    currOrders: {
+        type: Number,
+        default: 0
     }
 })
 

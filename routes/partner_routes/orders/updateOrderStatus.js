@@ -28,6 +28,8 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
             deliverySathi.cashInHand += order.billingDetails.deliveryCharge + order.billingDetails.itemsOnTheWayTotalCost
         }
 
+        deliverySathi.currOrders -= 1;
+
         await deliverySathi.save();
     }
 

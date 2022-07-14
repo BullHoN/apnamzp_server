@@ -1,6 +1,7 @@
 const geolib = require('geolib');
 const localDB = require('../../util/localDB/localDB');
 const Order = require('../../models/Order')
+const DeliverySathi = require('../../models/DeliverySathi')
 const sendNotification = require('../../util/sendNotification')
 
 // {latitude: "25.133699", longitude: "82.564430"}
@@ -13,43 +14,70 @@ module.exports = {
     assignDeliveryBoy: async (req,res)=>{
 
         const { orderId, latitude, longitude } = req.query;
-    
-        let deliverySathis = await localDB.get('deliverySathis');
-        deliverySathis = JSON.parse(deliverySathis);
-    
-        let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
-        Object.keys(deliverySathis).forEach((key,idx)=>{
-            const curr = deliverySathis[key];
-            const dist = getDistance({latitude: Number.parseFloat(curr["latitude"]),longitude: Number.parseFloat(curr["longitude"])}
-            ,{latitude: Number.parseFloat(latitude), longitude: Number.parseFloat(longitude)});
-    
-            if(dist < assignedDeliveryBoy.dist){
-                assignedDeliveryBoy = curr;
-                assignedDeliveryBoy.dist = dist;
-            }
-    
-        })
-    
-        if(assignedDeliveryBoy.phoneNo == null){
-            console.log("No Delivery Sathi was available");
-            // TODO: Throw error here
-            res.sendStatus(404);
-            return;
-        }
+        
 
-        await Order.findByIdAndUpdate({_id: orderId},{assignedDeliveryBoy: assignedDeliveryBoy.phoneNo});
+        let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
+        let assignDeliveryBoyInterval = setInterval(async ()=>{
+
+            let deliverySathis = await localDB.get('deliverySathis');
+            deliverySathis = JSON.parse(deliverySathis);
+
+            let keys = Object.keys(deliverySathis)
+
+            console.log(keys.length)
+
+            for(let i=0;i<keys.length;i++){
+                const key = keys[i]
+                const curr = deliverySathis[key];
+                const dist = getDistance({latitude: Number.parseFloat(curr["latitude"]),longitude: Number.parseFloat(curr["longitude"])}
+                ,{latitude: Number.parseFloat(latitude), longitude: Number.parseFloat(longitude)});
+        
+                const deliverySathi = await DeliverySathi.findOne({phoneNo: key})
+                
+                console.log(deliverySathi)
+                if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist){
+                    assignedDeliveryBoy = curr;
+                    assignedDeliveryBoy.dist = dist;
+                }
+            }
+
+            if(assignedDeliveryBoy.phoneNo != null){
+                clearInterval(assignDeliveryBoyInterval)
+
+                await Order.findByIdAndUpdate({_id: orderId},{assignedDeliveryBoy: assignedDeliveryBoy.phoneNo});
+
+                const deliverySathi = await DeliverySathi.findOne({phoneNo: assignedDeliveryBoy.phoneNo})
+                deliverySathi.currOrders += 1;
+                await deliverySathi.save();
+        
+                sendNotification(assignedDeliveryBoy.fcmId,{
+                    "data":"zeher",
+                    "type": "order",
+                    "title": "nya order aa gya bhai",
+                    "desc": "jake de aa order bhai"
+                })
+            
+
+            }
+
+            console.log("delivey sathi seen kya hai", assignedDeliveryBoy)
+
+        },1 * 1000 * 60)
+
+
+
     
-        sendNotification(assignedDeliveryBoy.fcmId,{
-            "data":"zeher",
-            "type": "order",
-            "title": "nya order aa gya bhai",
-            "desc": "jake de aa order bhai"
-        })
-    
-        res.json(assignedDeliveryBoy);
+        // if(assignedDeliveryBoy.phoneNo == null){
+        //     console.log("No Delivery Sathi was available");
+        //     // TODO: Throw error here
+        //     res.sendStatus(404);
+        //     return;
+        // }
+
     }
 
 }
+
 
 function getDistance(from,to){
     return geolib.getDistance(from,to);

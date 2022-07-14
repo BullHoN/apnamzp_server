@@ -14,14 +14,16 @@ router.get('/sathi/dayInfo/:deliverySathi', async (req,res)=>{
     try {
 
         // TODO: Use this
-        const orders = await Order.find({orderStatus: 6, 
+        const orders = await Order.find({assignedDeliveryBoy: deliverySathi,orderStatus: 6, 
         updated_at: { $gte: greaterThanDate, $lt: lessThanDate }})
 
         // const orders = await Order.find({orderStatus: 6})
         
+        const ordersDeliverySathiData = totalEarnings(orders)
+
         res.json({
             noOfOrders: orders.length,
-            totalEarnings: totalEarnings(orders)
+            ...ordersDeliverySathiData
         })
 
     } catch (error) {

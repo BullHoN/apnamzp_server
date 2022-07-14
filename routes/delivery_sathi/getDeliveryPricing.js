@@ -27,8 +27,12 @@ router.get('/getDeliveryPriceInfoSathi',(req,res)=>{
 router.get('/getIncentivePriceInfoSathi',(req,res)=>{
     res.json([
         {
-            message: "Above ₹5000 Sales",
-            value: "2000"
+            message: "6 Orders",
+            value: "30"
+        },
+        {
+            message: "9 Orders",
+            value: "50"
         }
     ])
 })
