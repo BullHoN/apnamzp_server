@@ -34,7 +34,6 @@ module.exports = {
         
                 const deliverySathi = await DeliverySathi.findOne({phoneNo: key})
                 
-                console.log(deliverySathi)
                 if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist){
                     assignedDeliveryBoy = curr;
                     assignedDeliveryBoy.dist = dist;
@@ -64,7 +63,10 @@ module.exports = {
 
         },1 * 1000 * 60)
 
-
+        
+        res.json({
+            success: true
+        })
 
     
         // if(assignedDeliveryBoy.phoneNo == null){

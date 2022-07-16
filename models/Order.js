@@ -78,7 +78,11 @@ const orderSchema = new mongoose.Schema({
     },
     expectedDeliveryTime: String,
     cancelReason: String,
-    actualDistance: String
+    actualDistance: String,
+    paymentReceivedToShop: {
+        type: Boolean,
+        default: false
+    }
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const Order = mongoose.model('order',orderSchema);
