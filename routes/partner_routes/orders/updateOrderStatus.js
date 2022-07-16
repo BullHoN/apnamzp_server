@@ -13,6 +13,8 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
         const order = await Order.findOne({_id: orderId});
         order.orderStatus = Number.parseInt(orderStatus);
 
+        // TODO: make a check for the updated value for the delivery sathi status
+
         if(order.orderStatus == 4){
             order.paymentReceivedToShop = (shopReceivedPayment == "true")
         }
@@ -22,6 +24,7 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
         if(order.orderStatus == 4 && !isDeliveryService){
             order.orderStatus = 6;
         }
+        
 
         await order.save();
     
