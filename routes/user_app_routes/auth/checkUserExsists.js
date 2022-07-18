@@ -3,29 +3,41 @@ const User = require('../../../models/User');
 const sendOtp = require('./sendOtp')
 const router = express.Router();
 
-router.get('/checkUserExists',async (req,res)=>{
+router.get('/checkUserExists',async (req,res,next)=>{
     const phoneNo = req.query.phoneNo;
     const user = await User.findOne({phoneNo: phoneNo});
 
-    if(user == null){
-        const otp = generateOTP();
-        const newUser = await (new User({phoneNo: phoneNo,otp:otp}).save());    
-        sendOtp(phoneNo,otp);
-
-        res.json(false);
-    }
-    else {
-        if(!user.isVerified){
+    try {
+        if(user == null){
             const otp = generateOTP();
-            user.otp = otp;
-            await user.save();
-        
+            const newUser = await (new User({phoneNo: phoneNo,otp:otp}).save());    
             sendOtp(phoneNo,otp);
-            res.json(false);
-            return;
+    
+            res.json({
+                success: false
+            });
         }
-        res.json(true);
+        else {
+            if(!user.isVerified){
+                const otp = generateOTP();
+                user.otp = otp;
+                await user.save();
+            
+                sendOtp(phoneNo,otp);
+                res.json({
+                    success: true
+                });
+                return;
+            }
+
+            res.json({
+                success: true
+            });
+        }        
+    } catch (error) {
+        next(error)
     }
+
 })
 
 

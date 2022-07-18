@@ -3,12 +3,19 @@ const Order = require('../../../models/Order');
 const Shop = require('../../../models/Shop')
 const router = express.Router();
 
-router.get('/user/getOrders',async (req,res)=>{
+router.get('/user/getOrders',async (req,res,next)=>{
     const userId = req.query.userId;
-    const orders = await Order.find({userId: userId}).sort({ created_at: -1 });
-    const mappedOrders = await mapOrderWithShopDetails(orders);
 
-    res.json(mappedOrders);
+    try{
+        const orders = await Order.find({userId: userId}).sort({ created_at: -1 });
+        const mappedOrders = await mapOrderWithShopDetails(orders);
+    
+        res.json(mappedOrders);
+    }
+    catch(error){
+        next(error)
+    }
+
 })
 
 async function mapOrderWithShopDetails(orders){

@@ -3,7 +3,7 @@ const Order = require('../../models/Order')
 const User = require('../../models/User')
 const router = express.Router();
 
-router.post('/sathi/updateItemsOnTheWayPrice/:orderId',async (req,res)=>{
+router.post('/sathi/updateItemsOnTheWayPrice/:orderId',async (req,res,next)=>{
     const orderId = req.params.orderId;
     const itemsOnTheWayActualCost =  Number.parseInt(req.query.itemsOnTheWayActualCost);
 
@@ -28,7 +28,7 @@ router.post('/sathi/updateItemsOnTheWayPrice/:orderId',async (req,res)=>{
         })
     }
     catch(e){
-
+        next(e)
     }
 })
 

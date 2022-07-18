@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const createError = require('http-errors')
 const ShopPartner = require('../../../models/ShopPartner')
 
-router.post('/partner/login',async (req,res)=>{
+router.post('/partner/login',async (req,res,next)=>{
 
     const {phoneNo, password} = req.body;
 
@@ -11,11 +12,7 @@ router.post('/partner/login',async (req,res)=>{
         const shopPartner = await ShopPartner.findOne({phoneNo});
 
         if(shopPartner == null){
-            res.json({
-                success: false,
-                desc: "User Not Found"
-            })
-            return;
+            throw createError.NotFound("Parter Not Found")
         }
     
         if(shopPartner.password == password){
@@ -26,17 +23,11 @@ router.post('/partner/login',async (req,res)=>{
             })
         }
         else {
-            res.json({
-                success: false,
-                desc: "Incorrect Password"
-            })
+            throw createError.Unauthorized("Incorrect Password")
         }        
     } catch (error) {
-        
+        next(error)
     }
-
-
-
 
 })
 

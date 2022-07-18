@@ -4,14 +4,21 @@ const Order = require('../../../models/Order');
 const User = require('../../../models/User');
 const sendNotification = require('../../../util/sendNotification')
 
-router.post('/partner/order/updateStatus',async (req,res)=>{
+router.post('/partner/order/updateStatus',async (req,res,next)=>{
     const {orderId, orderStatus, shopReceivedPayment} = req.query; 
 
     console.log(orderId,orderStatus);
 
     try {
         const order = await Order.findOne({_id: orderId});
-        order.orderStatus = Number.parseInt(orderStatus);
+
+        if(order.orderStatus > Number.parseInt(orderStatus)){
+            order.orderStatus += 1;
+        }
+        else {
+            order.orderStatus = Number.parseInt(orderStatus);
+        }
+
 
         // TODO: make a check for the updated value for the delivery sathi status
 
@@ -67,7 +74,7 @@ router.post('/partner/order/updateStatus',async (req,res)=>{
         res.json({success: true});
 
     } catch (error) {
-        
+        next(error)
     }
 
 

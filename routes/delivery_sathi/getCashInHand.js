@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const DeliverySathi = require('../../models/DeliverySathi')
 
-router.get('/sathi/cashInHand/:deliverySathiId',async (req,res)=>{
+router.get('/sathi/cashInHand/:deliverySathiId',async (req,res,next)=>{
     const deliverySathiId = req.params.deliverySathiId;
 
     try {
@@ -12,7 +12,7 @@ router.get('/sathi/cashInHand/:deliverySathiId',async (req,res)=>{
             cashInHand: deliverySathi.cashInHand
         })
     } catch (error) {
-        
+        next(error)
     }
 
 })

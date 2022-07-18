@@ -8,7 +8,7 @@ router.get('/partner/offers',async (req,res)=>{
         const offers = await Offer.find({shopName})
         res.json(offers)
     } catch (error) {
-        
+        next(error)
     }
 })
 

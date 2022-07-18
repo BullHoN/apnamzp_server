@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// TODO: Get this from redis
 const deliveryPricing = [
     {
         message: "Less Than Equal to 2KM",

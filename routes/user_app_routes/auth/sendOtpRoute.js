@@ -1,22 +1,31 @@
 const express = require('express');
 const sendOtp  = require('./sendOtp');
+const createError = require('http-errors')
 const User = require('../../../models/User')
 const router = express.Router();
 
-router.get('/sendOtp',async (req,res)=>{
+router.get('/sendOtp',async (req,res,next)=>{
     const phoneNo = req.query.phoneNo;
-    const user = await User.findOne({phoneNo:phoneNo});
-    if(user == null){
-        res.sendStatus(404);
-        return;
-    }
-    const otp = generateOTP();
-    user.otp = otp;
-    await user.save();
 
-    sendOtp(phoneNo,otp);
+    try{
+        const user = await User.findOne({phoneNo:phoneNo});
+        if(user == null){
+            throw createError.NotFound("User Not Found");
+        }
+        const otp = generateOTP();
+        user.otp = otp;
+        await user.save();
     
-    res.json();
+        sendOtp(phoneNo,otp);
+
+        res.json({
+            success: true
+        });
+    }
+    catch(error){
+        next(error)
+    }
+
 })
 
 function generateOTP() {

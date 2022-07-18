@@ -36,7 +36,7 @@ router.post('/partner/update/shopdetails',upload.single('banner_image'),async (r
         })        
 
     } catch (error) {
-        console.log(error);
+        next(error)
     }
 
 })

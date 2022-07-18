@@ -4,7 +4,7 @@ const DF = require('date-fns')
 const totalEarnings = require('./totalEarnings')
 const router = express.Router()
 
-router.get('/sathi/dayInfo/:deliverySathi', async (req,res)=>{
+router.get('/sathi/dayInfo/:deliverySathi', async (req,res,next)=>{
     const deliverySathi = req.params.deliverySathi
     const { ordersDateString } = req.query
 
@@ -27,7 +27,7 @@ router.get('/sathi/dayInfo/:deliverySathi', async (req,res)=>{
         })
 
     } catch (error) {
-        
+        next(error)
     }
 
 })

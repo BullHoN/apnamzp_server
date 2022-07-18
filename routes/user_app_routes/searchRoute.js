@@ -3,11 +3,17 @@ const router = express.Router();
 const Shop = require('../../models/Shop')
 const SearchDB = require('../../util/searchbarconfig')
 
-router.get('/search',async (req,res)=>{
+router.get('/search',async (req,res,next)=>{
     const query = req.query.query;
     
-    const results = SearchDB.searchInDB(query);
-    res.json(results);
+    try{
+        const results = SearchDB.searchInDB(query);
+        res.json(results);
+    }
+    catch(error){
+        next(error)
+    }
+
 })
 
 

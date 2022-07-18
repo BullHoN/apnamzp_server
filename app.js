@@ -11,6 +11,7 @@ const morgan = require('morgan')
 const compression = require('compression');
 const multer  = require('multer')
 const AWS = require('aws-sdk')
+const createError = require('http-errors')
 
 
 
@@ -57,20 +58,6 @@ AWS.config.update({
     region: process.env.AWS_REGION
 })
 
-const s3 = new AWS.S3();
-
-// var params = {
-//     Bucket: 'process.env.bucketname',
-//     Body : 'hello i am vaibhav',
-//     Key : 'myfile.txt'
-// };
-
-// s3.upload(params,(err,data)=>{
-//     if(err) throw err;
-//     console.log(data);
-// })
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -94,26 +81,6 @@ const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_Omkoqy
 //     "orderId": "6271219c625ead8bbe08e671"
 // })
 
-// const Review = require('./models/Review');
-// const review = new Review({
-//     userName: "Vaibhav Bhardwaj",
-//     rating: "1",
-//     userMessage: "Good Food ND Service",
-//     shopName: "Up63 Cafe"
-// }).save();
-
-// test
-// const ShopPartner = require('./models/DeliverySathi');
-// const shopPartner = new ShopPartner({
-//     phoneNo: "1234567890",
-//     isVerified: true,
-//     password: "vaibhav"
-// }).save().then(()=>{
-//     console.log("savled");
-// }).catch((err)=>{
-//     console.log(err);
-// })
-// const patner = new 
 
 // user app routes
 app.use('/',require('./routes/user_app_routes/getCategoryItems'));
@@ -158,36 +125,22 @@ app.use('/', require('./routes/partner_routes/auth/login'))
 app.use('/', require('./routes/partner_routes/offers/getShopOffers'))
 app.use('/', require('./routes/partner_routes/offers/putOffers'))
 
-// app.post('/upload/test',upload.single('item_image'),async (req,res)=>{
-//     console.log(req.file);
 
-//     const shopItemData = JSON.parse(req.body.shopItemData);
-//     console.log(shopItemData);
-
-//     try{
-//         if(req.file){
-//             var params = {
-//                 Bucket: 'process.env.bucketname',
-//                 Body : req.file.buffer,
-//                 Key : req.file.originalname
-//             };
-            
-//             const ImageData = await s3.upload(params);
-//             console.log(ImageData);
-//         }
-//     }
-//     catch(error){
-//         console.log(error);
-//     }
-
-
-//     res.json({
-//         success: true
-//     })
+// app.use(async (req,res,next)=>{
+//     next(createError.NotFound("This Route Does Not Exsist"));
 // })
 
-const sendOtp = require('./routes/user_app_routes/auth/sendOtp');
-// sendOtp("9565810009","1234")
+// global error handler
+app.use((err,req,res,next)=>{
+    res.status(err.status || 500)
+    res.json({
+        success: false,
+        status: (err.status || 500),
+        desc: (err.desc || err.message || "Something went wrong"),
+        data: err.data
+    })
+})
+
 
 app.listen(5000,()=>{
     console.log("Server Running At Port 5000");

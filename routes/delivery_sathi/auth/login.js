@@ -1,18 +1,16 @@
 const express = require('express')
 const DeliverySathi = require('../../../models/DeliverySathi')
+const createError = require('http-errors')
 const router = express.Router()
 
-router.post('/sathi/login',async (req,res)=>{
+router.post('/sathi/login',async (req,res,next)=>{
     const {phoneNo, password} = req.body
+
     try {
         const deliverySathi = await DeliverySathi.findOne({phoneNo: phoneNo, __t: DeliverySathi})
         
         if(deliverySathi == null){
-            res.json({
-                success: false,
-                desc: "Delivery Sathi Not Found"
-            })
-            return;
+            throw createError.NotFound("Delivery Sathi Not Found");
         }
 
 
@@ -24,14 +22,11 @@ router.post('/sathi/login',async (req,res)=>{
             })
         }
         else {
-            res.json({
-                success: false,
-                desc: "Incorrect Password"
-            })
+            throw createError.Unauthorized("Incorrect Password");
         }
 
     } catch (error) {
-
+        next(error)
     }
 })
 

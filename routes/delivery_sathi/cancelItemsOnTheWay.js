@@ -3,7 +3,7 @@ const Order = require('../../models/Order')
 const User = require('../../models/User')
 const router = express.Router();
 
-router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res)=>{
+router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res,next)=>{
     const orderId = req.params.orderId;
 
     try{
@@ -30,7 +30,7 @@ router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res)=>{
         })
     }
     catch(e){
-
+        next(e)
     }
 
 

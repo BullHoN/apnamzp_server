@@ -2,18 +2,28 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../../models/User')
 
-router.post('/registerUser',async (req,res)=>{
+router.post('/registerUser',async (req,res,next)=>{
     // Add Some Way to authenticate the token
-    const { username, password, phoneNo } = req.body;
+    const { username, password, phoneNo, name } = req.body;
 
-    const user = await User.findOne({phoneNo: phoneNo});
+    try {
+        const user = await User.findOne({phoneNo: phoneNo});
 
-    user.name = username;
-    user.password = password;
-    user.isVerified = true;
-    user.save();
+        user.name = username;
+        user.password = password;
+        user.name = name;
+        user.isVerified = true;
 
-    res.json(true);
+        await user.save();     
+        
+        res.json({
+            success: true
+        })
+
+    } catch (error) {
+        next(error)
+    }
+
 })
 
 

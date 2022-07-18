@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^10.0.2",
     "geolib": "^3.3.3",
+    "http-errors": "^2.0.0",
     "leveldown": "^6.1.1",
     "levelup": "^5.1.1",
     "mongoose": "^6.0.8",

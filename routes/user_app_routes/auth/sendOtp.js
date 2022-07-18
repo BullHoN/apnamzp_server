@@ -20,10 +20,9 @@ let sendOtp = function(number,otp) {
 	  "variables_values": otp
 	});
 
-	req.end(function (res) {
-	console.log(res.error,res.body);		
-	//   if (res.error) throw new Error(res.error);
-	//   console.log(res.body);
+	req.end(function (res) {	
+	  if (res.error) console.log(error)
+	  console.log(res.body);
 	});
 }
 

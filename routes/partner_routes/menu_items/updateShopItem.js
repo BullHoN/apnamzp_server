@@ -62,7 +62,7 @@ router.post('/partner/update/menuitem',upload.single('item_image'),async (req,re
 
     }
     catch(error){
-        console.log(error);
+        next(error)
     }
 
 })

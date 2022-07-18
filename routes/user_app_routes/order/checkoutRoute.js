@@ -3,10 +3,11 @@ const Order = require('../../../models/Order');
 const ShopPartner = require('../../../models/ShopPartner');
 const Shop = require('../../../models/Shop');
 const sendNotification = require('../../../util/sendNotification');
+const createError = require('http-errors')
 const router = express.Router();
 
 
-router.post('/checkout',async (req,res)=>{
+router.post('/checkout',async (req,res,next)=>{
 
     try {
         const order = new Order(req.body);
@@ -30,11 +31,13 @@ router.post('/checkout',async (req,res)=>{
             "isDeliveryService": ((order.billingDetails.isDeliveryService == true) + ""),
         })
     
-        res.json(true);        
-    } catch (error) {
+        res.json({
+            success: true
+        });        
         
+    } catch (error) {
+        next(error)
     }
-
 
 })
 

@@ -11,70 +11,70 @@ const sendNotification = require('../../util/sendNotification')
 
 module.exports = {
 
-    assignDeliveryBoy: async (req,res)=>{
+    assignDeliveryBoy: async (req,res,next)=>{
 
         const { orderId, latitude, longitude } = req.query;
         
-
-        let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
-        let assignDeliveryBoyInterval = setInterval(async ()=>{
-
-            let deliverySathis = await localDB.get('deliverySathis');
-            deliverySathis = JSON.parse(deliverySathis);
-
-            let keys = Object.keys(deliverySathis)
-
-            console.log(keys.length)
-
-            for(let i=0;i<keys.length;i++){
-                const key = keys[i]
-                const curr = deliverySathis[key];
-                const dist = getDistance({latitude: Number.parseFloat(curr["latitude"]),longitude: Number.parseFloat(curr["longitude"])}
-                ,{latitude: Number.parseFloat(latitude), longitude: Number.parseFloat(longitude)});
-        
-                const deliverySathi = await DeliverySathi.findOne({phoneNo: key})
-                
-                if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist){
-                    assignedDeliveryBoy = curr;
-                    assignedDeliveryBoy.dist = dist;
-                }
-            }
-
-            if(assignedDeliveryBoy.phoneNo != null){
-                clearInterval(assignDeliveryBoyInterval)
-
-                await Order.findByIdAndUpdate({_id: orderId},{assignedDeliveryBoy: assignedDeliveryBoy.phoneNo});
-
-                const deliverySathi = await DeliverySathi.findOne({phoneNo: assignedDeliveryBoy.phoneNo})
-                deliverySathi.currOrders += 1;
-                await deliverySathi.save();
-        
-                sendNotification(assignedDeliveryBoy.fcmId,{
-                    "data":"zeher",
-                    "type": "order",
-                    "title": "nya order aa gya bhai",
-                    "desc": "jake de aa order bhai"
-                })
-            
-
-            }
-
-            console.log("delivey sathi seen kya hai", assignedDeliveryBoy)
-
-        },1 * 1000 * 60)
-
-        
-        res.json({
-            success: true
-        })
-
+        try{
+            let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
+            let assignDeliveryBoyInterval = setInterval(async ()=>{
     
-        // if(assignedDeliveryBoy.phoneNo == null){
-        //     console.log("No Delivery Sathi was available");
-        //     // TODO: Throw error here
-        //     res.sendStatus(404);
-        //     return;
-        // }
+                let deliverySathis = await localDB.get('deliverySathis');
+                deliverySathis = JSON.parse(deliverySathis);
+    
+                let keys = Object.keys(deliverySathis)
+    
+                console.log(keys.length)
+    
+                for(let i=0;i<keys.length;i++){
+                    const key = keys[i]
+                    const curr = deliverySathis[key];
+                    const dist = getDistance({latitude: Number.parseFloat(curr["latitude"]),longitude: Number.parseFloat(curr["longitude"])}
+                    ,{latitude: Number.parseFloat(latitude), longitude: Number.parseFloat(longitude)});
+            
+                    const deliverySathi = await DeliverySathi.findOne({phoneNo: key})
+                    
+                    if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist){
+                        assignedDeliveryBoy = curr;
+                        assignedDeliveryBoy.dist = dist;
+                    }
+                    
+                    // TODO: remove this
+                    // assignedDeliveryBoy = curr;
+                    // assignedDeliveryBoy.dist = dist;
+                }
+    
+                if(assignedDeliveryBoy.phoneNo != null){
+                    clearInterval(assignDeliveryBoyInterval)
+    
+                    await Order.findByIdAndUpdate({_id: orderId},{assignedDeliveryBoy: assignedDeliveryBoy.phoneNo});
+    
+                    const deliverySathi = await DeliverySathi.findOne({phoneNo: assignedDeliveryBoy.phoneNo})
+                    deliverySathi.currOrders += 1;
+                    await deliverySathi.save();
+            
+                    sendNotification(assignedDeliveryBoy.fcmId,{
+                        "data":"zeher",
+                        "type": "order",
+                        "title": "nya order aa gya bhai",
+                        "desc": "jake de aa order bhai"
+                    })
+                
+    
+                }
+    
+                console.log("delivey sathi seen kya hai", assignedDeliveryBoy)
+    
+            },1 * 1000 * 60)
+    
+            
+            res.json({
+                success: true
+            })
+        }
+        catch(error){
+            next(error)
+        }
 
     }
 
