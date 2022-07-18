@@ -13,6 +13,12 @@ router.get('/partner/reject_order',async (req,res,next)=>{
 
     try{
         const order = await Order.findOne({_id: order_id});
+
+        if(order.orderStatus >= 1){
+            res.send({success: false});
+            return
+        }
+
         order.cancelled = true;
         order.orderStatus = 7;
         order.cancelReason = cancel_reason;

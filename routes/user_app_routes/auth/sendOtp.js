@@ -21,7 +21,7 @@ let sendOtp = function(number,otp) {
 	});
 
 	req.end(function (res) {	
-	  if (res.error) console.log(error)
+	  if (res.error) console.log(res.error)
 	  console.log(res.body);
 	});
 }
