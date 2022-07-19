@@ -124,6 +124,7 @@ app.use('/', require('./routes/partner_routes/updateShopData'))
 app.use('/', require('./routes/partner_routes/auth/login'))
 app.use('/', require('./routes/partner_routes/offers/getShopOffers'))
 app.use('/', require('./routes/partner_routes/offers/putOffers'))
+app.use('/', require('./routes/partner_routes/orders/changeShopStatus'))
 
 
 // app.use(async (req,res,next)=>{
