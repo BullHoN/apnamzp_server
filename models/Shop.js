@@ -41,6 +41,10 @@ const shopSchema = new mongoose.Schema({
     increasePriceByPercentage: {
         type: String,
         default: "0"
+    },
+    allowCheckout: {
+        type: Boolean,
+        default: false
     }
 });
 

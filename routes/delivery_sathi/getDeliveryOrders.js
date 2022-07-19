@@ -44,7 +44,9 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
                 },
                 itemsOnTheWay: order.itemsOnTheWay,
                 totalAmountToTake: order.billingDetails.totalPay,
-                orderStatus: order.orderStatus
+                orderStatus: order.orderStatus,
+                isPaid: order.isPaid,
+                totalAmountToGive: totalAmountToGive(order)
             })
         }
 
@@ -55,6 +57,22 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
     }
 
 })
+
+function totalAmountToGive(order){
+    let totalReceivingAmount = 0;
+    if(order.offerCode != null && !order.offerCode.includes("APNA")){
+        totalReceivingAmount =  order.billingDetails.itemTotal + order.billingDetails.totalTaxesAndPackingCharge  - order.billingDetails.totalDiscount;
+    }
+    else {
+        totalReceivingAmount =  order.billingDetails.itemTotal +  order.billingDetails.totalTaxesAndPackingCharge  - order.billingDetails.totalDiscount - order.billingDetails.offerDiscountedAmount;
+    }
+
+    if(order.billingDetails.itemTotal >= order.billingDetails.freeDeliveryPrice){
+        totalReceivingAmount -= order.billingDetails.deliveryCharge;
+    }
+
+    return  totalReceivingAmount;
+}
 
 // function mapOrders(orders){
 //     return new Promise((resolve,reject)=>{

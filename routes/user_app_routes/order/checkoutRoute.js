@@ -10,6 +10,7 @@ const router = express.Router();
 router.post('/checkout',async (req,res,next)=>{
 
     try {
+        console.log(req.body)
         const order = new Order(req.body);
 
         if(!order.billingDetails.isDeliveryService){

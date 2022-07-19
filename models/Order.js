@@ -66,6 +66,10 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    specialInstructions: {
+        type: String,
+        default: ""
+    },
     offerCode: String,
     itemsOnTheWay: [String],
     itemsOnTheWayCancelled: {
