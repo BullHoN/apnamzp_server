@@ -126,6 +126,7 @@ app.use('/', require('./routes/partner_routes/auth/login'))
 app.use('/', require('./routes/partner_routes/offers/getShopOffers'))
 app.use('/', require('./routes/partner_routes/offers/putOffers'))
 app.use('/', require('./routes/partner_routes/orders/changeShopStatus'))
+app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
 
 
 // app.use(async (req,res,next)=>{
