@@ -16,12 +16,21 @@ router.post('/checkout',async (req,res,next)=>{
         if(!order.billingDetails.isDeliveryService){
             order.billingDetails.deliveryCharge = 0
         }
-        await order.save();
-    
+        
+
         // send notification to the shop
         const shopData = await Shop.findOne({_id: req.body.shopID});
         const shopUser = await ShopPartner.findOne({phoneNo: shopData.phoneNO});
-    
+        
+        if(!shopData.isOpen){
+            throw createError.BadRequest("Shop is currently closed please try again later")
+        }
+
+        if(!shopData.allowCheckout){
+            throw createError.BadRequest("Shop is currently unavaible for delivery service")
+        }
+
+        await order.save();
     
         sendNotification(shopUser.fcmId,{
             "orderItems":  JSON.stringify(req.body.orderItems),

@@ -27,7 +27,7 @@ router.get('/getDistance',async (req,res,next)=>{
         }
         else if(distance <= 8){
             let amount = Math.ceil(distance * ABOVE_DISTANCE_FIVE_PRICE);
-            res.json({distance: String.parseInt(amount), actualDistance: distance})
+            res.json({distance: (amount+""), actualDistance: distance})
         }
         else {
             res.json({distance: "-1", actualDistance: "-1"});

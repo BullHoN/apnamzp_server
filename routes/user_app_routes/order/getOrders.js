@@ -44,6 +44,7 @@ async function mapOrderWithShopDetails(orders){
                 cancelReason: order.cancelReason,
                 assignedDeliveryBoy: order.assignedDeliveryBoy,
                 itemsOnTheWay: order.itemsOnTheWay,
+                itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
                 created_at: order.created_at
             });
         }

@@ -3,6 +3,7 @@ const localDB = require('../../util/localDB/localDB');
 const Order = require('../../models/Order')
 const DeliverySathi = require('../../models/DeliverySathi')
 const sendNotification = require('../../util/sendNotification')
+const User = require('../../models/User')
 
 // {latitude: "25.133699", longitude: "82.564430"}
 // 25.13649844681555, 82.56680760096513
@@ -16,6 +17,10 @@ module.exports = {
         const { orderId, latitude, longitude } = req.query;
         
         try{
+
+            const order = await Order.findById({_id: orderId});
+            const user = await User.findOne({phoneNo: order.userId})
+            
             let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
             let assignDeliveryBoyInterval = setInterval(async ()=>{
     
@@ -46,8 +51,9 @@ module.exports = {
     
                 if(assignedDeliveryBoy.phoneNo != null){
                     clearInterval(assignDeliveryBoyInterval)
-    
-                    await Order.findByIdAndUpdate({_id: orderId},{assignedDeliveryBoy: assignedDeliveryBoy.phoneNo});
+                    
+                    order.assignedDeliveryBoy = assignedDeliveryBoy.phoneNo
+                    await order.save();
     
                     const deliverySathi = await DeliverySathi.findOne({phoneNo: assignedDeliveryBoy.phoneNo})
                     deliverySathi.currOrders += 1;
@@ -59,8 +65,16 @@ module.exports = {
                         "title": "nya order aa gya bhai",
                         "desc": "jake de aa order bhai"
                     })
-                
-    
+                    
+
+                    sendNotification(user.fcmId,{
+                        "data": "assdgsdg",
+                        "type": "order_status_change",
+                        "title": "Delivery Sathi Assigned",
+                        "desc": "Your Delivery Sathi is assigned",
+                        "orderId": orderId
+                    })
+
                 }
     
                 console.log("delivey sathi seen kya hai", assignedDeliveryBoy)

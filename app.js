@@ -110,6 +110,7 @@ app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
 app.use('/', require('./routes/delivery_sathi/getCashInHand'));
 app.use('/', require('./routes/delivery_sathi/auth/login'));
 app.use('/', require('./routes/delivery_sathi/earnings/getDeliverySathiDayInfo'))
+app.use('/', require('./routes/delivery_sathi/updateOrderStatusSathi'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));

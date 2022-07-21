@@ -35,32 +35,6 @@ router.post('/partner/order/updateStatus',async (req,res,next)=>{
 
         await order.save();
     
-
-        if(order.orderStatus == 6 && isDeliveryService){
-            // update the cash in the hand of the deliveyr sathi
-            const deliverySathi = await User.findOne({phoneNo: order.assignedDeliveryBoy})
-            if(order.isPaid){
-                let amountPaidToResturant = order.billingDetails.itemTotal + order.billingDetails.totalTaxesAndPackingCharge - order.billingDetails.totalDiscount
-                if(order.offerCode != null && order.offerCode != '' && !order.offerCode.includes("APNAMZP")){
-                    amountPaidToResturant -= order.billingDetails.offerDiscountedAmount
-                }
-    
-                deliverySathi.cashInHand -= amountPaidToResturant
-            }
-            else {
-                if(order.paymentReceivedToShop){
-                    deliverySathi.cashInHand += order.billingDetails.deliveryCharge + order.billingDetails.itemsOnTheWayTotalCost
-                }
-                else {
-                    deliverySathi.cashInHand += order.billingDetails.totalPay
-                }
-                
-            }
-    
-            deliverySathi.currOrders -= 1;
-    
-            await deliverySathi.save();
-        }
     
         const user = await User.findOne({phoneNo: order.userId});
         sendNotification(user.fcmId,{
