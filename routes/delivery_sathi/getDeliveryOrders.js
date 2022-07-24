@@ -11,13 +11,15 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
         let orders;
         if(order_status == 5){
             orders = await Order.find({assignedDeliveryBoy: delivery_sathi,
-                orderStatus: Number.parseInt(order_status)});
+                orderStatus: Number.parseInt(order_status), orderAcceptedByDeliverySathi: true});
         }
         else {
             orders = await Order.find({assignedDeliveryBoy: delivery_sathi,
                 orderStatus: {
                     $lte: Number.parseInt(order_status)
-            }});
+                },
+                orderAcceptedByDeliverySathi: true
+            });
         }
     
     

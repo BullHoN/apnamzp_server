@@ -86,6 +86,14 @@ const orderSchema = new mongoose.Schema({
     paymentReceivedToShop: {
         type: Boolean,
         default: false
+    },
+    orderAcceptedByDeliverySathi: {
+        type: Boolean,
+        default: false
+    },
+    adminShopService: {
+        type: Boolean,
+        default: false
     }
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 

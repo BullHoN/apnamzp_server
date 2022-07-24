@@ -45,6 +45,14 @@ const shopSchema = new mongoose.Schema({
     allowCheckout: {
         type: Boolean,
         default: false
+    },
+    adminShopService: {
+        type: Boolean,
+        default: false
+    },
+    showShop: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -4,6 +4,8 @@ const Order = require('../../models/Order')
 const DeliverySathi = require('../../models/DeliverySathi')
 const sendNotification = require('../../util/sendNotification')
 const User = require('../../models/User')
+const createError = require('http-errors')
+const Shop = require('../../models/Shop')
 
 // {latitude: "25.133699", longitude: "82.564430"}
 // 25.13649844681555, 82.56680760096513
@@ -14,11 +16,16 @@ module.exports = {
 
     assignDeliveryBoy: async (req,res,next)=>{
 
-        const { orderId, latitude, longitude } = req.query;
+        const { orderId, latitude, longitude, alreadyAssignedSathi } = req.query;
         
+        if(orderId == undefined || latitude == undefined || longitude == undefined){
+            throw createError.BadRequest("Bad Request");
+        }
+
         try{
 
             const order = await Order.findById({_id: orderId});
+            const shopData = await Shop.findOne({shopType: order.shopCategory,_id: order.shopID});
             const user = await User.findOne({phoneNo: order.userId})
             
             let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
@@ -39,7 +46,9 @@ module.exports = {
             
                     const deliverySathi = await DeliverySathi.findOne({phoneNo: key})
                     
-                    if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist){
+                    console.log(alreadyAssignedSathi,key,(alreadyAssignedSathi != key))
+
+                    if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist && alreadyAssignedSathi != deliverySathi.phoneNo){
                         assignedDeliveryBoy = curr;
                         assignedDeliveryBoy.dist = dist;
                     }
@@ -60,12 +69,21 @@ module.exports = {
                     await deliverySathi.save();
             
                     sendNotification(assignedDeliveryBoy.fcmId,{
-                        "data":"zeher",
+                        "data": JSON.stringify({
+                            shopInfo: {
+                                name: shopData.name,
+                                phoneNo: shopData.phoneNO,
+                                rawAddress: shopData.addressData.mainAddress,
+                                latitude: shopData.addressData.latitude,
+                                longitude: shopData.addressData.longitude
+                            },
+                            _id: order._id
+                        }),
                         "type": "order",
                         "title": "nya order aa gya bhai",
-                        "desc": "jake de aa order bhai"
+                        "desc": "jake de aa order bhai" 
                     })
-                    
+
 
                     sendNotification(user.fcmId,{
                         "data": "assdgsdg",
