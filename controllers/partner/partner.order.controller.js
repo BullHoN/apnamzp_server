@@ -6,6 +6,7 @@ const sendNotification = require('../../util/sendNotification')
 const User = require('../../models/User')
 const createError = require('http-errors')
 const Shop = require('../../models/Shop')
+const client = require('../../util/init_redis')
 
 // {latitude: "25.133699", longitude: "82.564430"}
 // 25.13649844681555, 82.56680760096513
@@ -29,6 +30,7 @@ module.exports = {
             const user = await User.findOne({phoneNo: order.userId})
             
             let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
+            let tries = 0;
             let assignDeliveryBoyInterval = setInterval(async ()=>{
     
                 let deliverySathis = await localDB.get('deliverySathis');
@@ -38,6 +40,18 @@ module.exports = {
     
                 console.log(keys.length)
     
+                if(tries > 1){
+                    //TODO: send notification to admin
+                    let pendingOrders = await client.get("pendingOrders")
+                    if(pendingOrders == null) pendingOrders = []
+                    await client.set("pendingOrders",JSON.stringify([...pendingOrders,order]))
+                    
+                    console.log("send order to admin")
+                    clearInterval(assignDeliveryBoyInterval)
+
+                    return;
+                }
+
                 for(let i=0;i<keys.length;i++){
                     const key = keys[i]
                     const curr = deliverySathis[key];
@@ -48,7 +62,7 @@ module.exports = {
                     
                     console.log(alreadyAssignedSathi,key,(alreadyAssignedSathi != key))
 
-                    if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist && alreadyAssignedSathi != deliverySathi.phoneNo){
+                    if(deliverySathi.currOrders < 1000 && dist < assignedDeliveryBoy.dist && alreadyAssignedSathi != deliverySathi.phoneNo){
                         assignedDeliveryBoy = curr;
                         assignedDeliveryBoy.dist = dist;
                     }
@@ -57,7 +71,7 @@ module.exports = {
                     // assignedDeliveryBoy = curr;
                     // assignedDeliveryBoy.dist = dist;
                 }
-    
+                
                 if(assignedDeliveryBoy.phoneNo != null){
                     clearInterval(assignDeliveryBoyInterval)
                     
@@ -84,19 +98,13 @@ module.exports = {
                         "desc": "jake de aa order bhai" 
                     })
 
-
-                    sendNotification(user.fcmId,{
-                        "data": "assdgsdg",
-                        "type": "order_status_change",
-                        "title": "Delivery Sathi Assigned",
-                        "desc": "Your Delivery Sathi is assigned",
-                        "orderId": orderId
-                    })
-
                 }
-    
+                
+                
                 console.log("delivey sathi seen kya hai", assignedDeliveryBoy)
-    
+
+                tries++
+
             },1 * 1000 * 60)
     
             

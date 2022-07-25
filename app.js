@@ -11,6 +11,7 @@ const morgan = require('morgan')
 const compression = require('compression');
 const multer  = require('multer')
 const AWS = require('aws-sdk')
+require('./util/init_redis')
 const createError = require('http-errors')
 
 
@@ -130,6 +131,9 @@ app.use('/', require('./routes/partner_routes/offers/putOffers'))
 app.use('/', require('./routes/partner_routes/orders/changeShopStatus'))
 app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
 
+
+// admin app routes
+app.use('/', require('./routes/admin_routes/admin_shop/getPendingOrders'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
