@@ -3,6 +3,7 @@ const localDB = require('../../util/localDB/localDB');
 const Order = require('../../models/Order')
 const DeliverySathi = require('../../models/DeliverySathi')
 const sendNotification = require('../../util/sendNotification')
+const sendNotificationByTopic = require('../../util/sendNotificationOnTopic')
 const User = require('../../models/User')
 const createError = require('http-errors')
 const Shop = require('../../models/Shop')
@@ -44,9 +45,15 @@ module.exports = {
                     //TODO: send notification to admin
                     let pendingOrders = await client.get("pendingOrders")
                     if(pendingOrders == null) pendingOrders = []
+                    else pendingOrders = JSON.parse(pendingOrders)
                     await client.set("pendingOrders",JSON.stringify([...pendingOrders,order]))
                     
                     console.log("send order to admin")
+                    // send notification to user on the topuc 
+                    sendNotificationByTopic("pending_orders",{
+                        "type": "pending"
+                    })
+
                     clearInterval(assignDeliveryBoyInterval)
 
                     return;

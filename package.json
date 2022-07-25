@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "devStart": "nodemon app.js --ignore deliveryBoysLocation.json"
+    "devStart": "nodemon app.js --ignore deliveryBoysLocation.json",
+    "devRedisUI": "redis-commander"
   },
   "author": "vaibhav bhardwaj",
   "license": "ISC",
