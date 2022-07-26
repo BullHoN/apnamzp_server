@@ -26,6 +26,7 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
 
         if(order.orderStatus == 6 && order.billingDetails.isDeliveryService){
             // update the cash in the hand of the deliveyr sathi
+            // TODO: update for the thela orders
             const deliverySathi = await User.findOne({phoneNo: order.assignedDeliveryBoy})
             if(order.isPaid){
                 let amountPaidToResturant = order.billingDetails.itemTotal + order.billingDetails.totalTaxesAndPackingCharge - order.billingDetails.totalDiscount

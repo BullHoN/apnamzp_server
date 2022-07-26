@@ -18,7 +18,7 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
             "type": "order_status_change",
             "title": "Delivery Sathi Assigned",
             "desc": "Your Delivery Sathi is assigned",
-            "orderId": order._id
+            "orderId": orderId
         })
 
         res.json({

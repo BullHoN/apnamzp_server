@@ -50,7 +50,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
             mappedDeliverySathis.push(mappedSathi)
         }
 
-        console.log(mappedDeliverySathis)
+        // console.log(mappedDeliverySathis)
         res.json(mappedDeliverySathis)
     }
     catch(err){

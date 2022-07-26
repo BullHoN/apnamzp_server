@@ -69,7 +69,7 @@ module.exports = {
                     
                     console.log(alreadyAssignedSathi,key,(alreadyAssignedSathi != key))
 
-                    if(deliverySathi.currOrders < 1000 && dist < assignedDeliveryBoy.dist && alreadyAssignedSathi != deliverySathi.phoneNo){
+                    if(deliverySathi.currOrders == 0 && dist < assignedDeliveryBoy.dist && alreadyAssignedSathi != deliverySathi.phoneNo){
                         assignedDeliveryBoy = curr;
                         assignedDeliveryBoy.dist = dist;
                     }
