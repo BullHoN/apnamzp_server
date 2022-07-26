@@ -35,13 +35,13 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
                 "shopData": {
                     "name": shopData.name,
                     "phoneNo": shopData.phoneNO,
-                    "mainAddress": shopData.addressData.mainAddress,
+                    "rawAddress": shopData.addressData.mainAddress,
                     "latitude": shopData.addressData.latitude,
                     "longitude": shopData.addressData.longitude
                 },
                 "customerData": {
                     "phoneNo": order.userId,
-                    "mainAddress": order.deliveryAddress.rawAddress,
+                    "rawAddress": order.deliveryAddress.rawAddress,
                     "latitude": order.deliveryAddress.latitude,
                     "longitude": order.deliveryAddress.longitude
                 }}
@@ -50,6 +50,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
             mappedDeliverySathis.push(mappedSathi)
         }
 
+        console.log(mappedDeliverySathis)
         res.json(mappedDeliverySathis)
     }
     catch(err){

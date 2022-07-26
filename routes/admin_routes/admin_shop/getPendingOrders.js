@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/apna_mzp/admin/pendingOrders',async (req,res,next)=>{
     try {
         let pendingOrders = await client.get("pendingOrders")
-        if(pendingOrders == null) pendingOrders = []
+        if(pendingOrders == null) pendingOrders = "[]"
         pendingOrders = JSON.parse(pendingOrders)
 
         let mappedOrders = []
