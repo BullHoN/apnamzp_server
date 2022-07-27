@@ -136,6 +136,8 @@ app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
 app.use('/', require('./routes/admin_routes/admin_shop/getPendingOrders'))
 app.use('/', require('./routes/admin_routes/sathi_routes/getAllDeliverySathisInfo'))
 app.use('/', require('./routes/admin_routes/sathi_routes/assignDeliverySathi'))
+app.use('/', require('./routes/admin_routes/admin_shop/cancelOrder'))
+app.use('/', require('./routes/admin_routes/sathi_routes/addDeliverySathiIncome'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));

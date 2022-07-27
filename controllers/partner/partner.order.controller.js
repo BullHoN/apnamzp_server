@@ -98,6 +98,8 @@ module.exports = {
                                 latitude: shopData.addressData.latitude,
                                 longitude: shopData.addressData.longitude
                             },
+                            adminShopService: order.adminShopService,
+                            orderItems: order.orderItems,
                             _id: order._id
                         }),
                         "type": "order",

@@ -35,6 +35,8 @@ router.post('/apna_mzp/admin/assign_delivery_sathi', async (req,res,next)=>{
                     latitude: shopData.addressData.latitude,
                     longitude: shopData.addressData.longitude
                 },
+                adminShopService: order.adminShopService,
+                orderItems: order.orderItems,
                 _id: orderId
             }),
             "type": "order",

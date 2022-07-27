@@ -13,6 +13,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
         let allKeys = Object.keys(deliverySathis)
         for(let i=0;i<allKeys.length;i++){
             let currSathi = deliverySathis[allKeys[i]]
+
             let mappedSathi = {
                 "deliverySathi":{
                     "phoneNo": allKeys[i],
@@ -25,6 +26,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
                 const order = await Order.findOne({_id: currSathi.orderId})
 
                 if(order.orderStatus > 4){
+                    mappedDeliverySathis.push(mappedSathi)
                     continue;
                 }
                 
@@ -50,7 +52,6 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
             mappedDeliverySathis.push(mappedSathi)
         }
 
-        // console.log(mappedDeliverySathis)
         res.json(mappedDeliverySathis)
     }
     catch(err){

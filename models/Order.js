@@ -94,6 +94,10 @@ const orderSchema = new mongoose.Schema({
     adminShopService: {
         type: Boolean,
         default: false
+    },
+    deliverySathiIncome: {
+        type: Number,
+        default: 0
     }
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 

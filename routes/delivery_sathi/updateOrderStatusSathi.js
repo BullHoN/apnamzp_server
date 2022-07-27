@@ -12,7 +12,12 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
         const order = await Order.findOne({_id: orderId});
 
         if(order.orderStatus < 4){
-            throw createError.BadRequest("Please wait for shop to proceed");
+            if(order.adminShopService){
+                order.orderStatus = 5
+            }
+            else {
+                throw createError.BadRequest("Please wait for shop to proceed");
+            }
         }
         else {
             order.orderStatus += 1;
