@@ -99,7 +99,8 @@ app.use('/',require('./routes/user_app_routes/auth/checkPassword'));
 app.use('/',require('./routes/user_app_routes/order/getOrders'));
 app.use('/',require('./routes/user_app_routes/updateFCMToken'));
 app.use('/',require('./routes/user_app_routes/order/getOrder'));
-app.use('/',require('./routes/user_app_routes/getCartMetaData'))
+app.use('/',require('./routes/user_app_routes/getCartMetaData'));
+app.use('/',require('./routes/user_app_routes/getBannerImages'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -142,6 +143,16 @@ app.use('/', require('./routes/admin_routes/sathi_routes/addDeliverySathiIncome'
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
 // })
+
+
+// payment test
+const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')
+
+app.get('/getToken', async (req,res,next)=>{
+    const { orderId } = req.query; 
+    const data = await generateToken(orderId);
+    res.json(data)
+})
 
 // global error handler
 app.use((err,req,res,next)=>{

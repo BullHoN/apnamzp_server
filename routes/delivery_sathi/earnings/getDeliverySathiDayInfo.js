@@ -6,10 +6,26 @@ const router = express.Router()
 
 router.get('/sathi/dayInfo/:deliverySathi', async (req,res,next)=>{
     const deliverySathi = req.params.deliverySathi
-    const { ordersDateString } = req.query
+    const { ordersDateString, isMonthly } = req.query
 
-    const greaterThanDate = new Date(ordersDateString)
-    const lessThanDate = DF.addDays(greaterThanDate,1)
+    let greaterThanDate;
+    let lessThanDate;
+
+    if(isMonthly == "true"){
+        const curr_year = Number.parseInt(ordersDateString.split('-')[0])
+        const curr_month = Number.parseInt(ordersDateString.split('-')[1])
+
+        greaterThanDate = new Date(curr_year,curr_month-1)
+        greaterThanDate = DF.add(greaterThanDate, {days: 1})
+
+        lessThanDate = DF.add(greaterThanDate, {
+            months: 1
+        })
+    }
+    else {
+        greaterThanDate = new Date(ordersDateString)
+        lessThanDate = DF.addDays(greaterThanDate,1)  
+    }
 
     try {
 
@@ -20,8 +36,9 @@ router.get('/sathi/dayInfo/:deliverySathi', async (req,res,next)=>{
         // const orders = await Order.find({orderStatus: 6})
         
         const ordersDeliverySathiData = totalEarnings(orders)
-
+        
         res.json({
+            isMonthly: (isMonthly == "true"),
             noOfOrders: orders.length,
             ...ordersDeliverySathiData
         })
