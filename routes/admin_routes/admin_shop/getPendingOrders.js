@@ -14,6 +14,7 @@ router.get('/apna_mzp/admin/pendingOrders',async (req,res,next)=>{
             const order = pendingOrders[i];
             const shop = await Shop.findOne({_id: order.shopID})
             mappedOrders.push({
+                ...order,
                 _id: order._id.toString(),
                 orderItems: order.orderItems,
                 shopInfo: {
@@ -36,7 +37,8 @@ router.get('/apna_mzp/admin/pendingOrders',async (req,res,next)=>{
                 isPaid: order.isPaid,
                 totalAmountToGive: totalAmountToGive(order),
                 itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
-                itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost
+                itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost,
+                billingDetails: order.billingDetails
             })
         }
 

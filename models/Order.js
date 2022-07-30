@@ -98,6 +98,10 @@ const orderSchema = new mongoose.Schema({
     deliverySathiIncome: {
         type: Number,
         default: 0
+    },
+    shopsIncome: {
+        type: Number,
+        default: 0
     }
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
