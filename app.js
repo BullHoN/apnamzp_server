@@ -140,6 +140,7 @@ app.use('/', require('./routes/admin_routes/sathi_routes/assignDeliverySathi'))
 app.use('/', require('./routes/admin_routes/admin_shop/cancelOrder'))
 app.use('/', require('./routes/admin_routes/sathi_routes/addDeliverySathiIncome'))
 app.use('/', require('./routes/admin_routes/getOrders'))
+app.use('/', require('./routes/admin_routes/user_routes/setUserAppData'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
