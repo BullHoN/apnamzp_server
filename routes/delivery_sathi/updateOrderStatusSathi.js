@@ -57,11 +57,13 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
         }
 
         const user = await User.findOne({phoneNo: order.userId});
+
         sendNotification(user.fcmId,{
             "data": "assdgsdg",
             "type": "order_status_change",
             "title": "kuch to huaa hai",
             "desc": "kuch ho to rha hai",
+            "action": "feedback",
             "orderId": orderId
         })
 

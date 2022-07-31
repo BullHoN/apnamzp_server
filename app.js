@@ -100,7 +100,8 @@ app.use('/',require('./routes/user_app_routes/order/getOrders'));
 app.use('/',require('./routes/user_app_routes/updateFCMToken'));
 app.use('/',require('./routes/user_app_routes/order/getOrder'));
 app.use('/',require('./routes/user_app_routes/getCartMetaData'));
-app.use('/',require('./routes/user_app_routes/getBannerImages'))
+app.use('/',require('./routes/user_app_routes/getBannerImages'));
+app.use('/',require('./routes/user_app_routes/postFeedback'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -153,7 +154,10 @@ const generateToken = require('./routes/user_app_routes/payment/initOnlinePaymen
 app.get('/getToken', async (req,res,next)=>{
     const { orderId } = req.query; 
     const data = await generateToken(orderId);
-    res.json(data)
+    console.log(data)
+    res.json({
+        token: data.body.txnToken
+    })
 })
 
 // global error handler

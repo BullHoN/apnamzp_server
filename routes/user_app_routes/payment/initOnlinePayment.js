@@ -5,13 +5,14 @@ var paytmParams = {};
 
 
 async function generateToken(orderId){
-
     return new Promise((resolve,reject)=>{
+
         paytmParams.body = {
             "requestType"   : "Payment",
             "mid"           : process.env.MERCHANT_ID,
             "websiteName"   : "WEBSTAGING",
             "orderId"       : orderId,
+            "callbackUrl"   : "https://merchant.com/callback",
             "txnAmount"     : {
                 "value"     : "10.00",
                 "currency"  : "INR",
@@ -36,10 +37,10 @@ async function generateToken(orderId){
             var options = {
         
                 /* for Staging */
-                hostname: 'securegw-stage.paytm.in',
+                // hostname: 'securegw.paytm.in',
         
                 /* for Production */
-                // hostname: 'securegw.paytm.in',
+                hostname: 'securegw.paytm.in',   
         
                 port: 443,
                 path: `/theia/api/v1/initiateTransaction?mid=${process.env.MERCHANT_ID}&orderId=${orderId}`,
@@ -58,10 +59,7 @@ async function generateToken(orderId){
         
                 post_res.on('end', function(){
                     console.log('Response: ', response);
-                    response = JSON.parse(response)
-                    resolve({
-                        token: response.body.txnToken
-                    })
+                    resolve(JSON.parse(response))
                 });
             });
         

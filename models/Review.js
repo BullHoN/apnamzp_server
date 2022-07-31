@@ -7,6 +7,8 @@ const reviewSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    reviewType: String, // shop,sathi,apna
+    orderId: String,
     shopName: String
 })
 
