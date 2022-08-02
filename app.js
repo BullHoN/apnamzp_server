@@ -101,7 +101,8 @@ app.use('/',require('./routes/user_app_routes/updateFCMToken'));
 app.use('/',require('./routes/user_app_routes/order/getOrder'));
 app.use('/',require('./routes/user_app_routes/getCartMetaData'));
 app.use('/',require('./routes/user_app_routes/getBannerImages'));
-app.use('/',require('./routes/user_app_routes/postFeedback'))
+app.use('/',require('./routes/user_app_routes/postFeedback'));
+app.use('/',require('./routes/user_app_routes/payment/getOrderId'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -159,6 +160,49 @@ app.get('/getToken', async (req,res,next)=>{
         token: data.body.txnToken
     })
 })
+
+const Razorpay = require('razorpay')
+const instance = new Razorpay({ key_id: 'rzp_test_yWzsnOXTqAZItl', key_secret: 'QR5dXhIw6BJNhTX9LbFUfzN9' })
+
+app.get('/getOrderIdTest', async (req,res,next)=>{
+
+    var options = {
+		amount: 100,  
+		currency: "INR",
+		receipt: "Up63Cafe_payment_recipt",
+		notes:{
+		  email: "vaibhavbhardwaaj@gmail.com"
+		 }
+	};
+
+    try{
+        instance.orders.create(options,function(err,order){
+            if(err) throw err
+
+            console.log(order)
+            res.json(order)
+          })
+
+        // res.json({
+        //     success: true
+        // })
+
+    }
+    catch(err){
+        next(err)
+    }
+
+})
+
+app.get('/verifypayment', async (req,res,next)=>{
+    try{
+
+    }
+    catch(err){
+        next(err)
+    }
+})
+
 
 // global error handler
 app.use((err,req,res,next)=>{
