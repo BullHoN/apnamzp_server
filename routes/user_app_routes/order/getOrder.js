@@ -39,6 +39,7 @@ async function mapOrderWithShopDetails(order){
                 itemsOnTheWay: order.itemsOnTheWay,
                 assignedDeliveryBoy: order.assignedDeliveryBoy,
                 itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
+                userFeedBack: order.userFeedBack,
                 created_at: order.created_at
             });
         resolve(mappedOrders[0]);

@@ -102,6 +102,10 @@ const orderSchema = new mongoose.Schema({
     shopsIncome: {
         type: Number,
         default: 0
+    },
+    userFeedBack: {
+        type: Boolean,
+        default: false
     }
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 

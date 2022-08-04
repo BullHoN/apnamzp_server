@@ -28,13 +28,13 @@ router.get('/partner/getOrders',async (req,res,next)=>{
         }
 
         // TODO: Change this
-        const orders = await Order.find({shopCategory: shopCategory, shopId: shopId, 
-            orderStatus: Number.parseInt(orderStatus), updated_at: { $gte: greaterThanDate, $lt: lessThanDate }})
-            .sort({ created_at: 1 });
-
         // const orders = await Order.find({shopCategory: shopCategory, shopId: shopId, 
-        //     orderStatus: Number.parseInt(orderStatus)})
+        //     orderStatus: Number.parseInt(orderStatus), updated_at: { $gte: greaterThanDate, $lt: lessThanDate }})
         //     .sort({ created_at: 1 });
+
+        const orders = await Order.find({shopCategory: shopCategory, shopId: shopId, 
+            orderStatus: Number.parseInt(orderStatus)})
+            .sort({ created_at: 1 });
 
         
         res.json(orders);
