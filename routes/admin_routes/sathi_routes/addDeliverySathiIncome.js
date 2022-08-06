@@ -7,6 +7,7 @@ router.post('/apna_mzp/admin/addDeliverySathiIncome',async (req,res,next)=>{
 
     try{
         const order = await Order.findOne({_id: orderId})
+        console.log(order)
         order.deliverySathiIncome = Number.parseInt(deliverySathiIncome)
         await order.save()
 

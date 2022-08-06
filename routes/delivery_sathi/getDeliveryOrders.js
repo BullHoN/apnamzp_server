@@ -50,7 +50,8 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
                 isPaid: order.isPaid,
                 totalAmountToGive: totalAmountToGive(order),
                 itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
-                itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost
+                itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost,
+                deliverySathiIncome: order.deliverySathiIncome
             })
         }
 
