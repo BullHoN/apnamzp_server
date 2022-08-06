@@ -3,6 +3,7 @@ const Order = require('../../models/Order')
 const User = require('../../models/User')
 const createError = require('http-errors')
 const sendNotification = require('../../util/sendNotification')
+const notificationConstants = require('../../util/notificationConstants')
 const router = express.Router()
 
 router.post('/sathi/order/updateStatus',async (req,res,next)=>{
@@ -57,12 +58,12 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
         }
 
         const user = await User.findOne({phoneNo: order.userId});
+        const notificationKey = (order.orderStatus == 5) ? "rider_on_the_way" : "order_delivered"
 
         sendNotification(user.fcmId,{
             "data": "assdgsdg",
             "type": "order_status_change",
-            "title": "kuch to huaa hai",
-            "desc": "kuch ho to rha hai",
+            ...notificationConstants[`${notificationKey}`],
             "action": "feedback",
             "orderId": orderId
         })

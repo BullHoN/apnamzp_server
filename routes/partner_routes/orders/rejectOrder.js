@@ -28,8 +28,8 @@ router.get('/partner/reject_order',async (req,res,next)=>{
             sendNotification(user.fcmId,{
                 "data": "sdgsdg",
                 "type": "order_status_rejected",
-                "title": "na bol diya bhai",
-                "desc": "mna kar diya usne abb hm kya kar sakte hai" ,
+                "title": "Order Cancelled By Shop",
+                "desc": cancel_reason ,
                 "orderId": order_id          
             })
         })

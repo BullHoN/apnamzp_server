@@ -2,6 +2,7 @@ const express = require('express');
 const Order = require('../../../models/Order')
 const User = require('../../../models/User')
 const sendNotification = require('../../../util/sendNotification');
+const notificationConstants = require('../../../util/notificationConstants')
 const router = express.Router();
 
 router.get('/partner/accept_order',async (req,res,next)=>{
@@ -18,8 +19,7 @@ router.get('/partner/accept_order',async (req,res,next)=>{
             sendNotification(user.fcmId,{
                 "data":"zeher",
                 "type": "order_status_accept",
-                "title": "ha bol diya bhai",
-                "desc": "khana to aa hi jayga",
+                ...notificationConstants["order_accepted"],
                 "orderId": order_id
             })
         })

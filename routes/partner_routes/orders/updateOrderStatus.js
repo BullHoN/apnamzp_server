@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../../../models/Order');
 const User = require('../../../models/User');
+const notificationConstants = require('../../../util/notificationConstants');
 const sendNotification = require('../../../util/sendNotification')
 
 router.post('/partner/order/updateStatus',async (req,res,next)=>{
@@ -35,13 +36,22 @@ router.post('/partner/order/updateStatus',async (req,res,next)=>{
 
         await order.save();
     
+        let notificationKey;
+        if(order.orderStatus == 1){
+            notificationKey = "order_in_preperation"
+        }
+        else if(order.orderStatus == 2){
+            notificationKey = "order_in_preperation"
+        }
+        else if(order.orderStatus == 3){
+            notificationKey = "out_for_delivery"
+        }
     
         const user = await User.findOne({phoneNo: order.userId});
         sendNotification(user.fcmId,{
             "data": "assdgsdg",
             "type": "order_status_change",
-            "title": "kuch to huaa hai",
-            "desc": "kuch ho to rha hai",
+            ...notificationConstants[`${notificationKey}`],
             "orderId": orderId
         })
     

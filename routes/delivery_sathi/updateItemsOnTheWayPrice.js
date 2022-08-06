@@ -1,8 +1,9 @@
 const express = require('express');
 const Order = require('../../models/Order')
 const sendNotification = require('../../util/sendNotification')
+const notificationConstants = require('../../util/notificationConstants')
 const User = require('../../models/User')
-const router = express.Router();`1`
+const router = express.Router();
 
 router.post('/sathi/updateItemsOnTheWayPrice/:orderId',async (req,res,next)=>{
     const orderId = req.params.orderId;
@@ -19,8 +20,7 @@ router.post('/sathi/updateItemsOnTheWayPrice/:orderId',async (req,res,next)=>{
         sendNotification(user.fcmId,{
             "data": "assdgsdg",
             "type": "order_status_change",
-            "title": "Items On The Way Accepted",
-            "desc": "Price Updated for that shit",
+            ...notificationConstants["update_items_on_the_way_price"],
             "orderId": orderId
         })
 

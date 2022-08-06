@@ -103,8 +103,8 @@ module.exports = {
                             _id: order._id
                         }),
                         "type": "order",
-                        "title": "nya order aa gya bhai",
-                        "desc": "jake de aa order bhai" 
+                        "title": "New Order Received",
+                        "desc": "Hurry Up New Order Has Been Received" 
                     })
 
                 }

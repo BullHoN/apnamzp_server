@@ -3,6 +3,7 @@ const Order = require('../../../models/Order')
 const User = require('../../../models/User')
 const client = require('../../../util/init_redis')
 const sendNotification = require('../../../util/sendNotification')
+const notificationConstants = require('../../../util/notificationConstants')
 const router = express.Router()
 
 router.post('/apna_mzp/admin/cancelOrder', async (req,res,next)=>{
@@ -28,8 +29,7 @@ router.post('/apna_mzp/admin/cancelOrder', async (req,res,next)=>{
         sendNotification(user.fcmId,{
             "data": "sdgsdg",
             "type": "order_status_rejected",
-            "title": "na bol diya bhai",
-            "desc": "mna kar diya usne abb hm kya kar sakte hai" ,
+            ...notificationConstants["order_cancelled_by_admin"],
             "orderId": orderId          
         })
 

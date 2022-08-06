@@ -2,6 +2,7 @@ const express = require('express')
 const Order = require('../../../models/Order')
 const sendNotification = require('../../../util/sendNotification')
 const DeliverySathi = require('../../../models/DeliverySathi')
+const notificationConstants = require('../../../util/notificationConstants')
 const User = require('../../../models/User')
 const router = express.Router()
 
@@ -24,8 +25,7 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
         sendNotification(user.fcmId,{
             "data": "assdgsdg",
             "type": "order_status_change",
-            "title": "Delivery Sathi Assigned",
-            "desc": "Your Delivery Sathi is assigned",
+            ...notificationConstants["delivery_sathi_assigned"],
             "orderId": orderId
         })
 
