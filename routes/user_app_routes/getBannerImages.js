@@ -6,15 +6,13 @@ const bannerImagesDefault = [{"imageURL": "https://apnamzp-test-bucket.s3.ap-sou
 
 router.get('/user/bannerImages', async (req,res,next)=>{
     try{
-        // let bannerImages = await client.get("bannerImages")
-        // if(bannerImages == null) await client.set("bannerImages",bannerImagesDefault,{
-        //     'EX': 365 * 24 * 60 * 60
-        // })
-        // else bannerImages = JSON.parse(bannerImages)
-
-        res.json({
-            bannerImages: bannerImagesDefault
+        let bannerImages = await client.get("bannerImages")
+        if(bannerImages == null) await client.set("bannerImages",JSON.stringify(bannerImagesDefault),{
+            'EX': 365 * 24 * 60 * 60
         })
+        else bannerImages = JSON.parse(bannerImages)
+
+        res.json((bannerImages || bannerImagesDefault))
     }
     catch(err){
         next(err)
