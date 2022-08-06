@@ -53,6 +53,10 @@ const shopSchema = new mongoose.Schema({
     showShop: {
         type: Boolean,
         default: false
+    },
+    increaseDisplayPricePercentage: {
+        type: Number,
+        default: 0
     }
 });
 

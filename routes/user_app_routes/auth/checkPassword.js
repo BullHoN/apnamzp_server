@@ -17,8 +17,10 @@ router.get('/login',async (req,res,next)=>{
         if(user == null){
             throw createError.NotFound("User Not Found");
         }
-    
-        if(user.password == password){
+        
+        const isMatch = await user.isValidPassword(password);
+ 
+        if(isMatch){
             res.json({
                 success: true
             });

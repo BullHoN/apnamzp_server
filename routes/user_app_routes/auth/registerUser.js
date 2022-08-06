@@ -11,6 +11,9 @@ router.post('/registerUser',async (req,res,next)=>{
 
         user.name = username;
         user.password = password;
+        const hashedPassword = await user.encryptPassword(password)
+        user.password = hashedPassword
+
         user.name = name;
         user.isVerified = true;
 
