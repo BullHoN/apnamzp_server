@@ -1,5 +1,4 @@
 const geolib = require('geolib');
-const localDB = require('../../util/localDB/localDB');
 const Order = require('../../models/Order')
 const DeliverySathi = require('../../models/DeliverySathi')
 const sendNotification = require('../../util/sendNotification')
@@ -34,7 +33,9 @@ module.exports = {
             let tries = 0;
             let assignDeliveryBoyInterval = setInterval(async ()=>{
     
-                let deliverySathis = await localDB.get('deliverySathis');
+                let deliverySathis = await client.get('deliverySathis');
+                if(deliverySathis == null) deliverySathis = "{}"
+                
                 deliverySathis = JSON.parse(deliverySathis);
     
                 let keys = Object.keys(deliverySathis)

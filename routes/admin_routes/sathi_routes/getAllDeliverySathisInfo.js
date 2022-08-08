@@ -1,12 +1,14 @@
 const express = require('express')
-const localDB = require('../../../util/localDB/localDB')
+const client = require('../../../util/init_redis')
 const Shop = require('../../../models/Shop')
 const Order = require('../../../models/Order')
 const router = express.Router()
 
 router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
     try{
-        let deliverySathis = await localDB.get('deliverySathis');
+        let deliverySathis = await client.get('deliverySathis');
+        if(deliverySathis == null) deliverySathis = "{}"
+
         deliverySathis = JSON.parse(deliverySathis);
 
         let mappedDeliverySathis = []

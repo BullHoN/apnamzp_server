@@ -45,7 +45,7 @@ cloudinary.config({
 
 // utils
 SearchDB.loadData();
-require('./util/localDB/localDB')
+// require('./util/localDB/localDB')
 
 // configure firebase admin
 admin.initializeApp({
