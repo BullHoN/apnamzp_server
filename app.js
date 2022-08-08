@@ -12,6 +12,7 @@ const compression = require('compression');
 const multer  = require('multer')
 const AWS = require('aws-sdk')
 require('./util/init_redis')
+const path = require('path')
 const createError = require('http-errors')
 
 
@@ -203,6 +204,10 @@ app.get('/verifypayment', async (req,res,next)=>{
     }
 })
 
+
+app.get('/privacy_policy', async (req,res,next)=>{
+    res.sendFile(path.resolve(__dirname,'./views/privacyPolicy.html'))
+})
 
 // global error handler
 app.use((err,req,res,next)=>{
