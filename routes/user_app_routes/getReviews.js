@@ -3,11 +3,10 @@ const router = express.Router();
 const Review = require('../../models/Review')
 
 router.get('/reviews',async (req,res,next)=>{
-    const shopName = req.query.shopName;
+    const shopId = req.query.shopName;
 
     try{
-        // TODO: add shop name
-        const reviews = await Review.find();
+        const reviews = await Review.find({shopName: shopId, reviewType: "shop"});
         res.json(reviews);
     }
     catch(error){

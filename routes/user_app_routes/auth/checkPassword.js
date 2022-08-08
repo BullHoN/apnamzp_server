@@ -22,7 +22,8 @@ router.get('/login',async (req,res,next)=>{
  
         if(isMatch){
             res.json({
-                success: true
+                success: true,
+                data: user.name
             });
         }
         else {
