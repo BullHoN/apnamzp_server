@@ -40,7 +40,7 @@ module.exports = {
     
                 let keys = Object.keys(deliverySathis)
     
-                console.log(keys.length)
+                console.log(keys.length,tries)
     
                 if(tries > 1){
                     //TODO: send notification to admin

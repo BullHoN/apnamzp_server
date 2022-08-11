@@ -11,6 +11,8 @@ router.post('/user_routes/feedback',async (req,res,next)=>{
         let orderId;
 
         for(let i=0;i<keys.length;i++){
+            if(reviews[keys[i]] == null) continue;
+            
             const review = new Review(reviews[keys[i]])
             orderId = review.orderId
             await review.save()
