@@ -222,6 +222,6 @@ app.use((err,req,res,next)=>{
 })
 
 
-app.listen(5000,()=>{
-    console.log("Server Running At Port 5000");
+app.listen(process.env.PORT,()=>{
+    console.log(`Server Running At Port ${process.env.PORT}`);
 })
