@@ -17,8 +17,8 @@ class SearchDB{
                         shopString += menuitem.name.toLowerCase();
                     })
                 })
-                this.data.set(shop.name,shopString)
-                this.shopReference.set(shop.name,shop);
+                this.data.set(shop.name.toLowerCase(),shopString)
+                this.shopReference.set(shop.name.toLowerCase(),shop);
             })
         })
     }
@@ -27,8 +27,8 @@ class SearchDB{
         let results = [];
         for(let key of this.data.keys()){
             const regex = new RegExp(query);
-            
-            if(key.match(regex) || this.data.get(key).match(regex)){
+            console.log(key,query)
+            if(key.includes(query) || this.data.get(key).includes(query)){
                 results.push(this.shopReference.get(key));
             }
 
