@@ -43,11 +43,14 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
                 deliverySathi.cashInHand -= amountPaidToResturant
             }
             else {
-                if(order.paymentReceivedToShop){
+                if(order.paymentReceivedToShop || order.adminShopService){
                     deliverySathi.cashInHand += order.billingDetails.deliveryCharge + order.billingDetails.itemsOnTheWayTotalCost
                 }
                 else {
                     deliverySathi.cashInHand += order.billingDetails.totalPay
+                    if(order.billingDetails.itemsOnTheWayActualCost > 0){
+                        deliverySathi.cashInHand -= order.billingDetails.itemsOnTheWayActualCost
+                    }
                 }
                 
             }

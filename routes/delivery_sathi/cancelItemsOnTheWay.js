@@ -4,6 +4,8 @@ const sendNotification = require('../../util/sendNotification')
 const User = require('../../models/User')
 const router = express.Router();
 
+const DELIVERY_SATHI_ON_THE_WAY_COST = 4;
+
 router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res,next)=>{
     const orderId = req.params.orderId;
 
@@ -14,6 +16,8 @@ router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res,next)=>{
         order.billingDetails.itemsOnTheWayTotalCost = 0;
         order.billingDetails.itemsOnTheWayActualCost = 0;
 
+        order.deliverySathiIncome -= (order.itemsOnTheWay.length * DELIVERY_SATHI_ON_THE_WAY_COST)
+
         await order.save();
 
         // send notification to the user
@@ -22,7 +26,7 @@ router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res,next)=>{
             "data": "assdgsdg",
             "type": "order_status_change",
             "title": "Items On The Way Rejected",
-            "desc": "Jayda Challak Mat Bano sir",
+            "desc": "Items On The Way Cannot Be Delivered",
             "orderId": orderId
         })
 

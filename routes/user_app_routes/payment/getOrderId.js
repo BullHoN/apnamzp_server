@@ -1,6 +1,8 @@
 const express = require('express')
 const Razorpay = require('razorpay')
-const instance = new Razorpay({ key_id: 'rzp_test_yWzsnOXTqAZItl', key_secret: 'QR5dXhIw6BJNhTX9LbFUfzN9' })
+const instance = new Razorpay(
+    { key_id: process.env.RAZOR_PAY_KEY, key_secret: process.env.RAZOR_PAY_SECRET }
+)
 const router = express.Router()
 
 router.post('/user/getOrderId',async (req,res,next)=>{

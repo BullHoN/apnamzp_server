@@ -6,6 +6,9 @@ const notificationConstants = require('../../../util/notificationConstants')
 const User = require('../../../models/User')
 const router = express.Router()
 
+// TODO: FROM REDIS
+const DELIVERY_SATHI_ON_THE_WAY_COST = 4;
+
 router.post('/sathi/acceptOrder',async (req,res,next)=>{
     const { orderId, deliverySathiNo } = req.query
     try{
@@ -15,6 +18,10 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
         // calculate total income
         if(order.deliverySathiIncome == 0) 
             order.deliverySathiIncome = getTotalIncome(order)
+
+        if(order.itemsOnTheWay.length > 0){
+            order.deliverySathiIncome += (order.itemsOnTheWay.length * DELIVERY_SATHI_ON_THE_WAY_COST)
+        }
 
         await order.save()
 
@@ -40,15 +47,17 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
 })
 
 function getTotalIncome(order){
-    const actutalDistace = Number.parseInt(order.actualDistance)
-    if(actutalDistace <= 2){
-        return 15;
-    }
-    else if(actutalDistace <= 4){
+    const actutalDistace = Number.parseFloat(order.actualDistance)
+    if(actutalDistace <= 3){
         return 20;
     }
+    else if(actutalDistace <= 6){
+        let amount = 20 + (Math.round(actutalDistace) - 3) * 4
+        return amount;
+    }
     else {
-        return 50;
+        let amount = Math.round(actutalDistace) * 8
+        return amount
     }
 }
 
