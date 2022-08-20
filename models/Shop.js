@@ -57,7 +57,8 @@ const shopSchema = new mongoose.Schema({
     increaseDisplayPricePercentage: {
         type: Number,
         default: 0
-    }
+    },
+    fssaiCode: String
 });
 
 

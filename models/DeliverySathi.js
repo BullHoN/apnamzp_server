@@ -21,6 +21,10 @@ const deliverySathiSchema = new mongoose.Schema({
     currOrders: {
         type: Number,
         default: 0
+    },
+    loginTime: {
+        type: Number,
+        default: 0
     }
 })
 

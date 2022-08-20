@@ -103,7 +103,8 @@ app.use('/',require('./routes/user_app_routes/order/getOrder'));
 app.use('/',require('./routes/user_app_routes/getCartMetaData'));
 app.use('/',require('./routes/user_app_routes/getBannerImages'));
 app.use('/',require('./routes/user_app_routes/postFeedback'));
-app.use('/',require('./routes/user_app_routes/payment/getOrderId'))
+app.use('/',require('./routes/user_app_routes/payment/getOrderId'));
+app.use('/',require('./routes/user_app_routes/getPickAndDropDetails'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));

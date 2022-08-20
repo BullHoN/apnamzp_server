@@ -2,7 +2,7 @@ const express = require('express')
 const client = require('../../util/init_redis')
 const router = express.Router()
 
-const bannerImagesDefault = [{"imageURL": "https://apnamzp-test-bucket.s3.ap-south-1.amazonaws.com/1658316140237_croppedImg.jpg"}]
+const bannerImagesDefault = [{"imageURL":"https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/SECOND+POSTER+(4)+(1).png"}]
 
 router.get('/user/bannerImages', async (req,res,next)=>{
     try{
