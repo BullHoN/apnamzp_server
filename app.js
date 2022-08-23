@@ -45,7 +45,15 @@ cloudinary.config({
 });
 
 // utils
+
 SearchDB.loadData();
+
+setInterval(()=>{
+    console.log("Loading Data Into Search Bar")
+    SearchDB.loadData();
+},1000 * 60 * 30)
+
+
 // require('./util/localDB/localDB')
 
 // configure firebase admin
@@ -136,6 +144,7 @@ app.use('/', require('./routes/partner_routes/offers/putOffers'))
 app.use('/', require('./routes/partner_routes/orders/changeShopStatus'))
 app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
 app.use('/', require('./routes/partner_routes/getShopStatus'))
+app.use('/', require('./routes/partner_routes/menu_items/editCategory'))
 
 
 // admin app routes
