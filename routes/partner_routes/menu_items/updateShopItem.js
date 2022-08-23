@@ -8,7 +8,7 @@ const s3 = new AWS.S3();
 
 router.post('/partner/update/menuitem',upload.single('item_image'),async (req,res)=>{
 
-    const {shopItemsId, categoryName, isNewItem} = req.query;
+    const {shopItemsId, categoryName, isNewItem, deleteItem} = req.query;
     const shopItemData = JSON.parse(req.body.shopItemData);
 
 
@@ -35,6 +35,10 @@ router.post('/partner/update/menuitem',upload.single('item_image'),async (req,re
 
                 if(isNewItem == 'true'){
                     shopItems.categories[i].shopItemDataList = [...shopItems.categories[i].shopItemDataList, shopItemData]
+                    await shopItems.save();
+                }
+                else if(deleteItem == 'true'){
+                    shopItems.categories[i].shopItemDataList = shopItems.categories[i].shopItemDataList.filter(_ => _.name != shopItemData.name)
                     await shopItems.save();
                 }
                 else {
