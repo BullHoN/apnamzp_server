@@ -106,7 +106,8 @@ const orderSchema = new mongoose.Schema({
     userFeedBack: {
         type: Boolean,
         default: false
-    }
+    },
+    paymentId: String
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const Order = mongoose.model('order',orderSchema);

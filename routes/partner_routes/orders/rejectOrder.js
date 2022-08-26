@@ -2,6 +2,10 @@ const express = require('express');
 const Order = require('../../../models/Order')
 const User = require('../../../models/User')
 const sendNotification = require('../../../util/sendNotification');
+const Razorpay = require('razorpay')
+const instance = new Razorpay(
+    { key_id: process.env.RAZOR_PAY_KEY, key_secret: process.env.RAZOR_PAY_SECRET }
+)
 const router = express.Router();
 
 
@@ -23,20 +27,20 @@ router.get('/partner/reject_order',async (req,res,next)=>{
         order.orderStatus = 7;
         order.cancelReason = cancel_reason;
         order.save();
-    
-        User.findOne({phoneNo: user_id}).then((user)=>{
-            sendNotification(user.fcmId,{
-                "data": "sdgsdg",
-                "type": "order_status_rejected",
-                "title": "Order Cancelled By Shop",
-                "desc": cancel_reason ,
-                "orderId": order_id          
-            })
+        
+        instance.payments.refund(order.paymentId,{}).then((err,data)=>{
         })
-        .catch((err)=> {
-            if(err) throw err;
+
+        const user = await User.findOne({phoneNo: user_id})
+
+        sendNotification(user.fcmId,{
+            "data": "sdgsdg",
+            "type": "order_status_rejected",
+            "title": "Order Cancelled By Shop",
+            "desc": cancel_reason ,
+            "orderId": order_id          
         })
-    
+
         res.send({success: true});
     }
     catch(err){
@@ -44,6 +48,7 @@ router.get('/partner/reject_order',async (req,res,next)=>{
     }
 
 })
+
 
 
 module.exports = router;

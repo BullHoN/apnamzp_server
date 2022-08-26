@@ -12,6 +12,7 @@ router.post('/user/getOrderId',async (req,res,next)=>{
             amount: req.body.amount,  
             currency: "INR",
             receipt: "Up63Cafe_payment_recipt",
+            payment_capture: 1,
             notes:{
               email: req.body.userPhoneNo
              }
@@ -21,8 +22,9 @@ router.post('/user/getOrderId',async (req,res,next)=>{
             instance.orders.create(options,function(err,order){
                 if(err) throw err
     
-                console.log(order)
-                res.json(order)
+                res.json({
+                    paymentId: order.id
+                })
               })
     
         }
