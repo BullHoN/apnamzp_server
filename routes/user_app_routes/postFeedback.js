@@ -1,6 +1,7 @@
 const express = require('express')
 const Review = require('../../models/Review')
 const Order = require('../../models/Order')
+const Shop = require('../../models/Shop')
 const router = express.Router()
 
 router.post('/user_routes/feedback',async (req,res,next)=>{
@@ -18,7 +19,17 @@ router.post('/user_routes/feedback',async (req,res,next)=>{
             await review.save()
         }
         
-        await Order.findOneAndUpdate({_id: orderId},{userFeedBack: true});
+        const order = await Order.findOneAndUpdate({_id: orderId},{userFeedBack: true});
+
+        const shop = await Shop.findOne({_id: order.shopID})
+        let noReviews = Number.parseInt(shop.reviews) + 1
+        const newRatingNo = Number.parseFloat(reviews.foodReview.rating)
+
+        shop.averageRatings = shop.averageRatings * ((noReviews-1)/noReviews) + newRatingNo * (1 / noReviews)
+        shop.reviews = `${noReviews}`
+
+        await shop.save()
+
 
         res.json({
             success: true

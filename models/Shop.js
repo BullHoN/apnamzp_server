@@ -58,7 +58,11 @@ const shopSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    fssaiCode: String
+    fssaiCode: String,
+    allowProcessingFees: {
+        type: Boolean,
+        default: false
+    }
 });
 
 

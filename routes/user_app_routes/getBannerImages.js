@@ -2,7 +2,13 @@ const express = require('express')
 const client = require('../../util/init_redis')
 const router = express.Router()
 
-const bannerImagesDefault = [{"imageURL":"https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/SECOND+POSTER+(4)+(1).png"}]
+const bannerImagesDefault = [
+    {
+        "imageURL":"https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/SECOND+POSTER+(4)+(1).png",
+        "action": "open_shop",
+        "shopId": "6174fea0dbb0b2e38f7de2ad"
+    }
+]
 
 router.get('/user/bannerImages', async (req,res,next)=>{
     try{
@@ -12,7 +18,7 @@ router.get('/user/bannerImages', async (req,res,next)=>{
         })
         else bannerImages = JSON.parse(bannerImages)
 
-        res.json((bannerImages || bannerImagesDefault))
+        res.json((bannerImagesDefault))
     }
     catch(err){
         next(err)

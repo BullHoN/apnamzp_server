@@ -28,8 +28,10 @@ router.get('/partner/reject_order',async (req,res,next)=>{
         order.cancelReason = cancel_reason;
         order.save();
         
-        instance.payments.refund(order.paymentId,{}).then((err,data)=>{
-        })
+        if(order.isPaid){
+            instance.payments.refund(order.paymentId,{}).then((err,data)=>{
+            })
+        }
 
         const user = await User.findOne({phoneNo: user_id})
 

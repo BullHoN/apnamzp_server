@@ -81,14 +81,14 @@ app.use(compression());
 connectDB();
 
 // const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
-const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_OmkoqyHf3KafdIHpg9vhei1P1kVgpKUqexJjQcebm2RzKHBeNcACa7JRC2tPuMlcePZ2lYTIGDWJJKDRdVy4KegWkfq2Dwu19l2qj2ZAlYZYospEXK"
-// const userFCMToken = "do3y0UeGTRexGvWfAnbGGK:APA91bGZNs3u0Hg3VTCtQtZO0eIrCp6oq8I0FIyrJN_E3S98MDfIrMAjqTi-mt20wB8BE29VQ3w1PxN-tAzHSsEFUkaJUB746_mMBt92aaAD9Bo19W1Lu7HsDurqhyDPG7CB6h1aZpyu"
-// require("./util/sendNotification")(partnerFCMToken,{
+// const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_OmkoqyHf3KafdIHpg9vhei1P1kVgpKUqexJjQcebm2RzKHBeNcACa7JRC2tPuMlcePZ2lYTIGDWJJKDRdVy4KegWkfq2Dwu19l2qj2ZAlYZYospEXK"
+// const userFCMToken = "c9Re1F8nRY64PIwH_7m_Wx:APA91bFJ-WaUDZ5C4NRpDoz5oHjo5DOC6XnHmtvjm-2zfgHyUeU3LGtX_ALCnjCEm00tOnCVLcfrM5-yqs0Did9SCzMAIz4X8IkdqlqtKUN0cQa4RIdRBnZM_M_-Yc3WOho9UmIvtEva"
+// require("./util/sendNotification")(userFCMToken,{
 //     "data":"zeher",
-//     "type": "new_order",
+//     "type": "show_shop",
 //     "title": "nya order aa gya bhai",
 //     "desc": "jake de aa order bhai",
-//     "orderId": "6271219c625ead8bbe08e671"
+//     "shopId": "6174fea0dbb0b2e38f7de2ad"
 // })
 
 
@@ -113,6 +113,7 @@ app.use('/',require('./routes/user_app_routes/getBannerImages'));
 app.use('/',require('./routes/user_app_routes/postFeedback'));
 app.use('/',require('./routes/user_app_routes/payment/getOrderId'));
 app.use('/',require('./routes/user_app_routes/getPickAndDropDetails'))
+app.use('/',require('./routes/user_app_routes/getShopData'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -145,6 +146,7 @@ app.use('/', require('./routes/partner_routes/orders/changeShopStatus'))
 app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
 app.use('/', require('./routes/partner_routes/getShopStatus'))
 app.use('/', require('./routes/partner_routes/menu_items/editCategory'))
+app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'))
 
 
 // admin app routes

@@ -43,6 +43,7 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
                 deliverySathi.cashInHand -= amountPaidToResturant
             }
             else {
+                deliverySathi.cashInHand += order.billingDetails.processingFee
                 if(order.paymentReceivedToShop || order.adminShopService){
                     deliverySathi.cashInHand += order.billingDetails.deliveryCharge + order.billingDetails.itemsOnTheWayTotalCost
                 }

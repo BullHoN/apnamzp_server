@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/checkout',async (req,res,next)=>{
 
     try {   
-        console.log(req.body)
+        // console.log(req.body)
         const order = new Order(req.body);
 
         // self service is only when order is managed by shop
@@ -58,7 +58,7 @@ router.post('/checkout',async (req,res,next)=>{
                 "_id": order._id.toString(),
                 "userId": req.body.userId,
                 "type": "new_order",
-                "totalPay": (req.body.billingDetails.totalPay + ""),
+                "totalPay":  (getTotalReceivingAmount(order.billingDetails,order.offerCode) + ""),
                 "isDeliveryService": ((order.billingDetails.isDeliveryService == true) + ""),
             })
         }
@@ -72,6 +72,20 @@ router.post('/checkout',async (req,res,next)=>{
     }
 
 })
+
+
+function getTotalReceivingAmount(billingDetails,offerCode){
+    let totalReceivingAmount = billingDetails.itemTotal + billingDetails.totalTaxesAndPackingCharge + billingDetails.totalTaxesAndPackingCharge
+    if(offerCode != null && offerCode != "" && !offerCode.includes("APNA")){
+        totalReceivingAmount -= offerDiscountedAmount
+    }
+
+    if(billingDetails.itemTotal >= billingDetails.freeDeliveryPrice){
+        totalReceivingAmount -= billingDetails.deliveryCharge
+    }
+
+    return totalReceivingAmount
+}
 
 
 

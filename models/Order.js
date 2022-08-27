@@ -56,6 +56,10 @@ const orderSchema = new mongoose.Schema({
             default: 0
         }, // total actual items cost
         taxPercentage: Number, // tax percentage by shop
+        processingFee: {
+            type: Number,
+            default: 0
+        },
         freeDeliveryPrice: Number   
     },
     orderStatus: {
