@@ -24,8 +24,9 @@ router.post('/user_routes/feedback',async (req,res,next)=>{
         const shop = await Shop.findOne({_id: order.shopID})
         let noReviews = Number.parseInt(shop.reviews) + 1
         const newRatingNo = Number.parseFloat(reviews.foodReview.rating)
+        const newRating = shop.averageRatings * ((noReviews-1)/noReviews) + newRatingNo * (1 / noReviews)
 
-        shop.averageRatings = shop.averageRatings * ((noReviews-1)/noReviews) + newRatingNo * (1 / noReviews)
+        shop.averageRatings = newRating.toPrecision(2);
         shop.reviews = `${noReviews}`
 
         await shop.save()
