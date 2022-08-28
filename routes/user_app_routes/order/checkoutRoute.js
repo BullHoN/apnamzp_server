@@ -40,7 +40,7 @@ router.post('/checkout',async (req,res,next)=>{
             const deliverySathiAssignInterval = setInterval(async ()=>{
 
                 try{
-                    const assginedRes = await axios.post(`http://${process.env.HOST_NAME}/partner/assignDeliveryBoy?orderId=${order._id}&latitude=${shopData.addressData.latitude}&longitude=${shopData.addressData.longitude}`,{})
+                    const assginedRes = await axios.post(`${process.env.HTTP_HOST}://${process.env.HOST_NAME}/partner/assignDeliveryBoy?orderId=${order._id}&latitude=${shopData.addressData.latitude}&longitude=${shopData.addressData.longitude}`,{})
                     clearInterval(deliverySathiAssignInterval)
                     if(assginedRes.success){
                         clearInterval(deliverySathiAssignInterval)
