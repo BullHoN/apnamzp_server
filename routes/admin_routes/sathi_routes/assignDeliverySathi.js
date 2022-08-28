@@ -26,6 +26,9 @@ router.post('/apna_mzp/admin/assign_delivery_sathi', async (req,res,next)=>{
 
         await client.set("pendingOrders",JSON.stringify(pendingOrders))
 
+        deliverySathi.currOrders += 1;
+        await deliverySathi.save()
+
         sendNotification(deliverySathi.fcmId,{
             "data": JSON.stringify({
                 shopInfo: {
@@ -43,8 +46,6 @@ router.post('/apna_mzp/admin/assign_delivery_sathi', async (req,res,next)=>{
             "title": "nya order aa gya bhai",
             "desc": "jake de aa order bhai" 
         })
-
-
 
         res.json({
             success: true
