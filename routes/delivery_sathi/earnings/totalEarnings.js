@@ -2,17 +2,11 @@ module.exports =  (orders)=>{
     let earnings = 0;
     let incentives = 0;
 
-    if(orders.length == 1){
+    if(orders.length == 6){
         incentives += 30;
     }
-    else if(orders.length == 9){
+    else if(orders.length >= 9){
         incentives += 30;
-    }
-    else if(orders.length == 13){
-        incentives += 120;
-    }
-    else if(orders.length == 18){
-        incentives += 180;
     }
 
     // TODO: take incentives into considirations
