@@ -43,7 +43,7 @@ router.post('/partner/order/updateStatus',async (req,res,next)=>{
         else if(order.orderStatus == 2){
             notificationKey = "order_in_preperation"
         }
-        else if(order.orderStatus == 3){
+        else{
             notificationKey = "out_for_delivery"
         }
     

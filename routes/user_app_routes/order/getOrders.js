@@ -46,6 +46,7 @@ async function mapOrderWithShopDetails(orders){
                 itemsOnTheWay: order.itemsOnTheWay,
                 itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
                 userFeedBack: order.userFeedBack,
+                expectedDeliveryTime: order.expectedDeliveryTime,
                 created_at: order.created_at
             });
         }
