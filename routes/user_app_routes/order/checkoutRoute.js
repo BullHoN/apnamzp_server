@@ -32,6 +32,10 @@ router.post('/checkout',async (req,res,next)=>{
             throw createError.BadRequest("Shop is currently unavaible for delivery service")
         }
 
+        if(shopData.adminShopService){
+            order.paymentReceivedToShop = true
+        }
+
         await order.save();
         
 
