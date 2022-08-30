@@ -158,6 +158,8 @@ app.use('/', require('./routes/admin_routes/sathi_routes/addDeliverySathiIncome'
 app.use('/', require('./routes/admin_routes/getOrders'))
 app.use('/', require('./routes/admin_routes/user_routes/setUserAppData'))
 app.use('/', require('./routes/admin_routes/getApnaMzpReviews'))
+app.use('/', require('./routes/admin_routes/searchShop'))
+app.use('/', require('./routes/admin_routes/createShop'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
