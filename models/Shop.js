@@ -1,3 +1,4 @@
+const { default: roundToNearestMinutes } = require('date-fns/roundToNearestMinutes');
 const mongoose = require('mongoose');
 
 const shopSchema = new mongoose.Schema({
@@ -7,7 +8,10 @@ const shopSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    averageDeliveryTime: String,
+    averageDeliveryTime: {
+        type: String,
+        default: "30-40min"
+    },
     pricingDetails:{
         minOrderPrice: String,
         minFreeDeliveryPrice: String
@@ -44,7 +48,7 @@ const shopSchema = new mongoose.Schema({
     },
     allowCheckout: {
         type: Boolean,
-        default: false
+        default: roundToNearestMinutes
     },
     adminShopService: {
         type: Boolean,
@@ -56,7 +60,7 @@ const shopSchema = new mongoose.Schema({
     },
     increaseDisplayPricePercentage: {
         type: Number,
-        default: 0
+        default: 30
     },
     fssaiCode: String,
     allowProcessingFees: {
