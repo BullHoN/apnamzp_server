@@ -52,7 +52,7 @@ const shopSchema = new mongoose.Schema({
     },
     showShop: {
         type: Boolean,
-        default: false
+        default: true
     },
     increaseDisplayPricePercentage: {
         type: Number,
