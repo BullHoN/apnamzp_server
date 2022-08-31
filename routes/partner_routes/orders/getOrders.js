@@ -27,8 +27,9 @@ router.get('/partner/getOrders',async (req,res,next)=>{
             lessThanDate = DF.addDays(greaterThanDate,1)  
         }
 
+        console.log(shopId)
         // TODO: Change this
-        const orders = await Order.find({shopCategory: shopCategory, shopId: shopId, 
+        const orders = await Order.find({shopCategory: shopCategory, shopID: shopId, 
             orderStatus: Number.parseInt(orderStatus), updated_at: { $gte: greaterThanDate, $lt: lessThanDate }})
             .sort({ created_at: 1 });
 

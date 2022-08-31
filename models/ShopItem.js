@@ -26,6 +26,10 @@ const shopItemSchema = new mongoose.Schema({
                     available: {
                         type: Boolean,
                         default: true
+                    },
+                    availableTimings: {
+                        from: String,
+                        to: String
                     }
                 }
             ]
