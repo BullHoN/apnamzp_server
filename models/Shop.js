@@ -48,7 +48,7 @@ const shopSchema = new mongoose.Schema({
     },
     allowCheckout: {
         type: Boolean,
-        default: roundToNearestMinutes
+        default: true
     },
     adminShopService: {
         type: Boolean,
