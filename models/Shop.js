@@ -12,6 +12,7 @@ const shopSchema = new mongoose.Schema({
         type: String,
         default: "30-40min"
     },
+    shopTimings: String,
     pricingDetails:{
         minOrderPrice: String,
         minFreeDeliveryPrice: String
