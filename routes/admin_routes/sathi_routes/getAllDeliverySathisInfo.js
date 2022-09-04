@@ -57,6 +57,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
         res.json(mappedDeliverySathis)
     }
     catch(err){
+        await client.set("deliverySathis","{}")
         next(err)
     }
 })

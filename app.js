@@ -161,6 +161,7 @@ app.use('/', require('./routes/admin_routes/getApnaMzpReviews'))
 app.use('/', require('./routes/admin_routes/searchShop'))
 app.use('/', require('./routes/admin_routes/createShop'))
 app.use('/', require('./routes/admin_routes/user_routes/closeAppShops'))
+app.use('/', require('./routes/admin_routes/admin_shop/getshopMenuItems'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
