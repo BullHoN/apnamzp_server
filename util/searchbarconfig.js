@@ -27,13 +27,18 @@ class SearchDB{
         let results = [];
         for(let key of this.data.keys()){
             const regex = new RegExp(query);
-            console.log(key,query)
             if(key.includes(query) || this.data.get(key).includes(query)){
                 results.push(this.shopReference.get(key));
             }
 
         }
         return results;
+    }
+
+    updateShopStatus(shop){
+        const shopName = shop.name.toLowerCase()
+        this.shopReference.delete(shopName)
+        this.shopReference.set(shopName,shop);
     }
 
 }

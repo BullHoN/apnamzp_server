@@ -8,11 +8,8 @@ const s3 = new AWS.S3();
 
 
 router.post('/partner/update/shopdetails',upload.single('banner_image'),async (req,res)=>{
-    console.log(req.file);
 
     const shopData = JSON.parse(req.body.shopData)
-    console.log(shopData)
-
     try {
 
         if(req.file){

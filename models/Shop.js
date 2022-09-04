@@ -14,8 +14,14 @@ const shopSchema = new mongoose.Schema({
     },
     shopTimings: String,
     pricingDetails:{
-        minOrderPrice: String,
-        minFreeDeliveryPrice: String
+        minOrderPrice: {
+            type: String,
+            default: "0"
+        },
+        minFreeDeliveryPrice: {
+            type: String,
+            default: "2000"
+        }
     },
     addressData:{
         mainAddress: String,
