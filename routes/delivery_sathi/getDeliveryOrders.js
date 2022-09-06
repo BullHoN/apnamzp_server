@@ -1,6 +1,7 @@
 const express = require('express');
 const Order = require('../../models/Order')
 const Shop = require('../../models/Shop')
+const User = require('../../models/User')
 const router = express.Router();
 
 router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
@@ -21,12 +22,13 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
                 orderAcceptedByDeliverySathi: true
             });
         }
-    
+        
     
         let mappedOrders = []
         for(let i=0;i<orders.length;i++){
             const order = orders[i];
             const shop = await Shop.findOne({_id: order.shopID})
+            const customer = await User.findOne({phoneNo: order.userId})
             mappedOrders.push({
                 _id: order._id.toString(),
                 orderItems: order.orderItems,
@@ -38,7 +40,7 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
                     rawAddress: shop.addressData.mainAddress
                 },
                 userInfo: {
-                    name: "vaibhav", //TODO: change this default value
+                    name: customer.name,
                     latitude: order.deliveryAddress.latitude,
                     longitude: order.deliveryAddress.longitude,
                     phoneNo: order.userId,
