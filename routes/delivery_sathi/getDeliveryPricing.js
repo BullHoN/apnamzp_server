@@ -53,7 +53,7 @@ router.get('/getIncentivePriceInfoSathi',async (req,res,next)=>{
     if(incentivePricings == null) await client.set("incentivePricings",JSON.stringify(incentiveDefault))
     else incentivePricings = JSON.parse(incentivePricings)
 
-    res.json(deliveryPricing || incentiveDefault);
+    res.json(incentivePricings || incentiveDefault);
    }
    catch(err){
     next(err)
