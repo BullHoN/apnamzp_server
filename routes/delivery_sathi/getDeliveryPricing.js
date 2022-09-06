@@ -36,7 +36,7 @@ const incentiveDefault = [
 
 router.get('/getDeliveryPriceInfoSathi',async (req,res,next)=>{
     try{
-        const deliveryPricing = await client.get("deliveryPricing")
+        let deliveryPricing = await client.get("deliveryPricing")
         if(deliveryPricing == null) await client.set("deliveryPricing",JSON.stringify(deliveryPricingDefault))
         else deliveryPricing = JSON.parse(deliveryPricing)
 
@@ -49,7 +49,7 @@ router.get('/getDeliveryPriceInfoSathi',async (req,res,next)=>{
 
 router.get('/getIncentivePriceInfoSathi',async (req,res,next)=>{
    try{
-    const incentivePricings = await client.get("incentivePricings")
+    let incentivePricings = await client.get("incentivePricings")
     if(incentivePricings == null) await client.set("incentivePricings",JSON.stringify(incentiveDefault))
     else incentivePricings = JSON.parse(incentivePricings)
 
