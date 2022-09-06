@@ -90,7 +90,7 @@ module.exports = {
                     deliverySathi.currOrders += 1;
                     await deliverySathi.save();
             
-                    sendNotification(assignedDeliveryBoy.fcmId,{
+                    sendNotification(deliverySathi.fcmId,{
                         "data": JSON.stringify({
                             shopInfo: {
                                 name: shopData.name,
