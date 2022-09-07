@@ -128,6 +128,7 @@ app.use('/', require('./routes/delivery_sathi/earnings/getDeliverySathiDayInfo')
 app.use('/', require('./routes/delivery_sathi/updateOrderStatusSathi'))
 app.use('/', require('./routes/delivery_sathi/orders/acceptOrder'))
 app.use('/', require('./routes/delivery_sathi/orders/rejectOrder'))
+app.use('/', require('./routes/delivery_sathi/getNotRespondedOrders'))
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));

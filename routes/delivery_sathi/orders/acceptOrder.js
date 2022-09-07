@@ -4,6 +4,7 @@ const sendNotification = require('../../../util/sendNotification')
 const DeliverySathi = require('../../../models/DeliverySathi')
 const notificationConstants = require('../../../util/notificationConstants')
 const User = require('../../../models/User')
+const HttpErrors = require('http-errors')
 const router = express.Router()
 
 // TODO: FROM REDIS
@@ -13,6 +14,15 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
     const { orderId, deliverySathiNo } = req.query
     try{
         const order = await Order.findOne({_id: orderId});
+
+        if(order == null){
+            throw HttpErrors.BadRequest("Order Not Found")
+        }
+
+        if(order.orderAcceptedByDeliverySathi){
+            throw HttpErrors.BadRequest("Order was Already Accepted")
+        }
+
         order.orderAcceptedByDeliverySathi = true
 
         // calculate total income
