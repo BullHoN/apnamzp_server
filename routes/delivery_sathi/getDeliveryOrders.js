@@ -44,7 +44,9 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
                     latitude: order.deliveryAddress.latitude,
                     longitude: order.deliveryAddress.longitude,
                     phoneNo: order.userId,
-                    rawAddress: order.deliveryAddress.rawAddress
+                    rawAddress: order.deliveryAddress.rawAddress,
+                    landmark: order.deliveryAddress.landmark,
+                    houseNo: order.deliveryAddress.houseNo
                 },
                 itemsOnTheWay: order.itemsOnTheWay,
                 totalAmountToTake: order.billingDetails.totalPay,
