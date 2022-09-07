@@ -25,14 +25,21 @@ module.exports = {
 
         try{
 
-            const order = await Order.findById({_id: orderId});
+            let order = await Order.findById({_id: orderId});
             const shopData = await Shop.findOne({shopType: order.shopCategory,_id: order.shopID});
             const user = await User.findOne({phoneNo: order.userId})
             
             let assignedDeliveryBoy = {dist: Number.MAX_SAFE_INTEGER}
             let tries = 0;
             let assignDeliveryBoyInterval = setInterval(async ()=>{
-    
+
+                order = await Order.findById({_id: orderId});
+
+                if(order.orderAcceptedByDeliverySathi){
+                    clearInterval(assignDeliveryBoyInterval)
+                    return;
+                }
+
                 let deliverySathis = await client.get('deliverySathis');
                 if(deliverySathis == null) deliverySathis = "{}"
                 
