@@ -70,16 +70,14 @@ async function isUserLocationReachable(custLatLang){
         );
 
         dist = dist / 1000.0
-        
-        console.log(shop.name, dist)
 
-        if(Math.floor(dist) <= 3){
+        if(Math.ceil(dist) <= 3){
             shops_around_customer++;
         }
 
     }
 
-    return (shops_around_customer < 1) ? false : true;
+    return (shops_around_customer < 2) ? false : true;
 
 }
 
