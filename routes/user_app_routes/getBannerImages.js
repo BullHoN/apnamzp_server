@@ -24,7 +24,7 @@ router.get('/user/bannerImages', async (req,res,next)=>{
         })
         else bannerImages = JSON.parse(bannerImages)
 
-        res.json((bannerImagesDefault))
+        res.json(bannerImages || bannerImagesDefault)
     }
     catch(err){
         next(err)
