@@ -36,11 +36,6 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
             }
 
             if(order != null){
-
-                if(order.orderStatus > 4){
-                    mappedDeliverySathis.push(mappedSathi)
-                    continue;
-                }
                 
                 const shopData = await Shop.findOne({_id: order.shopID})
                 
