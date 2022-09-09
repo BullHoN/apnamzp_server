@@ -24,13 +24,17 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
                 }
             }
 
-            if(currSathi.orderId != null){
-                const order = await Order.findOne({_id: currSathi.orderId})
+            const order = await Order.findOne({
+                assignedDeliveryBoy: allKeys[i],
+                orderStatus: { $lt: 6 }
+            })
 
-                if(order == null){
-                    mappedDeliverySathis.push(mappedSathi)
-                    continue;
-                }
+            if(order == null){
+                mappedDeliverySathis.push(mappedSathi)
+                continue;
+            }
+
+            if(order != null){
 
                 if(order.orderStatus > 4){
                     mappedDeliverySathis.push(mappedSathi)
