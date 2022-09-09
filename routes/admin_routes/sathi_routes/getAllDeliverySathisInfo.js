@@ -26,6 +26,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
 
             const order = await Order.findOne({
                 assignedDeliveryBoy: allKeys[i],
+                orderAcceptedByDeliverySathi: true,
                 orderStatus: { $lt: 6 }
             })
 
