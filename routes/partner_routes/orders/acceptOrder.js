@@ -1,8 +1,10 @@
 const express = require('express');
 const Order = require('../../../models/Order')
 const User = require('../../../models/User')
+const Shop = require('../../../models/Shop')
 const sendNotification = require('../../../util/sendNotification');
 const notificationConstants = require('../../../util/notificationConstants')
+const axios = require('axios')
 const router = express.Router();
 
 router.get('/partner/accept_order',async (req,res,next)=>{
@@ -13,7 +15,26 @@ router.get('/partner/accept_order',async (req,res,next)=>{
     const expected_time = req.query.expected_time;
 
     try{
-        await Order.findOneAndUpdate({_id: order_id},{orderStatus: 1,expectedDeliveryTime: expected_time})
+
+        const orderStatus = await Order.findOne({_id: order_id})
+        if(orderStatus.orderStatus > 1){
+            res.send({success: true});
+            return;
+        }
+
+        const order = await Order.findOneAndUpdate({_id: order_id},{orderStatus: 1,expectedDeliveryTime: expected_time},{new: true})
+
+        const waitingTime = Number.parseInt(expected_time.split('m')[0]) - 15;
+        
+        if(waitingTime <= 0){
+            await assignDeliverySathi(order)
+        }
+        else {
+            setTimeout(async ()=>{
+                await assignDeliverySathi(order)
+            },waitingTime * 60 * 1000)
+        }
+
 
         User.findOne({phoneNo: user_id}).then((user)=>{
             sendNotification(user.fcmId,{
@@ -35,5 +56,29 @@ router.get('/partner/accept_order',async (req,res,next)=>{
 
 })
 
+async function assignDeliverySathi(order){
+
+    const shopData = await Shop.findOne({_id: order.shopID})
+    let tries = 0;
+
+    const deliverySathiAssignInterval = setInterval(async ()=>{
+
+        if(tries++ > 2){
+            clearInterval(deliverySathiAssignInterval)
+        }
+
+        try{
+            const assginedRes = await axios.post(`${process.env.HTTP_HOST}://${process.env.HOST_NAME}/partner/assignDeliveryBoy?orderId=${order._id}&latitude=${shopData.addressData.latitude}&longitude=${shopData.addressData.longitude}`,{})
+            clearInterval(deliverySathiAssignInterval)
+            if(assginedRes.success){
+                clearInterval(deliverySathiAssignInterval)
+            }
+        }
+        catch(err){
+            console.log(err)
+        }
+
+    },1000)
+}
 
 module.exports = router;

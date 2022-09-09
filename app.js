@@ -82,14 +82,49 @@ connectDB();
 
 // const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
 // const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_OmkoqyHf3KafdIHpg9vhei1P1kVgpKUqexJjQcebm2RzKHBeNcACa7JRC2tPuMlcePZ2lYTIGDWJJKDRdVy4KegWkfq2Dwu19l2qj2ZAlYZYospEXK"
-// const userFCMToken = "c9Re1F8nRY64PIwH_7m_Wx:APA91bFJ-WaUDZ5C4NRpDoz5oHjo5DOC6XnHmtvjm-2zfgHyUeU3LGtX_ALCnjCEm00tOnCVLcfrM5-yqs0Did9SCzMAIz4X8IkdqlqtKUN0cQa4RIdRBnZM_M_-Yc3WOho9UmIvtEva"
-// require("./util/sendNotification")(userFCMToken,{
+// const userFCMToken = "eRUTQH6sRpqaT8huTufgs5:APA91bFechOdZLCsA022Ym4r7T2QI7VJcXGmEd13cm7f3pr2nZQnwgOyQvobwO0DxHVZYFXWRacc2HdtKi5sdoTe3OUltdJOnLBzjcVwB5o6zZPonHkp1FnkzjPBdjNuBg-RcTvbda8P"
+// require("./util/sendNotificationOnTopic")("apnamzp_user",{
 //     "data":"zeher",
 //     "type": "show_shop",
-//     "title": "nya order aa gya bhai",
-//     "desc": "jake de aa order bhai",
-//     "shopId": "6174fea0dbb0b2e38f7de2ad"
+//     "title": "Up63 cafe",
+//     "desc": `test fg f jfgjfgj gjgjgj `,
+//     "shopId": "6174fea0dbb0b2e38f7de2ad",
+//     "imageUrl": "https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2022-09-09+at+1.46.08+PM.jpeg"
 // })
+
+
+
+// const user = require('./models/User')
+// async function sendNotificationToAllUser(){
+//     const users = await user.find({});
+//     users.forEach((user)=>{
+
+//         if(!user.fcmId){
+            
+//         }
+
+//         const message = {
+//             notification: {
+//                 title: "Namestey🙏 Mirzapur",
+//                 body: "0% Commission ki Duniya Mein Apka Swagat Hai🥳 \nOrder Kare Aur Hmareh Services Ka Labh Uthayeh \nApna Feedback Jarur Share Kareh \nThank You ApnaMzp",
+//                 // image: "https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/poster+3.png"
+//             },
+//             token: user.fcmId,
+//             android:{
+//                 priority: "high"
+//             }
+//         }
+        
+//         admin.messaging().send(message)
+//           .then((response) => {
+//             console.log('Successfully sent message to ' + "user", response);
+//           })
+//           .catch(err => console.log(err))
+//     })
+// }
+
+// sendNotificationToAllUser()
+
 
 
 // user app routes
