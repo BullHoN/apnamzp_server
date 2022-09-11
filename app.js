@@ -83,13 +83,13 @@ connectDB();
 // const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
 // const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_OmkoqyHf3KafdIHpg9vhei1P1kVgpKUqexJjQcebm2RzKHBeNcACa7JRC2tPuMlcePZ2lYTIGDWJJKDRdVy4KegWkfq2Dwu19l2qj2ZAlYZYospEXK"
 // const userFCMToken = "eRUTQH6sRpqaT8huTufgs5:APA91bFechOdZLCsA022Ym4r7T2QI7VJcXGmEd13cm7f3pr2nZQnwgOyQvobwO0DxHVZYFXWRacc2HdtKi5sdoTe3OUltdJOnLBzjcVwB5o6zZPonHkp1FnkzjPBdjNuBg-RcTvbda8P"
-// require("./util/sendNotificationOnTopic")("apnamzp_partner",{
+// require("./util/sendNotificationOnTopic")("apnamzp_user",{
 //     "data":"zeher",
 //     "type": "show_shop",
-//     "title": "Up63 cafe",
-//     "desc": `test fg f jfgjfgj gjgjgj `,
-//     "shopId": "6174fea0dbb0b2e38f7de2ad",
-//     "imageUrl": "https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2022-09-09+at+1.46.08+PM.jpeg"
+//     "title": "Breakfast Ready , Order Now",
+//     "desc": `Sunday- Kachori Jalebi nahi Khaya toh Kya khaya😃😋`,
+//     // "shopId": "6174fea0dbb0b2e38f7de2ad",
+//     "imageUrl": "https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2022-09-11+at+10.27.59+AM+(1).jpeg"
 // })
 
 
@@ -199,11 +199,22 @@ app.use('/', require('./routes/admin_routes/createShop'))
 app.use('/', require('./routes/admin_routes/user_routes/closeAppShops'))
 app.use('/', require('./routes/admin_routes/admin_shop/getshopMenuItems'))
 app.use('/', require('./routes/admin_routes/user_routes/changeBanners'))
+app.use('/', require('./routes/admin_routes/sendBulkNotification'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
 // })
 
+// test
+// const DeliverySathi = require('./models/DeliverySathi')
+// const deliverySathi = new DeliverySathi({
+//     phoneNo: "8787044997",
+//     password: "rishab",
+//     isVerified: true
+// })
+// deliverySathi.save().then(()=>{
+//     console.log('saved')
+// })
 
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')

@@ -12,7 +12,7 @@ router.get('/login',async (req,res,next)=>{
         const phoneNo = req.query.phoneNo;
         const password = req.query.password;
     
-        const user = await User.findOne({phoneNo: phoneNo});
+        const user = await User.findOne({phoneNo: phoneNo,__t: null});
     
         if(user == null){
             throw createError.NotFound("User Not Found");

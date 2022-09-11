@@ -4,7 +4,11 @@ const router = express.Router()
 
 router.get('/partner/actionNeededOrders/:shopId', async (req,res,next)=>{
     try{
-        const pendingOrders = await Order.find({shopID: req.params.shopId, orderStatus: 0})
+        const pendingOrders = await Order.find({
+            shopID: req.params.shopId,
+            orderStatus: 0,
+            adminShopService: false
+        })
         res.json(pendingOrders)
     }
     catch(err){
