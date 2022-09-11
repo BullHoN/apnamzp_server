@@ -18,6 +18,11 @@ router.get('/checkUserExists',async (req,res,next)=>{
             });
         }
         else {
+
+            if(user.__t){
+                throw HttpErrors.BadRequest("You already have account on our Partner/Sathi App")
+            }
+            
             if(!user.isVerified){
                 const otp = generateOTP();
                 user.otp = otp;
