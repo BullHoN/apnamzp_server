@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../../../models/User');
 const sendOtp = require('./sendOtp')
+const HttpErrors = require('http-errors')
 const router = express.Router();
 
 router.get('/checkUserExists',async (req,res,next)=>{
