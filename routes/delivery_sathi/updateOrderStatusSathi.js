@@ -68,13 +68,16 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
         const user = await User.findOne({phoneNo: order.userId});
         const notificationKey = (order.orderStatus == 5) ? "rider_on_the_way" : "order_delivered"
 
-        sendNotification(user.fcmId,{
-            "data": "assdgsdg",
-            "type": "order_status_change",
-            ...notificationConstants[`${notificationKey}`],
-            "action": "feedback",
-            "orderId": orderId
-        })
+        if(user){
+            sendNotification(user.fcmId,{
+                "data": "assdgsdg",
+                "type": "order_status_change",
+                ...notificationConstants[`${notificationKey}`],
+                "action": "feedback",
+                "orderId": orderId
+            })
+        }
+
 
         res.json({
             success: true

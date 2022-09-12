@@ -29,6 +29,10 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
             const order = orders[i];
             const shop = await Shop.findOne({_id: order.shopID})
             const customer = await User.findOne({phoneNo: order.userId})
+            
+            console.log(user, order.userId)
+            let customerName = customer ? customer.name : "No-Name";
+
             mappedOrders.push({
                 _id: order._id.toString(),
                 orderItems: order.orderItems,
@@ -40,7 +44,7 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
                     rawAddress: shop.addressData.mainAddress
                 },
                 userInfo: {
-                    name: customer.name,
+                    name: customerName,
                     latitude: order.deliveryAddress.latitude,
                     longitude: order.deliveryAddress.longitude,
                     phoneNo: order.userId,
