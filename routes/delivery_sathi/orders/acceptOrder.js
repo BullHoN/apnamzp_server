@@ -38,14 +38,15 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
         // const deliverySathi = await DeliverySathi.findOne({phoneNo: deliverySathiNo})
         const user = await User.findOne({phoneNo: order.userId})
 
+        if(user){
+            sendNotification(user.fcmId,{
+                "data": "assdgsdg",
+                "type": "order_status_change",
+                ...notificationConstants["delivery_sathi_assigned"],
+                "orderId": orderId
+            })
+        }
         
-        sendNotification(user.fcmId,{
-            "data": "assdgsdg",
-            "type": "order_status_change",
-            ...notificationConstants["delivery_sathi_assigned"],
-            "orderId": orderId
-        })
-
         res.json({
             success: true
         })
