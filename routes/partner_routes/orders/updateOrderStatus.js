@@ -48,12 +48,17 @@ router.post('/partner/order/updateStatus',async (req,res,next)=>{
         }
     
         const user = await User.findOne({phoneNo: order.userId});
-        sendNotification(user.fcmId,{
-            "data": "assdgsdg",
-            "type": "order_status_change",
-            ...notificationConstants[`${notificationKey}`],
-            "orderId": orderId
-        })
+
+        if(user){
+            sendNotification(user.fcmId,{
+                "data": "assdgsdg",
+                "type": "order_status_change",
+                ...notificationConstants[`${notificationKey}`],
+                "orderId": orderId
+            })
+        }
+
+
     
         res.json({success: true});
 

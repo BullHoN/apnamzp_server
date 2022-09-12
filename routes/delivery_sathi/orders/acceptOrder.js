@@ -38,7 +38,6 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
         // const deliverySathi = await DeliverySathi.findOne({phoneNo: deliverySathiNo})
         const user = await User.findOne({phoneNo: order.userId})
 
-        console.log(user, order.userId)
         if(user){
             sendNotification(user.fcmId,{
                 "data": "assdgsdg",

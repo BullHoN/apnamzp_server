@@ -37,12 +37,14 @@ router.get('/partner/accept_order',async (req,res,next)=>{
 
 
         User.findOne({phoneNo: user_id}).then((user)=>{
-            sendNotification(user.fcmId,{
-                "data":"zeher",
-                "type": "order_status_accept",
-                ...notificationConstants["order_accepted"],
-                "orderId": order_id
-            })
+            if(user){
+                sendNotification(user.fcmId,{
+                    "data":"zeher",
+                    "type": "order_status_accept",
+                    ...notificationConstants["order_accepted"],
+                    "orderId": order_id
+                })
+            }
         })
         .catch((err)=>{
             if(err) throw err;

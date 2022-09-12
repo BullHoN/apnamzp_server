@@ -35,13 +35,17 @@ router.get('/partner/reject_order',async (req,res,next)=>{
 
         const user = await User.findOne({phoneNo: user_id})
 
-        sendNotification(user.fcmId,{
-            "data": "sdgsdg",
-            "type": "order_status_rejected",
-            "title": "Order Cancelled By Shop",
-            "desc": cancel_reason ,
-            "orderId": order_id          
-        })
+        if(user){
+            sendNotification(user.fcmId,{
+                "data": "sdgsdg",
+                "type": "order_status_rejected",
+                "title": "Order Cancelled By Shop",
+                "desc": cancel_reason ,
+                "orderId": order_id          
+            })            
+        }
+
+
 
         res.send({success: true});
     }
