@@ -30,7 +30,7 @@ router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
             const shop = await Shop.findOne({_id: order.shopID})
             const customer = await User.findOne({phoneNo: order.userId})
             
-            console.log(user, order.userId)
+            console.log(customer, order.userId)
             let customerName = customer ? customer.name : "No-Name";
 
             mappedOrders.push({
