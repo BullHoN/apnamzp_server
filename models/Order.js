@@ -19,7 +19,10 @@ const orderItem = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema({
     orderItems: [orderItem],
-    isPaid: Boolean,
+    isPaid: {
+        type: Boolean,
+        default: false
+    },
     shopID: String,
     deliveryAddress: {
         houseNo: String,
