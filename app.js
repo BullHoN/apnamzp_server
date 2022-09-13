@@ -183,6 +183,7 @@ app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
 app.use('/', require('./routes/partner_routes/getShopStatus'))
 app.use('/', require('./routes/partner_routes/menu_items/editCategory'))
 app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'))
+app.use('/', require('./routes/partner_routes/registerShop'))
 
 
 // admin app routes
