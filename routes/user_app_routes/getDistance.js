@@ -70,6 +70,7 @@ async function isUserLocationReachable(custLatLang){
         );
 
         dist = dist / 1000.0
+        console.log(dist,shop.name)
 
         if(Math.ceil(dist) <= 3){
             shops_around_customer++;
@@ -82,7 +83,7 @@ async function isUserLocationReachable(custLatLang){
 }
 
 function getDistance(from,to){
-    return geolib.getDistance(from,to);
+    return geolib.getPreciseDistance(from,to);
 }
 
 
