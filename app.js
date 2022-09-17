@@ -149,6 +149,7 @@ app.use('/',require('./routes/user_app_routes/postFeedback'));
 app.use('/',require('./routes/user_app_routes/payment/getOrderId'));
 app.use('/',require('./routes/user_app_routes/getPickAndDropDetails'))
 app.use('/',require('./routes/user_app_routes/getShopData'))
+app.use('/',require('./routes/user_app_routes/getServiceStatus'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));

@@ -11,6 +11,12 @@ router.post('/apna_mzp/admin/assign_delivery_sathi', async (req,res,next)=>{
 
     try{
         const order = await Order.findOne({_id: orderId})
+
+        if(order.assignedDeliveryBoy){
+            const previous = await DeliverySathi.findOneAndUpdate(
+                {phoneNo: order.assignedDeliveryBoy},{$inc: { currOrders: -1 }})
+        }
+
         order.assignedDeliveryBoy = deliverySathiNo
         await order.save()
 

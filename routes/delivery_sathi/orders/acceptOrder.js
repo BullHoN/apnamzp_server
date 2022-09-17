@@ -63,7 +63,7 @@ function getTotalIncome(order){
         return 20;
     }
     else if(actutalDistace <= 6){
-        let amount = 20 + (Math.round(actutalDistace) - 3) * 4
+        let amount = 20 + (Math.ceil(actutalDistace) - 3) * 4
         return amount;
     }
     else {

@@ -73,6 +73,14 @@ const shopSchema = new mongoose.Schema({
     allowProcessingFees: {
         type: Boolean,
         default: false
+    },
+    allowCOD: {
+        type: Boolean,
+        default: true
+    },
+    allowSelfPickup: {
+        type: Boolean,
+        default: false
     }
 });
 

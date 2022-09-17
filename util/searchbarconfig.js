@@ -32,6 +32,23 @@ class SearchDB{
             }
 
         }
+
+        results.sort(function (a,b){
+            if(a.isOpen && b.isOpen){
+                return b.averageRatings - a.averageRatings
+            }
+            
+            if(a.isOpen){
+                return -1
+            }
+
+            if(b.isOpen){
+                return 1
+            }
+
+            return 0
+        })
+
         return results;
     }
 

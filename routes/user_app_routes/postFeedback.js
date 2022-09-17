@@ -21,15 +21,17 @@ router.post('/user_routes/feedback',async (req,res,next)=>{
         
         const order = await Order.findOneAndUpdate({_id: orderId},{userFeedBack: true});
 
-        const shop = await Shop.findOne({_id: order.shopID})
-        let noReviews = Number.parseInt(shop.reviews) + 1
-        const newRatingNo = Number.parseFloat(reviews.foodReview.rating)
-        const newRating = shop.averageRatings * ((noReviews-1)/noReviews) + newRatingNo * (1 / noReviews)
-
-        shop.averageRatings = newRating.toPrecision(2);
-        shop.reviews = `${noReviews}`
-
-        await shop.save()
+        if(reviews.foodReview && reviews.foodReview.rating){
+            const shop = await Shop.findOne({_id: order.shopID})
+            let noReviews = Number.parseInt(shop.reviews) + 1
+            const newRatingNo = Number.parseFloat(reviews.foodReview.rating)
+            const newRating = shop.averageRatings * ((noReviews-1)/noReviews) + newRatingNo * (1 / noReviews)
+    
+            shop.averageRatings = newRating.toPrecision(2);
+            shop.reviews = `${noReviews}`
+    
+            await shop.save()
+        }
 
 
         res.json({
