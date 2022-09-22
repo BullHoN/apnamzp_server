@@ -1,18 +1,26 @@
 const express = require('express')
 const Order = require('../../models/Order')
 const Shop = require('../../models/Shop')
+const User = require('../../models/User')
 const router = express.Router()
 
 router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
     const { phoneNo } = req.query
     try{
-        const orders = await Order.find({userId: phoneNo,
-            orderStatus: { $gte: 0, $lt: 6}})
+        let orders;
+        if(phoneNo){
+            orders = await Order.find({userId: phoneNo,
+                orderStatus: { $gte: 0, $lt: 6}})
+        }else {
+            orders = await Order.find({orderStatus: { $gte: 0, $lt: 6}})
+        }
         
             let mappedOrders = []
             for(let i=0;i<orders.length;i++){
                 const order = orders[i];
                 const shop = await Shop.findOne({_id: order.shopID})
+                const user = await User.findOne({phoneNo: order.userId})
+
                 mappedOrders.push({
                     ...order,
                     _id: order._id.toString(),
@@ -25,7 +33,7 @@ router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
                         rawAddress: shop.addressData.mainAddress
                     },
                     userInfo: {
-                        name: "vaibhav", //TODO: change this default value
+                        name: user.name,
                         latitude: order.deliveryAddress.latitude,
                         longitude: order.deliveryAddress.longitude,
                         phoneNo: order.userId,

@@ -211,12 +211,18 @@ app.use('/', require('./routes/admin_routes/createDirectOrder'))
 // test
 // const DeliverySathi = require('./models/DeliverySathi')
 // const deliverySathi = new DeliverySathi({
-//     phoneNo: "8787044997",
-//     password: "rishab",
+//     phoneNo: "9682900089",
+//     password: "Sathi@shubham@968",
 //     isVerified: true
 // })
 // deliverySathi.save().then(()=>{
 //     console.log('saved')
+// })
+
+
+// const Shop = require('./models/Shop')
+// Shop.updateMany({},{allowCOD: true, allowSelfPickup: true}).then(()=>{
+//     console.log("done")
 // })
 
 // payment test
