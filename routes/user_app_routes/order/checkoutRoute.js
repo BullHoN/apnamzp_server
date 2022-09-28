@@ -34,6 +34,7 @@ router.post('/checkout',async (req,res,next)=>{
 
         if(shopData.adminShopService){
             order.paymentReceivedToShop = true
+            order.expectedDeliveryTime = "30 min"
         }
 
         await order.save();

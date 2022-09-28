@@ -3,8 +3,9 @@ const router = express.Router()
 const client = require('../../util/init_redis')
 
 const defaultStatus = {
-    serviceOpen: true,
-    message: "Service is Currently Unavailable"
+    serviceOpen: false,
+    message: "Service is Currently Unavailable",
+    type: "rain"  // [close, rain, occasion]
 }
 
 router.get('/user/serviceStatus', async (req,res,next)=>{

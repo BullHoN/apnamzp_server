@@ -26,6 +26,13 @@ module.exports = {
         try{
 
             let order = await Order.findById({_id: orderId});
+
+            if(order.orderAcceptedByDeliverySathi){
+                res.json({
+                    success: true
+                })
+            }
+
             const shopData = await Shop.findOne({shopType: order.shopCategory,_id: order.shopID});
             const user = await User.findOne({phoneNo: order.userId})
             
