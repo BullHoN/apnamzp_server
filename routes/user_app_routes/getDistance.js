@@ -21,7 +21,7 @@ router.get('/getDistance',async (req,res,next)=>{
             return;
         }
 
-        const distanceRes = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${req.query.destinations}&origins=${req.query.origins}&key=AIzaSyCjGoldXj1rERZHuTyT9iebSRFc_O3YHX4`);
+        const distanceRes = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${req.query.destinations}&origins=${req.query.origins}&mode=bicycling&key=AIzaSyCjGoldXj1rERZHuTyT9iebSRFc_O3YHX4`);
         let distance = Number.parseInt(distanceRes.data['rows'][0]['elements'][0]['distance']['value'])/1000.0;
         
         if(distance <= 2.5){
