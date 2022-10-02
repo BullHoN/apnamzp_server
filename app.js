@@ -226,6 +226,14 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 //     console.log("done")
 // })
 
+// const ShopItem = require('./models/ShopItem')
+// ShopItem.findByIdAndUpdate(
+// {_id: "630f417f8212ba640150cccd"},
+// { $set: { "categories.$[].shopItemDataList.$[].shopItemDataList": 0 } }).then(()=>{
+//     console.log('done')
+// })
+// .catch(err => console.log(err))
+
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')
 
