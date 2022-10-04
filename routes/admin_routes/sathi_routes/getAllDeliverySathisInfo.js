@@ -24,36 +24,48 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
                 }
             }
 
-            const order = await Order.findOne({
+            const orders = await Order.find({
                 assignedDeliveryBoy: allKeys[i],
                 orderAcceptedByDeliverySathi: true,
                 orderStatus: { $lt: 6 }
             })
 
-            if(order == null){
+            if(orders == null || orders.length == 0){
                 mappedDeliverySathis.push(mappedSathi)
                 continue;
             }
 
-            if(order != null){
+            if(orders != null){
                 
-                const shopData = await Shop.findOne({_id: order.shopID})
-                
+                const mappedOrders = []
+                for(let i=0;i<orders.length;i++){
+                    const order = orders[i];
 
-                mappedSathi = {...mappedSathi,
-                "shopData": {
-                    "name": shopData.name,
-                    "phoneNo": shopData.phoneNO,
-                    "rawAddress": shopData.addressData.mainAddress,
-                    "latitude": shopData.addressData.latitude,
-                    "longitude": shopData.addressData.longitude
-                },
-                "customerData": {
-                    "phoneNo": order.userId,
-                    "rawAddress": order.deliveryAddress.rawAddress,
-                    "latitude": order.deliveryAddress.latitude,
-                    "longitude": order.deliveryAddress.longitude
-                }}
+                    const shopData = await Shop.findOne({_id: order.shopID})
+                
+                    mappedOrders.push({
+                        "shopData": {
+                            "name": shopData.name,
+                            "phoneNo": shopData.phoneNO,
+                            "rawAddress": shopData.addressData.mainAddress,
+                            "latitude": shopData.addressData.latitude,
+                            "longitude": shopData.addressData.longitude
+                        },
+                        "customerData": {
+                            "phoneNo": order.userId,
+                            "rawAddress": order.deliveryAddress.rawAddress,
+                            "latitude": order.deliveryAddress.latitude,
+                            "longitude": order.deliveryAddress.longitude    
+                        }
+                    })
+                }
+
+
+                mappedSathi = {
+                    ...mappedSathi,
+                    "orderDetailsList": mappedOrders
+                }
+                
             }
 
             mappedDeliverySathis.push(mappedSathi)

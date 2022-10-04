@@ -47,6 +47,11 @@ const notificationConstants = {
     "order_delivered": {
         "title": "Order Delivered",
         "desc": "Thanks for choosing ApnaMzp, Please Share Your Feedback"
+    },
+
+    "review_received_shop": {
+        "title": "Your shop received a new review",
+        "desc": "A new review is made by a customer",
     }
 
 }

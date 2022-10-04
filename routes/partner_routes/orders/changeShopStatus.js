@@ -4,12 +4,13 @@ const SearchDB = require('../../../util/searchbarconfig')
 const router = express.Router()
 
 router.post('/partner/changeShopStatus',async (req,res,next)=>{
-    const { phoneNo, isOpen } = req.query
+    const { phoneNo, isOpen, adminShopService } = req.query
 
     console.log(phoneNo, isOpen)
     try{
-        const shop = await Shop.findOneAndUpdate({phoneNO: phoneNo},{isOpen: (isOpen == "true")});
+        const shop = await Shop.findOneAndUpdate({phoneNO: phoneNo},{isOpen: (isOpen == "true"), adminShopService: (adminShopService == "true")});
         shop.isOpen = (isOpen == "true")
+        shop.adminShopService = (adminShopService == "true")
         SearchDB.updateShopStatus(shop)
 
         res.json({

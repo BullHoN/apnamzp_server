@@ -234,6 +234,14 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 // })
 // .catch(err => console.log(err))
 
+// const sendNotificationByTopic = require('./util/sendNotificationOnTopic')
+// sendNotificationByTopic("apnamzp_admin", {
+//     "type": "review_created",
+//     "title": "New Review",
+//     "desc": "A new review is made by a customer",
+//     "data": "review_received"
+// })
+
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')
 

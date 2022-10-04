@@ -13,6 +13,7 @@ router.post('/apna_mzp/admin/cancelOrder', async (req,res,next)=>{
         const order = await Order.findOne({_id: orderId});
         const user = await User.findOne({phoneNo: order.userId})
 
+        order.orderStatus = 7
         order.cancelled = true
         order.cancelReason = cancelReason
         await order.save()
@@ -29,7 +30,8 @@ router.post('/apna_mzp/admin/cancelOrder', async (req,res,next)=>{
         sendNotification(user.fcmId,{
             "data": "sdgsdg",
             "type": "order_status_rejected",
-            ...notificationConstants["order_cancelled_by_admin"],
+            "title": "Order Cancelled",
+            "desc": cancelReason,
             "orderId": orderId          
         })
 
