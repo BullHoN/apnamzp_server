@@ -13,7 +13,7 @@ class SearchDB{
                 const shopMenuItems = await ShopItem.findOne({_id: shop.menuItemsID});
                 let shopString = "";
                 shopMenuItems.categories.forEach((category)=>{
-                    shopString += category.categoryName
+                    shopString += category.categoryName.toLowerCase()
                     category.shopItemDataList.forEach(menuitem => {
                         shopString += menuitem.name.toLowerCase();
                     })
