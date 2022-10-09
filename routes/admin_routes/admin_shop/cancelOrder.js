@@ -1,6 +1,7 @@
 const express = require('express')
 const Order = require('../../../models/Order')
 const User = require('../../../models/User')
+const DeliverySathi = require('../../../models/DeliverySathi')
 const client = require('../../../util/init_redis')
 const sendNotification = require('../../../util/sendNotification')
 const notificationConstants = require('../../../util/notificationConstants')
@@ -17,6 +18,13 @@ router.post('/apna_mzp/admin/cancelOrder', async (req,res,next)=>{
         order.cancelled = true
         order.cancelReason = cancelReason
         await order.save()
+
+        if(order.orderAcceptedByDeliverySathi){
+            await DeliverySathi.findOneAndUpdate(
+                {phoneNo: order.assignedDeliveryBoy},
+                { $inc: { currOrders: -1 } } 
+            )
+        }
 
         let pendingOrders = await client.get("pendingOrders")
         pendingOrders = JSON.parse(pendingOrders)

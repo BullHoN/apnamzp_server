@@ -7,7 +7,7 @@ router.get('/reviews',async (req,res,next)=>{
 
     try{
         const reviews = await Review.find({shopName: shopId, reviewType: "shop"})
-        .sort({createdAt: -1})
+        .sort({created_at: -1})
         .limit(20);
         
         res.json(reviews);

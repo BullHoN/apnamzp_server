@@ -60,6 +60,10 @@ router.get('/partner/accept_order',async (req,res,next)=>{
 
 async function assignDeliverySathi(order){
 
+    if(!order.billingDetails.isDeliveryService){
+        return
+    }
+
     const shopData = await Shop.findOne({_id: order.shopID})
     let tries = 0;
 

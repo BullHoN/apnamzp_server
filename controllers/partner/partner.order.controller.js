@@ -27,7 +27,7 @@ module.exports = {
 
             let order = await Order.findById({_id: orderId});
 
-            if(order.orderAcceptedByDeliverySathi){
+            if(order.orderAcceptedByDeliverySathi || order.orderStatus >= 6){
                 res.json({
                     success: true
                 })
@@ -42,7 +42,7 @@ module.exports = {
 
                 order = await Order.findById({_id: orderId});
 
-                if(order.orderAcceptedByDeliverySathi){
+                if(order.orderAcceptedByDeliverySathi || order.orderStatus >= 6){
                     clearInterval(assignDeliveryBoyInterval)
                     return;
                 }

@@ -81,15 +81,13 @@ app.use(compression());
 connectDB();
 
 // const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
-// const partnerFCMToken = "falPKLFiR-OcK5INVmQaBU:APA91bFQlCwbJEgzaWRipgM2V_OmkoqyHf3KafdIHpg9vhei1P1kVgpKUqexJjQcebm2RzKHBeNcACa7JRC2tPuMlcePZ2lYTIGDWJJKDRdVy4KegWkfq2Dwu19l2qj2ZAlYZYospEXK"
+// const partnerFCMToken = "clT4ISrGSXGwtUFXX3tfer:APA91bHwzm0C1olTpRnQWBdeQVmrn2OjK_pU-ipa2LZnDdEShmLCelEAWsM6pSzS7SX5NstIt2b6ozzjT3441t0mVzUhyheQV9M6ScExJnzzsh9QLeQ9Gs2tklrx4iaVJ_1_4EHGaAKV"
 // const userFCMToken = "eRUTQH6sRpqaT8huTufgs5:APA91bFechOdZLCsA022Ym4r7T2QI7VJcXGmEd13cm7f3pr2nZQnwgOyQvobwO0DxHVZYFXWRacc2HdtKi5sdoTe3OUltdJOnLBzjcVwB5o6zZPonHkp1FnkzjPBdjNuBg-RcTvbda8P"
-// require("./util/sendNotificationOnTopic")("apnamzp_user",{
-//     "data":"zeher",
-//     "type": "show_shop",
-//     "title": "Breakfast Ready , Order Now",
-//     "desc": `Sunday- Kachori Jalebi nahi Khaya toh Kya khaya😃😋`,
-//     // "shopId": "6174fea0dbb0b2e38f7de2ad",
-//     "imageUrl": "https://apna-mzp-assests.s3.ap-south-1.amazonaws.com/WhatsApp+Image+2022-09-11+at+10.27.59+AM+(1).jpeg"
+// require("./util/sendNotification")(partnerFCMToken,{
+//     "type": "review_created",
+//     "title": "New Review",
+//     "desc": "A new review is made by a customer",
+//     "data": "review_received"
 // })
 
 
@@ -185,6 +183,7 @@ app.use('/', require('./routes/partner_routes/getShopStatus'))
 app.use('/', require('./routes/partner_routes/menu_items/editCategory'))
 app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'))
 app.use('/', require('./routes/partner_routes/registerShop'))
+app.use('/partner/subscription', require('./routes/partner_routes/subscription/router.partner.subscription'))
 
 
 // admin app routes
@@ -212,8 +211,8 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 // test
 // const DeliverySathi = require('./models/DeliverySathi')
 // const deliverySathi = new DeliverySathi({
-//     phoneNo: "9682900089",
-//     password: "Sathi@shubham@968",
+//     phoneNo: "7757883703",
+//     password: "mohit7757@Apnamzp",
 //     isVerified: true
 // })
 // deliverySathi.save().then(()=>{
