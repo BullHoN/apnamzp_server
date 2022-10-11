@@ -241,6 +241,14 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 //     "data": "review_received"
 // })
 
+// const Subscription = require('./models/Subscription')
+// const subs = new Subscription({
+//     shopId: "62d44f84da65b173888b4e8b",
+//     startDate: new Date(),
+//     endDate: new Date()
+// }).save()
+
+
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')
 

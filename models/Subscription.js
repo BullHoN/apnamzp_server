@@ -11,14 +11,14 @@ const subscriptionSchema = mongoose.Schema({
         default: false
     },
     startDate: {
-        type: String,
+        type: Date,
         required: true
     },
     endDate: {
-        type: String,
+        type: Date,
         required: true
     },
-    payedAmount: {
+    payedAmount: { 
         type: Number,
         default: 0
     },
