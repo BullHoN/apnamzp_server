@@ -59,7 +59,7 @@ module.exports = {
             res.json({
                 ...subscription._doc,
                 totalEarning: totalEarning,
-                subscriptionPricings: defaultSubscriptionPricings
+                subscriptionPricings: subscriptionPricings || defaultSubscriptionPricings
             })
 
         }
