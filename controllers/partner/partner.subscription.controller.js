@@ -35,6 +35,14 @@ module.exports = {
         try {
             const shopId = req.params.shopId
             const subscription = await Subscription.findOne({shopId: shopId, isActive: true})
+            
+            if(subscription == null){
+                res.json({
+                    subscriptionPricings: defaultSubscriptionPricings
+                })
+
+                return;
+            }
 
             const orders = await Order.find({shopID: shopId, 
                 orderStatus: 6, updated_at: { $gte: (new Date(subscription.startDate)), $lte: (new Date(subscription.endDate))}})
@@ -51,7 +59,7 @@ module.exports = {
             res.json({
                 ...subscription._doc,
                 totalEarning: totalEarning,
-                subscriptionPricings: subscriptionPricings || defaultSubscriptionPricings
+                subscriptionPricings: defaultSubscriptionPricings
             })
 
         }
@@ -73,6 +81,7 @@ module.exports = {
         }
     }
 
+    
 }
 
 function getTotalReceivingAmount(billingDetails,offerCode){

@@ -14,6 +14,7 @@ const AWS = require('aws-sdk')
 require('./util/init_redis')
 const path = require('path')
 const createError = require('http-errors')
+const subscriptionSchedular = require('./schedulers/subscription.scheduler');
 
 
 
@@ -80,13 +81,16 @@ app.use(compression());
 // mongoDB Connect
 connectDB();
 
+// subscription schedular
+subscriptionSchedular()
+
 // const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
-// const partnerFCMToken = "clT4ISrGSXGwtUFXX3tfer:APA91bHwzm0C1olTpRnQWBdeQVmrn2OjK_pU-ipa2LZnDdEShmLCelEAWsM6pSzS7SX5NstIt2b6ozzjT3441t0mVzUhyheQV9M6ScExJnzzsh9QLeQ9Gs2tklrx4iaVJ_1_4EHGaAKV"
+// const partnerFCMToken = "cpKuSZDsQ0yzM_vJKjjFKW:APA91bGko5CKirSPMPCmLRQdKrzPBTrAregBXIn4fHWWico_0eQ6MPv-iNIg81CsT4lwggOe1x1YBU8BjlPAPTvCmrFm_cqu7enJzkapkD17GiyaCaDqlnNPD4jFUmT_piqdKAeX0zNe"
 // const userFCMToken = "eRUTQH6sRpqaT8huTufgs5:APA91bFechOdZLCsA022Ym4r7T2QI7VJcXGmEd13cm7f3pr2nZQnwgOyQvobwO0DxHVZYFXWRacc2HdtKi5sdoTe3OUltdJOnLBzjcVwB5o6zZPonHkp1FnkzjPBdjNuBg-RcTvbda8P"
 // require("./util/sendNotification")(partnerFCMToken,{
-//     "type": "review_created",
-//     "title": "New Review",
-//     "desc": "A new review is made by a customer",
+//     "type": "subscription",
+//     "title": "Your Subscription is Expired",
+//     "desc": "Pay Now to Continue Our Services !!",
 //     "data": "review_received"
 // })
 
@@ -184,6 +188,7 @@ app.use('/', require('./routes/partner_routes/menu_items/editCategory'))
 app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'))
 app.use('/', require('./routes/partner_routes/registerShop'))
 app.use('/partner/subscription', require('./routes/partner_routes/subscription/router.partner.subscription'))
+app.use('/partner/payment', require('./routes/partner_routes/payment/router.partner.payment'))
 
 
 // admin app routes

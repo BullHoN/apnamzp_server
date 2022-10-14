@@ -29,6 +29,9 @@ const subscriptionSchema = mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    paymentId: {
+        type: String
     }
 })
 
