@@ -3,7 +3,9 @@ const instance = new Razorpay(
     { key_id: process.env.RAZOR_PAY_KEY, key_secret: process.env.RAZOR_PAY_SECRET }
 )
 const Subscription = require('../../models/Subscription')
+const sendNotificationByTopic = require('../../util/sendNotificationOnTopic')
 const dateFns = require('date-fns')
+const ShopPartner = require('../../models/ShopPartner')
 
 module.exports = {
 
@@ -48,8 +50,17 @@ module.exports = {
             
             const newSubs = await Subscription.create({
                 shopId: oldSubs.shopId,
-                startDate: dateFns.addDays(oldSubs.startDate,1),
-                endDate: dateFns.addDays(oldSubs.startDate,31)
+                startDate: dateFns.addDays(oldSubs.endDate,1),
+                endDate: dateFns.addDays(oldSubs.endDate,31)
+            })
+
+            ShopPartner.findOne({shopId: oldSubs.shopId}).then((user) => {
+                sendNotificationByTopic("apnamzp_admin", {
+                    "type": "subscription",
+                    "title": `Payment Received ${user.name} !!`,
+                    "desc": `Payment Received By ${user.name} And New Plan Is Created`,
+                    "data": "review_received"
+                })
             })
 
             res.json({

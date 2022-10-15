@@ -7,6 +7,7 @@ const sendNotification = require('../../util/sendNotification')
 const HttpErrors = require('http-errors')
 const router = express.Router()
 
+
 router.post('/apna_mzp/admin/direct-order', async (req,res,next)=>{
     try {
 
@@ -22,11 +23,11 @@ router.post('/apna_mzp/admin/direct-order', async (req,res,next)=>{
             const shopUser = await ShopPartner.findOne({phoneNo: shopData.phoneNO});
             
             if(!shopData.isOpen){
-                throw createError.BadRequest("Shop is currently closed please try again later")
+                throw HttpErrors.BadRequest("Shop is currently closed please try again later")
             }
     
             if(!shopData.allowCheckout){
-                throw createError.BadRequest("Shop is currently unavaible for delivery service")
+                throw HttpErrors.BadRequest("Shop is currently unavaible for delivery service")
             }
     
             if(shopData.adminShopService){
