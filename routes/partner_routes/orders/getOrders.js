@@ -30,7 +30,7 @@ router.get('/partner/getOrders',async (req,res,next)=>{
         console.log(shopId)
         // TODO: Change this
         const orders = await Order.find({shopID: shopId, 
-            orderStatus: Number.parseInt(orderStatus), updated_at: { $gte: greaterThanDate, $lt: lessThanDate }})
+            orderStatus: Number.parseInt(orderStatus), created_at: { $gte: greaterThanDate, $lt: lessThanDate }})
             .sort({ created_at: 1 });
 
         // const orders = await Order.find({shopCategory: shopCategory, shopId: shopId, 
