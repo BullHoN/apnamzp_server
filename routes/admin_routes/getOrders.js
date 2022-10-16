@@ -20,7 +20,7 @@ router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
                 const order = orders[i];
                 const shop = await Shop.findOne({_id: order.shopID})
                 const user = await User.findOne({phoneNo: order.userId})
-
+                    
                 mappedOrders.push({
                     ...order,
                     _id: order._id.toString(),
@@ -33,7 +33,7 @@ router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
                         rawAddress: shop.addressData.mainAddress
                     },
                     userInfo: {
-                        name: user.name,
+                        name: (user) ? user.name : "Not-Registered",
                         latitude: order.deliveryAddress.latitude,
                         longitude: order.deliveryAddress.longitude,
                         phoneNo: order.userId,
