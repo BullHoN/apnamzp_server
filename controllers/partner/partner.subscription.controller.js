@@ -14,6 +14,8 @@ const defaultSubscriptionPricings = [
     { from: 35000, to: 45000, amount: 2899 }
 ]
 
+const defaultNewPlanPrice = 299
+
 module.exports = {
 
     getSubscriptionBanner: async (req,res,next) => {
@@ -56,10 +58,15 @@ module.exports = {
             if(subscriptionPricings) subscriptionPricings = JSON.parse(subscriptionPricings)
             else await client.set("subscriptionPricings", JSON.stringify(defaultSubscriptionPricings))
 
+            let newPlanPrice = await client.get("newPlanPrice")
+            if(newPlanPrice) newPlanPrice = Number.parseInt(newPlanPrice)
+            else await client.set("newPlanPrice", JSON.stringify(defaultNewPlanPrice))
+
             res.json({
                 ...subscription._doc,
                 totalEarning: totalEarning,
-                subscriptionPricings: subscriptionPricings || defaultSubscriptionPricings
+                subscriptionPricings: subscriptionPricings || defaultSubscriptionPricings,
+                newPlanPrice: newPlanPrice || defaultNewPlanPrice
             })
 
         }

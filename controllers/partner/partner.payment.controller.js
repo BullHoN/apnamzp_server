@@ -48,20 +48,34 @@ module.exports = {
                 { $set: { paymentId: body.paymentId, payedAmount: body.amount, isActive: false} }
             )
             
-            const newSubs = await Subscription.create({
-                shopId: oldSubs.shopId,
-                startDate: dateFns.addDays(oldSubs.endDate,1),
-                endDate: dateFns.addDays(oldSubs.endDate,31)
-            })
-
-            ShopPartner.findOne({shopId: oldSubs.shopId}).then((user) => {
-                sendNotificationByTopic("apnamzp_admin", {
-                    "type": "subscription",
-                    "title": `Payment Received ${user.name} !!`,
-                    "desc": `Payment Received By ${user.name} And New Plan Is Created`,
-                    "data": "review_received"
+            if(body.createNewPlan){
+                const newSubs = await Subscription.create({
+                    shopId: oldSubs.shopId,
+                    startDate: dateFns.addDays(oldSubs.endDate,1),
+                    endDate: dateFns.addDays(oldSubs.endDate,31)
+                })       
+                
+                ShopPartner.findOne({shopId: oldSubs.shopId}).then((user) => {
+                    sendNotificationByTopic("apnamzp_admin", {
+                        "type": "subscription",
+                        "title": `New Plan Created for ${user.name} !!`,
+                        "desc": `Payment Received By ${user.name} And New Plan Is Created`,
+                        "data": "review_received"
+                    })
                 })
-            })
+
+            }
+            else {
+                ShopPartner.findOne({shopId: oldSubs.shopId}).then((user) => {
+                    sendNotificationByTopic("apnamzp_admin", {
+                        "type": "subscription",
+                        "title": `${user.name} Has Discontinued Our Services`,
+                        "desc": `Payment Received By ${user.name} But New Plan Is Not Created`,
+                        "data": "review_received"
+                    })
+                })
+            }
+
 
             res.json({
                 success: true

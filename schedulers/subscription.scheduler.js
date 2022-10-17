@@ -64,15 +64,6 @@ async function cronJOB(){
         if(dateFns.compareAsc(subscription.endDate,(new Date())) < 0){
             if(subscription.isFree){
 
-                subscription.isActive = false;
-                await subscription.save()
-
-                const newSubs = await Subscription.create({
-                    shopId: subscription.shopId,
-                    startDate: dateFns.addDays(subscription.endDate,1),
-                    endDate: dateFns.addDays(subscription.endDate,31)
-                })
-
                 sendNotificationById(user.fcmId,{
                     type: "subscription",
                     title: "Your Free Trial Has Expired",
@@ -83,7 +74,7 @@ async function cronJOB(){
                 sendNotificationByTopic("apnamzp_admin", {
                     "type": "subscription",
                     "title": `Free Trial of Shop ${user.name} has Expired`,
-                    "desc": `Subscription Plan is Created For ${user.name} `,
+                    "desc": `Free Trial of Shop ${user.name} has Expired`,
                     "data": "review_received"
                 })
             }
