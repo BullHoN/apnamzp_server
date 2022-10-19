@@ -226,7 +226,7 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{allowCOD: true, allowSelfPickup: true}).then(()=>{
+// Shop.updateMany({},{allowSubscription: true}).then(()=>{
 //     console.log("done")
 // })
 
@@ -253,6 +253,19 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 //     endDate: new Date()
 // }).save()
 
+// const Order = require('./models/Order')
+// const fs = require('fs')
+// Order.aggregate(
+//     [
+//         { $group: { _id: "$userId", noOfOrders: { $count: {} }  } },
+//         { $sort: { noOfOrders: -1 } }
+//     ],
+//     function(err,result){
+//         fs.writeFile(__dirname + "/order.txt", JSON.stringify(result), () => {
+//             console.log("done")
+//         })
+//     }
+// )
 
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')

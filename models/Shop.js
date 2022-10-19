@@ -85,6 +85,20 @@ const shopSchema = new mongoose.Schema({
     allowSubscription: {
         type: Boolean,
         default: true
+    },
+    processingFees: {
+        init: {
+            type: Number,
+            default: 0
+        },
+        inc: {
+            type: Number,
+            default: 0
+        },
+        jump: {
+            type: Number,
+            default: 1
+        }
     }
 });
 

@@ -37,10 +37,18 @@ module.exports = {
         try {
             const shopId = req.params.shopId
             const subscription = await Subscription.findOne({shopId: shopId, isActive: true})
-            
+
+            let subscriptionPricings = await client.get("subscriptionPricings")
+            if(subscriptionPricings) subscriptionPricings = JSON.parse(subscriptionPricings)
+            else await client.set("subscriptionPricings", JSON.stringify(defaultSubscriptionPricings))
+
+            let newPlanPrice = await client.get("newPlanPrice")
+            if(newPlanPrice) newPlanPrice = Number.parseInt(newPlanPrice)
+            else await client.set("newPlanPrice", JSON.stringify(defaultNewPlanPrice))
+
             if(subscription == null){
                 res.json({
-                    subscriptionPricings: defaultSubscriptionPricings
+                    subscriptionPricings: subscriptionPricings || defaultSubscriptionPricings
                 })
 
                 return;
@@ -53,14 +61,6 @@ module.exports = {
             for(let i=0;i<orders.length;i++){
                 totalEarning+= getTotalReceivingAmount(orders[i].billingDetails)
             }
-
-            let subscriptionPricings = await client.get("subscriptionPricings")
-            if(subscriptionPricings) subscriptionPricings = JSON.parse(subscriptionPricings)
-            else await client.set("subscriptionPricings", JSON.stringify(defaultSubscriptionPricings))
-
-            let newPlanPrice = await client.get("newPlanPrice")
-            if(newPlanPrice) newPlanPrice = Number.parseInt(newPlanPrice)
-            else await client.set("newPlanPrice", JSON.stringify(defaultNewPlanPrice))
 
             res.json({
                 ...subscription._doc,
