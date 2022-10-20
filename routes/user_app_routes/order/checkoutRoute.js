@@ -82,7 +82,7 @@ router.post('/checkout',async (req,res,next)=>{
 function getTotalReceivingAmount(billingDetails,offerCode){
     let totalReceivingAmount = billingDetails.itemTotal + billingDetails.totalTaxesAndPackingCharge + billingDetails.totalTaxesAndPackingCharge
     if(offerCode != null && offerCode != "" && !offerCode.includes("APNA")){
-        totalReceivingAmount -= offerDiscountedAmount
+        totalReceivingAmount -= billingDetails.offerDiscountedAmount
     }
 
     if(billingDetails.itemTotal >= billingDetails.freeDeliveryPrice){

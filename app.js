@@ -226,7 +226,7 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{allowSubscription: true}).then(()=>{
+// Shop.updateMany({},{processingFees: { init: 0, inc: 0, jump: 1 }}).then(()=>{
 //     console.log("done")
 // })
 
