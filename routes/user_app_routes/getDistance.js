@@ -5,10 +5,14 @@ const print = require('../../util/printFullObject')
 const Shop = require('../../models/Shop')
 const geolib = require('geolib');
 const HttpError = require('http-errors')
+const client = require('../../util/init_redis')
 
 // TODO: Get this from redis cache
 const ABOVE_DISTANCE_FIVE_PRICE = 15;
 const BELOW_DISTANCE_FIVE_PRICE = 5;
+
+const EDGE_LOCATIONS_DEFAULT = [ "jangi", "lohandi", "gango", "kirtarrata"]
+const EDGE_LOCATION_DEFAULT_INC = 20
 
 router.get('/getDistance',async (req,res,next)=>{
 
@@ -24,19 +28,34 @@ router.get('/getDistance',async (req,res,next)=>{
         const distanceRes = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${req.query.destinations}&origins=${req.query.origins}&key=AIzaSyCjGoldXj1rERZHuTyT9iebSRFc_O3YHX4`);
         let distance = Number.parseInt(distanceRes.data['rows'][0]['elements'][0]['distance']['value'])/1000.0;
         
+        let edgeLocationsData = await client.get("edgeLocationsData")
+        if(edgeLocationsData) edgeLocationsData = JSON.parse(edgeLocationsData)
+        else {
+            edgeLocationsData = {
+                locations: EDGE_LOCATIONS_DEFAULT,
+                priceInc: EDGE_LOCATION_DEFAULT_INC
+            }
+
+            await client.set("edgeLocationsData", JSON.stringify(edgeLocationsData))
+        }
+
+        let extraCharges = edgeLocationsCharges(distanceRes.data.destination_addresses[0]
+            , edgeLocationsData.locations, edgeLocationsData.priceInc)
+        
+        console.log(extraCharges)
         if(distance <= 2.5){
             // TODO: Get all this from redis cache
-            res.json({distance: "25", actualDistance: distance});
+            res.json({distance: ((25 + extraCharges) + ""), actualDistance: distance});
             return;
         }
         else if(distance <= 6){
             let amount = 25 + Math.ceil(Math.ceil(distance)-2.5) * BELOW_DISTANCE_FIVE_PRICE
-            res.json({distance: (amount+""), actualDistance: distance});
+            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance});
             return;
         }
         else if(distance <= 8){
             let amount = Math.ceil(distance) * ABOVE_DISTANCE_FIVE_PRICE;
-            res.json({distance: (amount+""), actualDistance: distance})
+            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance})
         }
         else {
             res.json({distance: "-1", actualDistance: "-1"});
@@ -47,6 +66,18 @@ router.get('/getDistance',async (req,res,next)=>{
     }
     
 })
+
+function edgeLocationsCharges(userAddress, edgeLocations, edgeInc){
+
+    for(let i=0;i<edgeLocations.length;i++){
+        const loc = edgeLocations[i]
+        if(userAddress.toLowerCase().includes(loc)){
+            return edgeInc
+        }
+    }
+
+    return 0
+}   
 
 async function isUserLocationReachable(custLatLang){
     const shops = await Shop.find({})
