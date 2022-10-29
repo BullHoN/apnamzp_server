@@ -208,6 +208,7 @@ app.use('/', require('./routes/admin_routes/user_routes/changeBanners'))
 app.use('/', require('./routes/admin_routes/sendBulkNotification'))
 app.use('/', require('./routes/admin_routes/createDirectOrder'))
 app.use('/', require('./routes/admin_routes/changeServiceStatus'))
+app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));

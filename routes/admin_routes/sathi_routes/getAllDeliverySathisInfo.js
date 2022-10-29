@@ -2,6 +2,7 @@ const express = require('express')
 const client = require('../../../util/init_redis')
 const Shop = require('../../../models/Shop')
 const Order = require('../../../models/Order')
+const DeliverySathi = require('../../../models/DeliverySathi')
 const router = express.Router()
 
 router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
@@ -15,6 +16,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
         let allKeys = Object.keys(deliverySathis)
         for(let i=0;i<allKeys.length;i++){
             let currSathi = deliverySathis[allKeys[i]]
+            const deliverySathiFromDb = await DeliverySathi.findOne({phoneNo: allKeys[i]})
 
             let mappedSathi = {
                 "deliverySathi":{
@@ -63,7 +65,8 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
 
                 mappedSathi = {
                     ...mappedSathi,
-                    "orderDetailsList": mappedOrders
+                    "orderDetailsList": mappedOrders,
+                    "currOrders": deliverySathiFromDb.currOrders
                 }
                 
             }

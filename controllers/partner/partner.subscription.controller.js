@@ -60,7 +60,7 @@ module.exports = {
             let totalEarning = 0
             for(let i=0;i<orders.length;i++){
                 totalEarning+= getTotalReceivingAmount(orders[i].billingDetails)
-            }
+            } 
 
             res.json({
                 ...subscription._doc,
