@@ -6,13 +6,26 @@ const sendNotification = require('../../../util/sendNotification');
 const createError = require('http-errors');
 const axios = require('axios').default
 const router = express.Router();
+const client = require('../../../util/init_redis')
 
 
 router.post('/checkout',async (req,res,next)=>{
 
     try {   
-        // console.log(req.body)
+        let blockedCODUsers = await client.get("blockedCODUsers")
+        if(blockedCODUsers) blockedCODUsers = JSON.parse(blockedCODUsers)
+        else {
+            blockedCODUsers = []
+            client.set("blockedCODUsers",JSON.stringify([]))
+        }
+
         const order = new Order(req.body);
+
+        for(let i=0;i<blockedCODUsers.length;i++){
+            if(blockedCODUsers[i] == order.userId && !order.isPaid){
+                throw createError.BadRequest("You Have Been Blocked By Resturant, Please Try Prepaid Order Or Contact Apna Mzp")
+            }
+        }
 
         // self service is only when order is managed by shop
         if(!order.billingDetails.isDeliveryService){

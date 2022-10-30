@@ -247,12 +247,28 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 //     "data": "review_received"
 // })
 
+// const Shop = require('./models/Shop')
 // const Subscription = require('./models/Subscription')
-// const subs = new Subscription({
-//     shopId: "62d44f84da65b173888b4e8b",
-//     startDate: new Date(),
-//     endDate: new Date()
-// }).save()
+// const dateFns = require('date-fns')
+
+// Shop.find({}).then(async (shops) => {
+
+//     shops.forEach(async (shop)=>{
+//         const subsAlreadyExsists = await Subscription.findOne({shopId: shop._id})
+//         if(subsAlreadyExsists) return;
+
+//         const todayDate = new Date()
+
+//         const subs = Subscription.create({
+//             shopId: shop._id,
+//             startDate: dateFns.subDays(todayDate,1),
+//             endDate: dateFns.addDays(todayDate,32),
+//             isFree: true
+//         })
+//     })
+
+// })
+
 
 // const Order = require('./models/Order')
 // const fs = require('fs')
