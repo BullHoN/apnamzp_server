@@ -34,6 +34,8 @@ router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
                     },
                     userInfo: {
                         name: (user) ? user.name : "Not-Registered",
+                        landmark: order.deliveryAddress.landmark,
+                        houseNo: order.deliveryAddress.houseNo,
                         latitude: order.deliveryAddress.latitude,
                         longitude: order.deliveryAddress.longitude,
                         phoneNo: order.userId,
