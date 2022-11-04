@@ -217,8 +217,8 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 // test
 // const DeliverySathi = require('./models/DeliverySathi')
 // const deliverySathi = new DeliverySathi({
-//     phoneNo: "7757883703",
-//     password: "mohit7757@Apnamzp",
+//     phoneNo: "9335396249",
+//     password: "DeliverySathi5396@apnamzp",
 //     isVerified: true
 // })
 // deliverySathi.save().then(()=>{
@@ -227,7 +227,7 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{processingFees: { init: 0, inc: 0, jump: 1 }}).then(()=>{
+// Shop.updateMany({},{allowSelfPickup: false}).then(()=>{
 //     console.log("done")
 // })
 

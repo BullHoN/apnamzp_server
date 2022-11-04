@@ -8,7 +8,6 @@ router.post('/partner/login',async (req,res,next)=>{
     const {phoneNo, password} = req.body;
 
     try {
-        // TODO: ignore field password
         const shopPartner = await ShopPartner.findOne({phoneNo});
 
         if(shopPartner == null){

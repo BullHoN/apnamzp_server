@@ -33,7 +33,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
             })
 
             if(orders == null || orders.length == 0){
-                mappedDeliverySathis.push(mappedSathi)
+                mappedDeliverySathis.push({...mappedSathi,"currOrders": deliverySathiFromDb.currOrders})
                 continue;
             }
 
