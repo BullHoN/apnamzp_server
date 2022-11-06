@@ -30,6 +30,10 @@ const shopItemSchema = new mongoose.Schema({
                     availableTimings: {
                         from: String,
                         to: String
+                    },
+                    isBestSeller: {
+                        type: Boolean,
+                        default: false
                     }
                 }
             ]
