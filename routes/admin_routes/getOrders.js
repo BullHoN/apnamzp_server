@@ -22,7 +22,7 @@ router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
                 const user = await User.findOne({phoneNo: order.userId})
                     
                 mappedOrders.push({
-                    ...order,
+                    ...order._doc,
                     _id: order._id.toString(),
                     orderItems: order.orderItems,
                     shopInfo: {

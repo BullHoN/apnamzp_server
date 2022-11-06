@@ -22,7 +22,9 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
                 "deliverySathi":{
                     "phoneNo": allKeys[i],
                     "latitude": currSathi.latitude,
-                    "longitude": currSathi.longitude
+                    "longitude": currSathi.longitude,
+                    "currOrders": deliverySathiFromDb.currOrders,
+                    "cashInHand": deliverySathiFromDb.cashInHand
                 }
             }
 
@@ -33,7 +35,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
             })
 
             if(orders == null || orders.length == 0){
-                mappedDeliverySathis.push({...mappedSathi,"currOrders": deliverySathiFromDb.currOrders})
+                mappedDeliverySathis.push({...mappedSathi})
                 continue;
             }
 
@@ -65,8 +67,7 @@ router.get('/apna_mzp/admin/delivery_sathis', async (req,res,next)=>{
 
                 mappedSathi = {
                     ...mappedSathi,
-                    "orderDetailsList": mappedOrders,
-                    "currOrders": deliverySathiFromDb.currOrders
+                    "orderDetailsList": mappedOrders
                 }
                 
             }

@@ -8,7 +8,10 @@ router.post('/apna_mzp/admin/update-delivery-sathi', async (req,res,next)=>{
         
         await DeliverySathi.findOneAndUpdate(
             {phoneNo: deliverySathi.phoneNo},
-            {$set:{currOrders: deliverySathi.currOrders}}
+            {$set:{
+                currOrders: deliverySathi.currOrders,
+                cashInHand: deliverySathi.cashInHand
+            }}
         )
 
         res.json({
