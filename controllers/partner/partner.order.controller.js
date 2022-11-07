@@ -23,6 +23,8 @@ module.exports = {
             throw createError.BadRequest("Bad Request");
         }
 
+
+
         try{
 
             let order = await Order.findById({_id: orderId});
@@ -31,6 +33,8 @@ module.exports = {
                 res.json({
                     success: true
                 })
+
+                return;
             }
 
             const shopData = await Shop.findOne({shopType: order.shopCategory,_id: order.shopID});
