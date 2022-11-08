@@ -10,6 +10,14 @@ router.post('/sathi/rejectOrder',async (req,res,next)=>{
     const { orderId, deliverySathiNo, cancelReason } = req.query
     try{
         const order = await Order.findOne({_id: orderId});
+
+        if(order.orderAcceptedByDeliverySathi){
+            res.json({
+                success: false
+            })
+            return;
+        }
+
         order.orderAcceptedByDeliverySathi = false
         order.assignedDeliveryBoy = ""
 
