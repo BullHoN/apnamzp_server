@@ -10,6 +10,8 @@ class SearchDB{
 
         Shop.find().then(shops => {
             shops.forEach(async (shop)=>{
+                if(!shop.showShop) return;
+                
                 const shopMenuItems = await ShopItem.findOne({_id: shop.menuItemsID});
                 let shopString = "";
                 shopMenuItems.categories.forEach((category)=>{
