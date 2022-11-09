@@ -11,7 +11,7 @@ function delayPreperationTimeAlert(orderId,preperationTime){
         const order = await Order.findOne({_id: orderId})
         const shopPartner = await ShopPartner.findOne({shopId: order.shopID})
 
-        if(order.orderStatus > 3){
+        if(order.orderStatus > 2){
             return
         }
 
