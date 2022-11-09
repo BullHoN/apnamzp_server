@@ -6,6 +6,9 @@ const sendNotification = require('../../../util/sendNotification');
 const notificationConstants = require('../../../util/notificationConstants')
 const axios = require('axios')
 const router = express.Router();
+const delayPreperationTimeAlert = require('../../../alerts/delay_preperation_time.alert')
+const delayDeliveryAlert = require('../../../alerts/delay_delivery.alert')
+
 
 router.get('/partner/accept_order',async (req,res,next)=>{
 
@@ -23,6 +26,9 @@ router.get('/partner/accept_order',async (req,res,next)=>{
         }
 
         const order = await Order.findOneAndUpdate({_id: order_id},{orderStatus: 1,expectedDeliveryTime: expected_time},{new: true})
+
+        delayPreperationTimeAlert(order_id,expected_time)
+        delayDeliveryAlert(order_id,expected_time)
 
         const waitingTime = Number.parseInt(expected_time.split('m')[0]) - 15;
         

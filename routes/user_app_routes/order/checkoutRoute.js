@@ -7,6 +7,7 @@ const createError = require('http-errors');
 const axios = require('axios').default
 const router = express.Router();
 const client = require('../../../util/init_redis')
+const resturantNotRespondedAlert = require('../../../alerts/resturant_not_responded.alert')
 
 
 router.post('/checkout',async (req,res,next)=>{
@@ -80,6 +81,8 @@ router.post('/checkout',async (req,res,next)=>{
                 "isDeliveryService": ((order.billingDetails.isDeliveryService == true) + ""),
             })
         }
+
+        resturantNotRespondedAlert(order._id)
 
         res.json({
             success: true
