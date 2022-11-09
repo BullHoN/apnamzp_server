@@ -1,5 +1,6 @@
 const sendNotificationByTopic = require('../util/sendNotificationOnTopic')
 const Order = require('../models/Order')
+const ShopPartner = require('../models/ShopPartner')
 
 function delayPreperationTimeAlert(orderId,preperationTime){
 
@@ -8,6 +9,7 @@ function delayPreperationTimeAlert(orderId,preperationTime){
     setTimeout(async () =>{
 
         const order = await Order.findOne({_id: orderId})
+        const shopPartner = await ShopPartner.findOne({shopId: order.shopID})
 
         if(order.orderStatus > 3){
             return
@@ -19,7 +21,8 @@ function delayPreperationTimeAlert(orderId,preperationTime){
             sendNotificationByTopic("apnamzp_admin", {
                 "type": "order_alerts",
                 "title": `Stall Order: Preperation Time Excedded Order Not Updated`,
-                "desc": `Order Id ${orderId}`,
+                "desc": `Shop Name: ${shopPartner.name} \nOrder Id ${orderId}`,
+                "orderId": `${orderId}`,
                 "data": "shop_not_responded"
             })
         }
@@ -27,7 +30,8 @@ function delayPreperationTimeAlert(orderId,preperationTime){
             sendNotificationByTopic("apnamzp_admin", {
                 "type": "order_alerts",
                 "title": `Normal Order Preperation Time Exceded Order Not Updated`,
-                "desc": `Order Id ${orderId}`,
+                "desc": `Shop Name: ${shopPartner.name} \nOrder Id ${orderId}`,
+                "orderId": `${orderId}`,
                 "data": "shop_not_responded"
             })
         }

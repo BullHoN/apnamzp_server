@@ -1,10 +1,15 @@
 const sendNotificationByTopic = require('../util/sendNotificationOnTopic')
 const Order = require('../models/Order')
+const ShopPartner = require('../models/ShopPartner')
 
-function resturantNotRespondedAlert(orderId){
+function resturantNotRespondedAlert(orderId,adminShopService){
+
+    let intervalTime = adminShopService ? 1000 * 60 * 1 : 1000 * 60 * 2
+
     setTimeout(async ()=>{
 
     const order = await Order.findOne({_id: orderId})
+    const shopPartner = await ShopPartner.findOne({shopId: order.shopID})
     
     if(order.orderStatus != 0){
         return;
@@ -14,22 +19,24 @@ function resturantNotRespondedAlert(orderId){
 
     if(order.adminShopService){
         sendNotificationByTopic("apnamzp_admin", {
-            "type": "order_alerts",
+            "type": "order_alerts_not_responded",
             "title": `Stall Order Delivery Sathi Not Responded`,
-            "desc": `Order Id ${orderId}`,
+            "desc": `Shop Name: ${shopPartner.name} \nOrder Id ${orderId}`,
+            "orderId": `${orderId}`,
             "data": "shop_not_responded"
         })
     }
     else {
         sendNotificationByTopic("apnamzp_admin", {
-            "type": "order_alerts",
-            "title": `Normal Order Shop Didn't Responded Alert`,
+            "type": "order_alerts_not_responded",
+            "title": `Shop Name: ${shopPartner.name} \nOrder Id ${orderId}`,
             "desc": `Order Id ${orderId}`,
+            "orderId":`${orderId}`,
             "data": "shop_not_responded"
         })
     }
 
-    },1000 * 60 * 2)
+    },intervalTime)
 }
 
 module.exports =  resturantNotRespondedAlert

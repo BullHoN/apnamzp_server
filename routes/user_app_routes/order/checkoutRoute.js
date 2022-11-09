@@ -82,7 +82,7 @@ router.post('/checkout',async (req,res,next)=>{
             })
         }
 
-        resturantNotRespondedAlert(order._id)
+        resturantNotRespondedAlert(order._id,order.adminShopService)
 
         res.json({
             success: true

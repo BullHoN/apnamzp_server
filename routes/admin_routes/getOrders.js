@@ -5,13 +5,17 @@ const User = require('../../models/User')
 const router = express.Router()
 
 router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
-    const { phoneNo } = req.query
+    const { phoneNo, orderId } = req.query
     try{
         let orders;
         if(phoneNo){
             orders = await Order.find({userId: phoneNo,
                 orderStatus: { $gte: 0, $lt: 6}})
-        }else {
+        }
+        else if(orderId){
+            orders = await Order.find({_id: orderId})
+        }
+        else {
             orders = await Order.find({orderStatus: { $gte: 0, $lt: 6}})
         }
         
