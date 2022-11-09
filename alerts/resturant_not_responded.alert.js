@@ -29,8 +29,8 @@ function resturantNotRespondedAlert(orderId,adminShopService){
     else {
         sendNotificationByTopic("apnamzp_admin", {
             "type": "order_alerts_not_responded",
-            "title": `Shop Name: ${shopPartner.name} \nOrder Id ${orderId}`,
-            "desc": `Order Id ${orderId}`,
+            "title": `Shop Name: ${shopPartner.name} Not Responded`,
+            "desc": `Shop Name: ${shopPartner.name} \nOrder Id ${orderId}`,
             "orderId":`${orderId}`,
             "data": "shop_not_responded"
         })
