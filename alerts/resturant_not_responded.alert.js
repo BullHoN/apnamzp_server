@@ -4,7 +4,7 @@ const ShopPartner = require('../models/ShopPartner')
 
 function resturantNotRespondedAlert(orderId,adminShopService){
 
-    let intervalTime = adminShopService ? 1000 * 60 * 1 : 1000 * 60 * 2
+    let intervalTime = adminShopService ? 1000 * 60 * 4 : 1000 * 60 * 2
 
     setTimeout(async ()=>{
 
