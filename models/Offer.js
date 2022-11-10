@@ -8,6 +8,10 @@ const offerSchema = new mongoose.Schema({
         type: String,
         index: true
     },
+    shopId: {
+        type: String,
+        index: true
+    },
     discountAbove: String,
 
     // Type1 : "percent"
