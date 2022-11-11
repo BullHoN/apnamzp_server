@@ -227,7 +227,7 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{allowSelfPickup: false}).then(()=>{
+// Shop.updateMany({},{allowSelfPickupCOD: false}).then(()=>{
 //     console.log("done")
 // })
 

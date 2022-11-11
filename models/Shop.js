@@ -82,6 +82,10 @@ const shopSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    allowSelfPickupCOD: {
+        type: Boolean,
+        default: true
+    },
     allowSubscription: {
         type: Boolean,
         default: true
