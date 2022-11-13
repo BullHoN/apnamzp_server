@@ -152,6 +152,7 @@ app.use('/',require('./routes/user_app_routes/payment/getOrderId'));
 app.use('/',require('./routes/user_app_routes/getPickAndDropDetails'))
 app.use('/',require('./routes/user_app_routes/getShopData'))
 app.use('/',require('./routes/user_app_routes/getServiceStatus'))
+app.use('/',require('./routes/user_app_routes/getShopPhoneNo'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -227,7 +228,7 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{allowSelfPickupCOD: false}).then(()=>{
+// Shop.updateMany({},{allowSelfPickup:true,allowSelfPickupCOD: false}).then(()=>{
 //     console.log("done")
 // })
 
