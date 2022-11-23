@@ -4,7 +4,8 @@ const deliverySathiDailyInfoSchema = new mongoose.Schema({
     loginTime: Number,
     incentives: Number,
     earnings: Number,
-    totalOrders: Number
+    totalOrders: Number,
+    cancelCount: Number
 })
 
 

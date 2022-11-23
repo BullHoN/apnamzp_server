@@ -103,6 +103,14 @@ const shopSchema = new mongoose.Schema({
             type: Number,
             default: 1
         }
+    },
+    isNewShop: {
+        type: Boolean,
+        default: true
+    },
+    shopDiscountTag: {
+        type: Number,
+        default: 0
     }
 });
 

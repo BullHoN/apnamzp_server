@@ -5,10 +5,15 @@ const Offer = require('../../models/Offer')
 
 router.get('/getOffers',async (req,res,next)=>{
     const isApnaMzpDiscount = req.query.onlyAdmin == "true" ? true : false;
+    const allOffers = req.query.allOffers == "true" ? true : false;
     const shopId = req.query.shopId
 
     try{
-        if(shopId){
+        if(allOffers){
+            const data = await Offer.find({});
+            res.json(data)
+        }
+        else if(shopId){
             const data = await Offer.find({shopId: shopId});
             res.json(data)
         }
