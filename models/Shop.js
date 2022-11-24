@@ -109,8 +109,8 @@ const shopSchema = new mongoose.Schema({
         default: true
     },
     shopDiscountTag: {
-        type: Number,
-        default: 0
+        type: String,
+        default: "0"
     }
 });
 

@@ -190,7 +190,7 @@ app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'))
 app.use('/', require('./routes/partner_routes/registerShop'))
 app.use('/partner/subscription', require('./routes/partner_routes/subscription/router.partner.subscription'))
 app.use('/partner/payment', require('./routes/partner_routes/payment/router.partner.payment'))
-
+app.use('/', require('./routes/partner_routes/offers/setDisplayOffer'))
 
 // admin app routes
 app.use('/', require('./routes/admin_routes/admin_shop/getPendingOrders'))
@@ -228,7 +228,7 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{allowSelfPickup:true,allowSelfPickupCOD: false}).then(()=>{
+// Shop.updateMany({},{shopDiscountTag: "0"}).then(()=>{
 //     console.log("done")
 // })
 
