@@ -228,7 +228,7 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 
 
 // const Shop = require('./models/Shop')
-// Shop.updateMany({},{shopDiscountTag: "0"}).then(()=>{
+// Shop.updateMany({},{isNewShop: false}).then(()=>{
 //     console.log("done")
 // })
 

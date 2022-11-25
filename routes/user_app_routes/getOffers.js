@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Offer = require('../../models/Offer')
-
+const Shop = require('../../models/Shop')
 
 router.get('/getOffers',async (req,res,next)=>{
     const isApnaMzpDiscount = req.query.onlyAdmin == "true" ? true : false;
@@ -11,7 +11,20 @@ router.get('/getOffers',async (req,res,next)=>{
     try{
         if(allOffers){
             const data = await Offer.find({});
-            res.json(data)
+            let mappedData = []
+            for(let i=0;i<data.length;i++){
+                let offer = data[i]
+                if(offer.isApnaMzpDiscount){
+                    mappedData.push(offer)
+                    continue;
+                }
+
+                offer = await insertShopNameAndImageUrl(offer)
+                mappedData.push(offer)
+            }
+
+            res.json(mappedData)
+
         }
         else if(shopId){
             const data = await Offer.find({shopId: shopId});
@@ -36,5 +49,10 @@ router.get('/getOffers',async (req,res,next)=>{
     }
 
 })
+
+async function insertShopNameAndImageUrl(offer){
+    const shop = await Shop.findOne({_id: offer.shopId})
+    return {...offer._doc,shopName: shop.name,bannerImage: shop.bannerImage}
+}
 
 module.exports = router;
