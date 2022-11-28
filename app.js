@@ -153,6 +153,7 @@ app.use('/',require('./routes/user_app_routes/getPickAndDropDetails'))
 app.use('/',require('./routes/user_app_routes/getShopData'))
 app.use('/',require('./routes/user_app_routes/getServiceStatus'))
 app.use('/',require('./routes/user_app_routes/getShopPhoneNo'))
+app.use('/',require('./routes/user_app_routes/getBannerAnimation'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
