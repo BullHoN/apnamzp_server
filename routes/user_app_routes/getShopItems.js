@@ -1,41 +1,43 @@
 const express = require('express');
 const ShopItem = require('../../models/ShopItem');
 const router = express.Router();
-const print = require('../../util/printFullObject')
-const mongoose = require('mongoose')
 
 
 router.get('/getShopItems/:itemsId',async (req,res,next)=>{
 
     try{
-
-        const data2 = await ShopItem.aggregate([
-            {
-                $match: {_id: new mongoose.Types.ObjectId(req.params.itemsId)}
-            },
-            {
-                $unwind: "$categories"
-            },
-            {
-                $sort: {"categories.shopItemDataList.available": -1}
-            },
-            {
-                $group: {_id: "$_id", categories: {$push: "$categories"}}
-            }
-        ])
-
-        print(data2)
-
         const data = await ShopItem.findOne({_id: req.params.itemsId})
-            .sort({"categories.shopItemDataList.available": -1})
-
-        res.json(data["categories"]);
+        res.json(sortShopItems(data["categories"]));
     }
     catch(error){
         next(error)
     }
 
 })
+
+
+function sortShopItems(categories){
+    let filteredAvailableCategories = []
+    let filteredUnAvailableCategories = []
+
+    categories.forEach((category)=>{
+        let currAvailableCategoryItems = []
+        let currUnAvailableCategoryItems = []
+
+        category.shopItemDataList.forEach(item => {
+            if(item.available) currAvailableCategoryItems.push(item)
+            else currUnAvailableCategoryItems.push(item)
+        })
+
+        let currCategory = category
+        currCategory.shopItemDataList = currAvailableCategoryItems.concat(currUnAvailableCategoryItems)
+
+        if(category.isCategoryAvailable) filteredAvailableCategories.push(currCategory)
+        else filteredUnAvailableCategories.push(currCategory)
+    })
+
+    return filteredAvailableCategories.concat(filteredUnAvailableCategories);
+}
 
 
 module.exports = router;

@@ -76,6 +76,7 @@ router.post('/checkout',async (req,res,next)=>{
                 "orderItems":  JSON.stringify(req.body.orderItems),
                 "_id": order._id.toString(),
                 "userId": req.body.userId,
+                "specialInstructions": order.specialInstructions,
                 "type": "new_order",
                 "totalPay":  (getTotalReceivingAmount(order.billingDetails,order.offerCode) + ""),
                 "isDeliveryService": ((order.billingDetails.isDeliveryService == true) + ""),

@@ -36,7 +36,11 @@ const shopItemSchema = new mongoose.Schema({
                         default: false
                     }
                 }
-            ]
+            ],
+            isCategoryAvailable: {
+                type: Boolean,
+                default: true
+            }
         }
     ]
 })

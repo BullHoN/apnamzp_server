@@ -32,7 +32,9 @@ router.post('/partner/update/menuitem',upload.single('item_image'),async (req,re
         for(let i=0;i<shopItems.categories.length;i++){
             const category = shopItems.categories[i];
             if(category.categoryName == categoryName){
-
+                
+                category.isCategoryAvailable = true
+                
                 if(isNewItem == 'true'){
                     shopItems.categories[i].shopItemDataList = [...shopItems.categories[i].shopItemDataList, shopItemData]
                     await shopItems.save();

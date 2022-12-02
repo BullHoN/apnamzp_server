@@ -192,6 +192,7 @@ app.use('/', require('./routes/partner_routes/registerShop'))
 app.use('/partner/subscription', require('./routes/partner_routes/subscription/router.partner.subscription'))
 app.use('/partner/payment', require('./routes/partner_routes/payment/router.partner.payment'))
 app.use('/', require('./routes/partner_routes/offers/setDisplayOffer'))
+app.use('/', require('./routes/partner_routes/menu_items/turnOffCategory'))
 
 // admin app routes
 app.use('/', require('./routes/admin_routes/admin_shop/getPendingOrders'))
