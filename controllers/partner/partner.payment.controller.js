@@ -49,10 +49,11 @@ module.exports = {
             )
             
             if(body.createNewPlan){
+                const todaysDate = new Date()
                 const newSubs = await Subscription.create({
                     shopId: oldSubs.shopId,
-                    startDate: dateFns.addDays(oldSubs.endDate,1),
-                    endDate: dateFns.addDays(oldSubs.endDate,31)
+                    startDate: todaysDate,
+                    endDate: dateFns.addDays(todaysDate,30)
                 })       
                 
                 ShopPartner.findOne({shopId: oldSubs.shopId}).then((user) => {

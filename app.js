@@ -271,6 +271,15 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 
 // })
 
+// const todayDate = new Date()
+// const Subscription = require('./models/Subscription')
+// const dateFns = require('date-fns')
+// Subscription.updateMany({},{
+//     endDate: dateFns.subDays(todayDate,1)
+// }).then(()=>{
+//     console.log('done')
+// })
+
 
 // const Order = require('./models/Order')
 // const fs = require('fs')
