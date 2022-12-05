@@ -18,16 +18,17 @@ router.get('/getDistance',async (req,res,next)=>{
 
     try {
 
+        const distanceRes = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${req.query.destinations}&origins=${req.query.origins}&key=AIzaSyCjGoldXj1rERZHuTyT9iebSRFc_O3YHX4`);
+        let distance = Number.parseInt(distanceRes.data['rows'][0]['elements'][0]['distance']['value'])/1000.0;
+        const destinationRawAddress = distanceRes.data.destination_addresses.join('')
+
         const customerInRange = await isUserLocationReachable(req.query.destinations)
-        if(!customerInRange){
+        if(!customerInRange && !destinationRawAddress.includes("Barkachhakalan")){
             // throw HttpError.BadRequest("Sorry our service is not available in your area.")
             res.json({distance: "-1", actualDistance: "-1"});
             return;
         }
 
-        const distanceRes = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${req.query.destinations}&origins=${req.query.origins}&key=AIzaSyCjGoldXj1rERZHuTyT9iebSRFc_O3YHX4`);
-        let distance = Number.parseInt(distanceRes.data['rows'][0]['elements'][0]['distance']['value'])/1000.0;
-        
         let edgeLocationsData = await client.get("edgeLocationsData")
         if(edgeLocationsData) edgeLocationsData = JSON.parse(edgeLocationsData)
         else {
@@ -44,7 +45,6 @@ router.get('/getDistance',async (req,res,next)=>{
         
         console.log(extraCharges)
         if(distance <= 2.5){
-            // TODO: Get all this from redis cache
             res.json({distance: ((25 + extraCharges) + ""), actualDistance: distance});
             return;
         }
@@ -53,9 +53,9 @@ router.get('/getDistance',async (req,res,next)=>{
             res.json({distance: ((amount + extraCharges) +""), actualDistance: distance});
             return;
         }
-        else if(distance <= 8){
+        else if(distance <= 8 || destinationRawAddress.includes("Barkachhakalan")){
             let amount = Math.ceil(distance) * ABOVE_DISTANCE_FIVE_PRICE;
-            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance})
+            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance, edgeLocation: true})
         }
         else {
             res.json({distance: "-1", actualDistance: "-1"});
