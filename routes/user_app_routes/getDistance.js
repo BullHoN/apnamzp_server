@@ -44,7 +44,10 @@ router.get('/getDistance',async (req,res,next)=>{
             , edgeLocationsData.locations, edgeLocationsData.priceInc)
         
         console.log(extraCharges)
-        if(distance <= 2.5){
+        if(destinationRawAddress.includes("Barkachhakalan")){
+            res.json({distance: 150, actualDistance: distance, edgeLocation: true})
+        }
+        else if(distance <= 2.5){
             res.json({distance: ((25 + extraCharges) + ""), actualDistance: distance});
             return;
         }
@@ -53,9 +56,9 @@ router.get('/getDistance',async (req,res,next)=>{
             res.json({distance: ((amount + extraCharges) +""), actualDistance: distance});
             return;
         }
-        else if(distance <= 8 || destinationRawAddress.includes("Barkachhakalan")){
+        else if(distance <= 8){
             let amount = Math.ceil(distance) * ABOVE_DISTANCE_FIVE_PRICE;
-            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance, edgeLocation: true})
+            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance})
         }
         else {
             res.json({distance: "-1", actualDistance: "-1"});
