@@ -10,9 +10,9 @@ router.post('/partner/turnOffCategory', async (req,res,next)=>{
         const shopItems = await ShopItem.findOne({_id: shopItemId})
         shopItems.categories.forEach(_ => {
             if(_.categoryName == categoryName){
-                _.isCategoryAvailable = false
+                _.isCategoryAvailable = !_.isCategoryAvailable
                 _.shopItemDataList.forEach(__ => {
-                    __.available = false
+                    __.available = !__.available
                 })
                 return;
             }
