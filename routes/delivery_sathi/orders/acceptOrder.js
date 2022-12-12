@@ -25,6 +25,10 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
 
         order.orderAcceptedByDeliverySathi = true
 
+        if(order.adminShopService){
+            order.orderStatus = 1;
+        }
+
         // calculate total income
         if(order.deliverySathiIncome == 0) 
             order.deliverySathiIncome = getTotalIncome(order)
