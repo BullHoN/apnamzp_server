@@ -5,7 +5,7 @@ const router = express.Router()
 router.get('/partner/offers',async (req,res)=>{
     const {shopName} = req.query;
     try {
-        const offers = await Offer.find({shopName})
+        const offers = await Offer.find({shopName}).sort({discountAbove: 1})
         res.json(offers)
     } catch (error) {
         next(error)

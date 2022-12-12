@@ -119,11 +119,12 @@ module.exports = {
                             },
                             adminShopService: order.adminShopService,
                             orderItems: order.orderItems,
+                            specialInstructions: order.specialInstructions,
                             _id: order._id
                         }),
                         "type": "order",
                         "title": "New Order Received",
-                        "desc": "Hurry Up New Order Has Been Received" 
+                        "desc": "Hurry Up New Order Has Been Received"
                     })
 
                 }
