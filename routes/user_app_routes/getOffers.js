@@ -10,7 +10,7 @@ router.get('/getOffers',async (req,res,next)=>{
 
     try{
         if(allOffers){
-            const data = await Offer.find({});
+            const data = await Offer.find({}).sort({discountAbove: 1});
             let mappedData = []
             for(let i=0;i<data.length;i++){
                 let offer = data[i]
@@ -27,11 +27,11 @@ router.get('/getOffers',async (req,res,next)=>{
 
         }
         else if(shopId){
-            const data = await Offer.find({shopId: shopId});
+            const data = await Offer.find({shopId: shopId}).sort({discountAbove: 1});
             res.json(data)
         }
         else if(isApnaMzpDiscount){
-            const data = await Offer.find({isApnaMzpDiscount: isApnaMzpDiscount});
+            const data = await Offer.find({isApnaMzpDiscount: isApnaMzpDiscount}).sort({discountAbove: 1});
             res.json(data);
         }
         else {
@@ -40,7 +40,7 @@ router.get('/getOffers',async (req,res,next)=>{
             },
             {
                 shopName: req.query.shopName
-            }]});
+            }]}).sort({discountAbove: 1});
             res.json(data)
         }
     }
