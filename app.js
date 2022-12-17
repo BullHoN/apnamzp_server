@@ -281,20 +281,11 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 //     console.log('done')
 // })
 
-
 // const Order = require('./models/Order')
-// const fs = require('fs')
-// Order.aggregate(
-//     [
-//         { $group: { _id: "$userId", noOfOrders: { $count: {} }  } },
-//         { $sort: { noOfOrders: -1 } }
-//     ],
-//     function(err,result){
-//         fs.writeFile(__dirname + "/order.txt", JSON.stringify(result), () => {
-//             console.log("done")
-//         })
-//     }
-// )
+// Order.updateMany({orderStatus: {$gt: 7} },{orderStatus: 7}).then(()=>{
+//     console.log('done')
+// })
+
 
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')

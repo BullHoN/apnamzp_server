@@ -23,6 +23,8 @@ router.post('/sathi/order/updateStatus',async (req,res,next)=>{
         else {
             order.orderStatus += 1;
         }
+        
+        order.orderStatus = orderStatus
 
         if(order.itemsOnTheWay.length > 0 && !order.itemsOnTheWayCancelled && order.billingDetails.itemsOnTheWayActualCost == 0){
             throw createError.BadRequest("Please Add The Total For Items On The Way Before Proceding")
