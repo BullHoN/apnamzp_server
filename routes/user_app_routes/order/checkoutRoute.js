@@ -36,6 +36,11 @@ router.post('/checkout',async (req,res,next)=>{
 
         // send notification to the shop
         const shopData = await Shop.findOne({_id: req.body.shopID});
+
+        if(order.billingDetails.itemTotal < Number.parseInt(shopData.pricingDetails.minOrderPrice)){
+            throw createError.BadRequest("Item Total Must Be Greater Than " + shopData.pricingDetails.minOrderPrice)
+        }
+
         const shopUser = await ShopPartner.findOne({phoneNo: shopData.phoneNO});
         
         if(!shopData.isOpen){
@@ -72,6 +77,11 @@ router.post('/checkout',async (req,res,next)=>{
             },1000)
         }
         else {
+
+            setTimeout(async ()=>{
+                const checkOrder = await Order.findOne()
+            },1000 * 60 * 6)
+
             sendNotification(shopUser.fcmId,{
                 "orderItems":  JSON.stringify(req.body.orderItems),
                 "_id": order._id.toString(),

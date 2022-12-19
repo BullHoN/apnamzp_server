@@ -220,15 +220,15 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 // test
 // const DeliverySathi = require('./models/DeliverySathi')
 // const deliverySathi = new DeliverySathi({
-//     phoneNo: "8585995759",
-//     password: "apnaMzp@akash559",
+//     phoneNo: "9140200390",
+//     password: "ashwaniApnamzp@324sathi",
 //     isVerified: true
 // })
 // deliverySathi.save().then(()=>{
 //     console.log('saved')
 // })
 
-
+// db.getCollection('users').find({created_at: { $gte: ISODate("2022-12-18") }}).count()
 // const Shop = require('./models/Shop')
 // Shop.updateMany({},{allowSelfPickup: true,allowSelfPickupCOD: false}).then(()=>{
 //     console.log("done")
