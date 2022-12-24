@@ -74,7 +74,7 @@ function edgeLocationsCharges(userAddress, edgeLocations, edgeInc){
 
     for(let i=0;i<edgeLocations.length;i++){
         const loc = edgeLocations[i]
-        if(userAddress.toLowerCase().includes(loc)){
+        if(userAddress.toLowerCase().includes(loc.toLowerCase())){
             return edgeInc
         }
     }
