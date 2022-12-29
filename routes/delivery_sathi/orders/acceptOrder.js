@@ -19,8 +19,18 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
             throw HttpErrors.BadRequest("Order Not Found")
         }
 
-        if(order.orderAcceptedByDeliverySathi){
-            throw HttpErrors.BadRequest("Order was Already Accepted")
+        if(!order.orderAcceptedByDeliverySathi){
+            const user = await User.findOne({phoneNo: order.userId})
+
+            if(user){
+                sendNotification(user.fcmId,{
+                    "data": "assdgsdg",
+                    "type": "order_status_change",
+                    ...notificationConstants["delivery_sathi_assigned"],
+                    "orderId": orderId
+                })
+            }
+            
         }
 
         order.orderAcceptedByDeliverySathi = true
@@ -38,18 +48,6 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
         }
 
         await order.save()
-
-        // const deliverySathi = await DeliverySathi.findOne({phoneNo: deliverySathiNo})
-        const user = await User.findOne({phoneNo: order.userId})
-
-        if(user){
-            sendNotification(user.fcmId,{
-                "data": "assdgsdg",
-                "type": "order_status_change",
-                ...notificationConstants["delivery_sathi_assigned"],
-                "orderId": orderId
-            })
-        }
         
         res.json({
             success: true
