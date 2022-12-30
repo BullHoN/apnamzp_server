@@ -212,6 +212,7 @@ app.use('/', require('./routes/admin_routes/sendBulkNotification'))
 app.use('/', require('./routes/admin_routes/createDirectOrder'))
 app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData'))
+app.use('/', require('./routes/admin_routes/getAllShops'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
@@ -286,28 +287,28 @@ app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData
 //     console.log('done')
 // })
 
-const User = require('./models/User')
-const Order = require('./models/Order')
-const Shop = require('./models/Shop')
+// const User = require('./models/User')
+// const Order = require('./models/Order')
+// const Shop = require('./models/Shop')
 
-User.find({}).then(async (users)=>{
-    for(let i=0;i<users.length;i++){
-        const user = users[i]
-        const orders = await Order.find({userId: user.phoneNo})
+// User.find({}).then(async (users)=>{
+//     for(let i=0;i<users.length;i++){
+//         const user = users[i]
+//         const orders = await Order.find({userId: user.phoneNo})
 
-        if(orders.length == 0){
-            console.log(`${user.phoneNo}, join date: ${user.created_at}`)
-        }
+//         if(orders.length == 0){
+//             console.log(`${user.phoneNo}, join date: ${user.created_at}`)
+//         }
 
-        // if(orders.length != 1) continue;
+//         // if(orders.length != 1) continue;
 
-        // const shop = await Shop.findOne({_id: orders[0].shopID})
-        // if(orders.length > 1 && user.name != shop.name){
-        //     console.log(`${user.phoneNo} , ${user.name} , ${shop.name} , ${orders.length} , ${orders[0].created_at}`)
-        // }
-    }
-    console.log('done')
-})
+//         // const shop = await Shop.findOne({_id: orders[0].shopID})
+//         // if(orders.length > 1 && user.name != shop.name){
+//         //     console.log(`${user.phoneNo} , ${user.name} , ${shop.name} , ${orders.length} , ${orders[0].created_at}`)
+//         // }
+//     }
+//     console.log('done')
+// })
 
 
 
