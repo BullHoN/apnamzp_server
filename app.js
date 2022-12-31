@@ -213,6 +213,7 @@ app.use('/', require('./routes/admin_routes/createDirectOrder'))
 app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData'))
 app.use('/', require('./routes/admin_routes/getAllShops'))
+app.use('/', require('./routes/admin_routes/subscription/updateSubscription'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
@@ -252,6 +253,12 @@ app.use('/', require('./routes/admin_routes/getAllShops'))
 // })
 
 // const Shop = require('./models/Shop')
+// Shop.find({}).then((shops)=>{
+//     shops.forEach((shop)=>{
+//         console.log(`${shop.name}:- ${shop._id.toString()}`)
+//     })
+// })
+
 // const Subscription = require('./models/Subscription')
 // const dateFns = require('date-fns')
 
