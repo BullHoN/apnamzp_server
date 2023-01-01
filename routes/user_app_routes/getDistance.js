@@ -14,6 +14,8 @@ const BELOW_DISTANCE_FIVE_PRICE = 5;
 const EDGE_LOCATIONS_DEFAULT = [ "jangi", "lohandi", "gango", "kirtarrata"]
 const EDGE_LOCATION_DEFAULT_INC = 20
 
+
+
 router.get('/getDistance',async (req,res,next)=>{
 
     try {
@@ -48,7 +50,7 @@ router.get('/getDistance',async (req,res,next)=>{
             res.json({distance: 150, actualDistance: distance, edgeLocation: true})
         }
         else if(distance <= 2.5){
-            res.json({distance: ((25 + extraCharges) + ""), actualDistance: distance});
+            res.json({distance: ((15 + extraCharges) + ""), actualDistance: distance});
             return;
         }
         else if(distance <= 6){
