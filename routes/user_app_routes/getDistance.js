@@ -14,7 +14,10 @@ const BELOW_DISTANCE_FIVE_PRICE = 5;
 const EDGE_LOCATIONS_DEFAULT = [ "jangi", "lohandi", "gango", "kirtarrata"]
 const EDGE_LOCATION_DEFAULT_INC = 20
 
-
+const PRICING_DEFAULT = {
+    BELOW_THREE: 25,
+    BELOW_SIX: 25
+}
 
 router.get('/getDistance',async (req,res,next)=>{
 
@@ -46,15 +49,23 @@ router.get('/getDistance',async (req,res,next)=>{
             , edgeLocationsData.locations, edgeLocationsData.priceInc)
         
         console.log(extraCharges)
+
+        let deliveryPricings =  await client.get("deliveryPricings")
+        if(deliveryPricings) deliveryPricings = JSON.parse(deliveryPricings)
+        else {
+            deliveryPricings = PRICING_DEFAULT
+            await client.set("deliveryPricings", JSON.stringify(deliveryPricings))
+        }
+
         if(destinationRawAddress.includes("Barkachhakalan")){
             res.json({distance: 150, actualDistance: distance, edgeLocation: true})
         }
         else if(distance <= 2.5){
-            res.json({distance: ((15 + extraCharges) + ""), actualDistance: distance});
+            res.json({distance: ((deliveryPricings.BELOW_THREE + extraCharges) + ""), actualDistance: distance});
             return;
         }
         else if(distance <= 6){
-            let amount = 25 + Math.ceil(Math.ceil(distance)-2.5) * BELOW_DISTANCE_FIVE_PRICE
+            let amount = deliveryPricings.BELOW_SIX + Math.ceil(Math.ceil(distance)-2.5) * BELOW_DISTANCE_FIVE_PRICE
             res.json({distance: ((amount + extraCharges) +""), actualDistance: distance});
             return;
         }
