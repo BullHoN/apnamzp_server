@@ -3,7 +3,10 @@ const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
     phoneNo: String,
-    name: String,
+    name: {
+        type: String,
+        default: "No-Name"
+    },
     password: String,
     fcmId: {
         type: String,
