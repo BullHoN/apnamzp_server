@@ -55,7 +55,7 @@ module.exports = {
             }
 
             const orders = await Order.find({shopID: shopId, 
-                orderStatus: 6, updated_at: { $gte: (new Date(subscription.startDate)), $lte: (new Date(subscription.endDate))}})
+                orderStatus: 6, created_at: { $gte: (new Date(subscription.startDate)), $lte: (new Date(subscription.endDate))}})
             
             let totalEarning = 0
             for(let i=0;i<orders.length;i++){
