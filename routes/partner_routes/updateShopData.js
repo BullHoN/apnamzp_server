@@ -26,7 +26,16 @@ router.post('/partner/update/shopdetails',upload.single('banner_image'),async (r
             shopData.bannerImage = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.file.originalname}`;            
         }
 
-        await Shop.findOneAndUpdate({_id: shopData.shopId}, shopData)
+        
+
+        await Shop.findOneAndUpdate({_id: shopData.shopId}, {
+            taxPercentage: shopData.taxPercentage,
+            pricingDetails: shopData.pricingDetails,
+            tagLine: shopData.tagLine,
+            bannerImage: shopData.bannerImage,
+            shopTimings: shopData.shopTimings,
+            fssaiCode: shopData.fssaiCode
+        })
 
         res.json({
             success: true
