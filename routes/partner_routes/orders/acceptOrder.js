@@ -43,7 +43,7 @@ router.get('/partner/accept_order',async (req,res,next)=>{
 
 
         User.findOne({phoneNo: user_id}).then((user)=>{
-            if(user){
+            if(user && user.fcmId){
                 sendNotification(user.fcmId,{
                     "data":"zeher",
                     "type": "order_status_accept",

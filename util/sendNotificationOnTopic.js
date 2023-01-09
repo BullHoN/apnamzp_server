@@ -2,6 +2,8 @@ const admin = require("firebase-admin")
 
 function sendNotificationByTopic(topic,data) {
     
+	if(!topic) return;
+
 	const message = {
 		data: data,
 		topic: topic,

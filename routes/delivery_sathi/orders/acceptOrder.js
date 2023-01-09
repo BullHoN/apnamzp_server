@@ -22,7 +22,7 @@ router.post('/sathi/acceptOrder',async (req,res,next)=>{
         if(!order.orderAcceptedByDeliverySathi){
             const user = await User.findOne({phoneNo: order.userId})
 
-            if(user){
+            if(user && user.fcmId){
                 sendNotification(user.fcmId,{
                     "data": "assdgsdg",
                     "type": "order_status_change",

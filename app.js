@@ -317,6 +317,22 @@ app.use('/', require('./routes/admin_routes/subscription/updateSubscription'))
 //     console.log('done')
 // })
 
+// const Order = require('./models/Order')
+// const Shop = require('./models/Shop')
+
+// Order.find({orderStatus: 7}).then((orders)=>{
+//     orders.forEach(async (order)=>{
+//         const shop = await Shop.findOne({_id: order.shopID})
+
+//         let items = "";
+//         for(let i=0;i<order.orderItems.length;i++){
+//             const currItem = order.orderItems[i];
+//             items += currItem.name + ","
+//         }
+
+//         console.log(`${order.userId} , ${shop.name} , ${order.cancelReason}, ${order.actualDistance}Km , (${items})`)
+//     })
+// })
 
 
 // payment test

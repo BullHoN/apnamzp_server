@@ -22,13 +22,16 @@ router.post('/sathi/cancelItemsOnTheWay/:orderId',async (req,res,next)=>{
 
         // send notification to the user
         const user = await User.findOne({phoneNo: order.userId});
-        sendNotification(user.fcmId,{
-            "data": "assdgsdg",
-            "type": "order_status_change",
-            "title": "Items On The Way Rejected",
-            "desc": "Items On The Way Cannot Be Delivered",
-            "orderId": orderId
-        })
+        if(user && user.fcmId){
+            sendNotification(user.fcmId,{
+                "data": "assdgsdg",
+                "type": "order_status_change",
+                "title": "Items On The Way Rejected",
+                "desc": "Items On The Way Cannot Be Delivered",
+                "orderId": orderId
+            })
+        }
+
 
         res.json({
             success: true

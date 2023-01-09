@@ -17,12 +17,15 @@ router.post('/sathi/updateItemsOnTheWayPrice/:orderId',async (req,res,next)=>{
         
         // send notification to the user
         const user = await User.findOne({phoneNo: order.userId});
-        sendNotification(user.fcmId,{
-            "data": "assdgsdg",
-            "type": "order_status_change",
-            ...notificationConstants["update_items_on_the_way_price"],
-            "orderId": orderId
-        })
+        if(user && user.fcmId){
+            sendNotification(user.fcmId,{
+                "data": "assdgsdg",
+                "type": "order_status_change",
+                ...notificationConstants["update_items_on_the_way_price"],
+                "orderId": orderId
+            })
+        }
+
 
         res.json({
             success: true

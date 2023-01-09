@@ -1,6 +1,8 @@
 const admin = require("firebase-admin")
 
 function sendNotification(userFCMId,data) {
+	if(!userFCMId) return;
+	
 	const message = {
 		data: data,
 		token: userFCMId,

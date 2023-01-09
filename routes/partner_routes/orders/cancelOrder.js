@@ -21,7 +21,7 @@ router.post('/apna_mzp/admin/cancelOrder', async (req,res,next)=>{
 
         }
 
-        if(user){
+        if(user && user.fcmId){
             sendNotification(user.fcmId,{
                 "data": "sdgsdg",
                 "type": "order_status_rejected",
