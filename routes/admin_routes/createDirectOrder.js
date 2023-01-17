@@ -11,7 +11,9 @@ const router = express.Router()
 router.post('/apna_mzp/admin/direct-order', async (req,res,next)=>{
     try {
 
+        req.body.isDirectOrder = true
         const order = await Order.create(req.body);
+
 
         if(!order){
             throw HttpErrors.BadRequest("Something went wrong");

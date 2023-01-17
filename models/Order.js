@@ -114,7 +114,11 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    paymentId: String
+    paymentId: String,
+    isDirectOrder: {
+        type: Boolean,
+        default: false
+    }
 },{ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 const Order = mongoose.model('order',orderSchema);

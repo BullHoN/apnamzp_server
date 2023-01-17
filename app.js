@@ -334,6 +334,84 @@ app.use('/', require('./routes/admin_routes/subscription/updateSubscription'))
 //     })
 // })
 
+// const Order = require('./models/Order')
+// Order.find({}).then((orders)=>{
+//     const result = {};
+//     for(let i=0;i<orders.length;i++){
+//         const createdAt = orders[i].created_at.toDateString().split(' ');
+//         const key = (createdAt[1] + "-" + createdAt[3]).toLowerCase();
+
+//         if(result[key]) result[key]++;
+//         else result[key] = 1;
+//     }
+//     console.log(result)
+// })
+
+// const Order = require('./models/Order')
+// const Shop = require('./models/Shop')
+// const Subscription = require('./models/Subscription')
+
+// Order.find({}).then(async (orders)=>{
+//     const result = {};
+//     for(let i=0;i<orders.length;i++){
+//         const order = orders[i]
+//         const createdAt = orders[i].created_at.toDateString().split(' ');
+//         const shop = await Shop.findOne({_id: order.shopID})
+
+//         if(shop == null) continue;
+
+
+//         if(result[shop.name] == null){
+//             result[shop.name] = {}
+//         }
+
+//         const monthKey = (createdAt[1] + "-" + createdAt[3]).toLowerCase();
+
+//         if(result[shop.name][monthKey]){
+//             result[shop.name][monthKey].totalSales += order.billingDetails.itemTotal;
+//         } 
+//         else {
+//             const curr = {
+//                 totalSales: order.billingDetails.itemTotal,
+//                 amountPaid: 0
+//             }
+//             result[shop.name][monthKey] = curr;
+//         }
+
+//     }
+
+//     // const subs = await Subscription.find({});
+//     // for(let i=0;i<subs.length;i++){
+//     //     const sub = subs[i]
+//     //     const shop = await Shop.findOne({_id: sub.shopId})
+
+//     //     if(shop == null) continue;
+
+//     //     if(result[shop.name] == null){
+//     //         result[shop.name] = {}
+//     //     }
+
+//     //     const createdAt = sub.startDate.toDateString().split(' ');
+//     //     const monthKey = (createdAt[1] + "-" + createdAt[3]).toLowerCase();
+
+//     //     if(result[shop.name][monthKey]){
+//     //         result[shop.name][monthKey].amountPaid = sub.payedAmount;
+//     //     } 
+//     //     else {
+//     //         const curr = {
+//     //             totalSales: 0,
+//     //             amountPaid: sub.payedAmount
+//     //         }
+//     //         result[shop.name][monthKey] = curr;
+//     //     }
+
+//     // }
+    
+
+//     console.log(result)
+// })
+
+
 
 // payment test
 const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')

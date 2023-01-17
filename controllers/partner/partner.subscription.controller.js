@@ -57,14 +57,18 @@ module.exports = {
             const orders = await Order.find({shopID: shopId, 
                 orderStatus: 6, created_at: { $gte: (new Date(subscription.startDate)), $lte: (new Date(subscription.endDate))}})
             
-            let totalEarning = 0
+            let totalEarning = 0, directOrderEarning = 0
             for(let i=0;i<orders.length;i++){
-                totalEarning+= getTotalReceivingAmount(orders[i].billingDetails)
+                const curr = getTotalReceivingAmount(orders[i].billingDetails)
+
+                totalEarning+= curr
+                if(orders[i].isDirectOrder) directOrderEarning+= curr
             } 
 
             res.json({
                 ...subscription._doc,
                 totalEarning: totalEarning,
+                directOrderEarning: directOrderEarning,
                 subscriptionPricings: subscriptionPricings || defaultSubscriptionPricings,
                 newPlanPrice: newPlanPrice || defaultNewPlanPrice
             })
