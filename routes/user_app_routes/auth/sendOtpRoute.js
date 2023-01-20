@@ -12,6 +12,11 @@ router.get('/sendOtp',async (req,res,next)=>{
         if(user == null){
             throw createError.NotFound("User Not Found");
         }
+
+        if(user.__t){
+            throw createError.BadRequest("You already have account on our Partner/Sathi App");
+        }
+
         const otp = generateOTP();
         user.otp = otp;
         await user.save();

@@ -24,7 +24,7 @@ router.get('/apna_mzp/admin/orders', async (req,res,next)=>{
                 const order = orders[i];
                 const shop = await Shop.findOne({_id: order.shopID})
                 const user = await User.findOne({phoneNo: order.userId})
-                const allUserOrders = await Order.find({userId: order.userId}).limit(2)
+                const allUserOrders = await Order.find({userId: order.userId, orderStatus: 6}).limit(2)
                     
                 mappedOrders.push({
                     ...order._doc,
