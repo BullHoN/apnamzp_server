@@ -214,6 +214,7 @@ app.use('/', require('./routes/admin_routes/changeServiceStatus'))
 app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData'))
 app.use('/', require('./routes/admin_routes/getAllShops'))
 app.use('/', require('./routes/admin_routes/subscription/updateSubscription'))
+app.use('/', require('./routes/admin_routes/updateOrderStatus'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));

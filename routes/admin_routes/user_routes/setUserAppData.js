@@ -21,13 +21,15 @@ router.get('/apna_mzp/admin/userAppData', async (req,res,next)=>{
         let slurgeCharges = await client.get("slurgeCharges")
         let slurgeReason = await client.get("slurgeReason")
         let itemsOnTheWayCost = await client.get("itemsOnTheWayCost")
+        let distanceBasePricings = await client.get("deliveryPricings")
 
         res.json({
             bannerImages: JSON.parse(bannerImages),
             userServiceOpen: JSON.parse(userServiceOpen),
             slurgeCharges: JSON.parse(slurgeCharges),
             slurgeReason: slurgeReason,
-            itemsOnTheWayCost: JSON.parse(itemsOnTheWayCost)
+            itemsOnTheWayCost: JSON.parse(itemsOnTheWayCost),
+            distanceBasePricings: JSON.parse(distanceBasePricings)
         })
 
     }
@@ -43,6 +45,7 @@ router.post('/apna_mzp/admin/userAppData', async (req,res,next)=>{
         await client.set("slurgeCharges", req.body.slurgeCharges, ttlOptions)
         await client.set("slurgeReason", req.body.slurgeReason, ttlOptions)
         await client.set("itemsOnTheWayCost", req.body.itemsOnTheWayCost, ttlOptions)
+        await client.set("deliveryPricings", JSON.stringify(req.body.distanceBasePricings))
 
         res.json({
             success: true
