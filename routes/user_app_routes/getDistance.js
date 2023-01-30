@@ -19,10 +19,10 @@ const PRICING_DEFAULT = {
     BELOW_SIX: 25
 }
 
-router.get('/getDistance',async (req,res,next)=>{
+router.post('/getDistance',async (req,res,next)=>{
 
     try {
-
+        const body = req.body
         const distanceRes = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${req.query.destinations}&origins=${req.query.origins}&key=AIzaSyCjGoldXj1rERZHuTyT9iebSRFc_O3YHX4`);
         let distance = Number.parseInt(distanceRes.data['rows'][0]['elements'][0]['distance']['value'])/1000.0;
         const destinationRawAddress = distanceRes.data.destination_addresses.join('')
@@ -56,6 +56,11 @@ router.get('/getDistance',async (req,res,next)=>{
             deliveryPricings = PRICING_DEFAULT
             await client.set("deliveryPricings", JSON.stringify(deliveryPricings))
         }
+        console.log(body)
+        if(body != null){
+            deliveryPricings.BELOW_THREE = body.BELOW_THREE == -1 ? deliveryPricings.BELOW_THREE : body.BELOW_THREE
+            deliveryPricings.BELOW_SIX = body.BELOW_SIX == -1 ? deliveryPricings.BELOW_SIX : body.BELOW_SIX
+        }
 
         if(destinationRawAddress.includes("Barkachhakalan")){
             res.json({distance: 150, actualDistance: distance, edgeLocation: true})
@@ -78,6 +83,7 @@ router.get('/getDistance',async (req,res,next)=>{
             return;
         }        
     } catch (error) {
+        console.log(error)
         next(error)
     }
     

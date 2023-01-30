@@ -1,4 +1,3 @@
-const { default: roundToNearestMinutes } = require('date-fns/roundToNearestMinutes');
 const mongoose = require('mongoose');
 
 const shopSchema = new mongoose.Schema({
@@ -111,6 +110,16 @@ const shopSchema = new mongoose.Schema({
     shopDiscountTag: {
         type: String,
         default: "0"
+    },
+    deliveryPricings: {
+        BELOW_THREE: {
+            type: Number,
+            default: -1
+        },
+        BELOW_SIX: {
+            type: Number,
+            default: -1
+        }
     }
 });
 
