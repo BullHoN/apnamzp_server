@@ -19,6 +19,8 @@ const PRICING_DEFAULT = {
     BELOW_SIX: 25
 }
 
+const DEFAULT_Locations_NOT_ALLOWED_COD = []
+
 router.post('/getDistance',async (req,res,next)=>{
 
     try {
@@ -62,21 +64,29 @@ router.post('/getDistance',async (req,res,next)=>{
             deliveryPricings.BELOW_SIX = body.BELOW_SIX == -1 ? deliveryPricings.BELOW_SIX : body.BELOW_SIX
         }
 
+        let codNotAllowedList = await client.get("codNotAllowedLocations")
+        if(codNotAllowedList) codNotAllowedList = JSON.parse(codNotAllowedList)
+        else {
+            codNotAllowedList = DEFAULT_Locations_NOT_ALLOWED_COD
+            await client.set("codNotAllowedLocations",JSON.stringify(codNotAllowedList))
+        }
+
+        const isCODEDGELOCATION = isOnlyOnlineLocation(destinationRawAddress,codNotAllowedList)
         if(destinationRawAddress.includes("Barkachhakalan")){
             res.json({distance: 150, actualDistance: distance, edgeLocation: true})
         }
         else if(distance <= 2.5){
-            res.json({distance: ((deliveryPricings.BELOW_THREE + extraCharges) + ""), actualDistance: distance});
+            res.json({distance: ((deliveryPricings.BELOW_THREE + extraCharges) + ""), actualDistance: distance, edgeLocation: isCODEDGELOCATION});
             return;
         }
         else if(distance <= 6){
             let amount = deliveryPricings.BELOW_SIX + Math.ceil(Math.ceil(distance)-2.5) * BELOW_DISTANCE_FIVE_PRICE
-            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance});
+            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance, edgeLocation: isCODEDGELOCATION});
             return;
         }
         else if(distance <= 8){
             let amount = Math.ceil(distance) * ABOVE_DISTANCE_FIVE_PRICE;
-            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance})
+            res.json({distance: ((amount + extraCharges) +""), actualDistance: distance, edgeLocation: isCODEDGELOCATION})
         }
         else {
             res.json({distance: "-1", actualDistance: "-1"});
@@ -88,6 +98,18 @@ router.post('/getDistance',async (req,res,next)=>{
     }
     
 })
+
+function isOnlyOnlineLocation(destinationRawAddress,codNotAllowedList){
+
+    for(let i=0;i<codNotAllowedList.length;i++){
+        const curr = codNotAllowedList[i]
+        if(destinationRawAddress.toLowerCase().includes(curr.toLowerCase())){
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function edgeLocationsCharges(userAddress, edgeLocations, edgeInc){
 
