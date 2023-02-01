@@ -21,7 +21,7 @@ const PRICING_DEFAULT = {
 
 const DEFAULT_Locations_NOT_ALLOWED_COD = []
 
-router.post('/getDistance',async (req,res,next)=>{
+router.all('/getDistance',async (req,res,next)=>{
 
     try {
         const body = req.body
