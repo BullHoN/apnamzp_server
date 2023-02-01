@@ -58,8 +58,8 @@ router.all('/getDistance',async (req,res,next)=>{
             deliveryPricings = PRICING_DEFAULT
             await client.set("deliveryPricings", JSON.stringify(deliveryPricings))
         }
-        console.log(body)
-        if(body != null){
+
+        if(body.BELOW_THREE){
             deliveryPricings.BELOW_THREE = body.BELOW_THREE == -1 ? deliveryPricings.BELOW_THREE : body.BELOW_THREE
             deliveryPricings.BELOW_SIX = body.BELOW_SIX == -1 ? deliveryPricings.BELOW_SIX : body.BELOW_SIX
         }
