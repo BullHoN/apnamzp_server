@@ -3,21 +3,18 @@ const app = express();
 const print = require('./util/printFullObject');
 const connectDB = require('./util/dbconfig');
 const SearchDB = require('./util/searchbarconfig');
-const admin = require("firebase-admin");
-const secretFile = require("./firebase_secretkey.json")
-const cors = require('cors')
+const admin = require('firebase-admin');
+const secretFile = require('./firebase_secretkey.json');
+const cors = require('cors');
 const cloudinary = require('cloudinary').v2;
-const morgan = require('morgan')
+const morgan = require('morgan');
 const compression = require('compression');
-const multer  = require('multer')
-const AWS = require('aws-sdk')
-require('./util/init_redis')
-const path = require('path')
-const createError = require('http-errors')
+const multer = require('multer');
+const AWS = require('aws-sdk');
+require('./util/init_redis');
+const path = require('path');
+const createError = require('http-errors');
 const subscriptionSchedular = require('./schedulers/subscription.scheduler');
-
-
-
 
 // const storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
@@ -28,61 +25,55 @@ const subscriptionSchedular = require('./schedulers/subscription.scheduler');
 //       cb(null, file.fieldname + '-' + uniqueSuffix + '.jpg')
 //     }
 //   })
-  
+
 // const upload = multer({ storage: storage })
 // TODO: USE THE BELOW ONE
-const upload = multer()
-
+const upload = multer();
 
 // Environement variables
 require('dotenv').config();
 
 // configure image storage
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
 });
 
 // utils
 
 SearchDB.loadData();
 
-setInterval(()=>{
-    console.log("Loading Data Into Search Bar")
-    SearchDB.loadData();
-},1000 * 60 * 30)
-
+setInterval(() => {
+  console.log('Loading Data Into Search Bar');
+  SearchDB.loadData();
+}, 1000 * 60 * 30);
 
 // require('./util/localDB/localDB')
 
 // configure firebase admin
 admin.initializeApp({
-    credential: admin.credential.cert(secretFile)
+  credential: admin.credential.cert(secretFile),
 });
 
-
 AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
-})
-
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
 
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 app.use(compression());
-
-
 
 // mongoDB Connect
 connectDB();
 
 // subscription schedular
-subscriptionSchedular()
+subscriptionSchedular();
 
 // const deliverySathiToken = "f1ezEnWURO61dPnyZlwY5F:APA91bFCWW4K-xT7UUWtXSuXwacO8bXvBCPs8X1qXkEueH6JBwD4jM99naEDjWcBCDnwEAW7EZ6ous8sUp1j6DzJEn7wUBptazYd-yb8VtfGttiUPv83L4a9Q17CuiT5NrXqjPyTVfRc";
 // const partnerFCMToken = "cpKuSZDsQ0yzM_vJKjjFKW:APA91bGko5CKirSPMPCmLRQdKrzPBTrAregBXIn4fHWWico_0eQ6MPv-iNIg81CsT4lwggOe1x1YBU8BjlPAPTvCmrFm_cqu7enJzkapkD17GiyaCaDqlnNPD4jFUmT_piqdKAeX0zNe"
@@ -94,15 +85,13 @@ subscriptionSchedular()
 //     "data": "review_received"
 // })
 
-
-
 // const user = require('./models/User')
 // async function sendNotificationToAllUser(){
 //     const users = await user.find({});
 //     users.forEach((user)=>{
 
 //         if(!user.fcmId){
-            
+
 //         }
 
 //         const message = {
@@ -116,7 +105,7 @@ subscriptionSchedular()
 //                 priority: "high"
 //             }
 //         }
-        
+
 //         admin.messaging().send(message)
 //           .then((response) => {
 //             console.log('Successfully sent message to ' + "user", response);
@@ -127,48 +116,50 @@ subscriptionSchedular()
 
 // sendNotificationToAllUser()
 
-
-
 // user app routes
-app.use('/',require('./routes/user_app_routes/getCategoryItems'));
-app.use('/',require('./routes/user_app_routes/getShopItems'));
-app.use('/',require('./routes/user_app_routes/getDistance'));
-app.use('/',require('./routes/user_app_routes/getOffers'));
-app.use('/',require('./routes/user_app_routes/searchRoute'));
-app.use('/',require('./routes/user_app_routes/order/checkoutRoute'));
-app.use('/',require('./routes/user_app_routes/getReviews'));
-app.use('/',require('./routes/user_app_routes/auth/checkUserExsists'));
-app.use('/',require('./routes/user_app_routes/auth/sendOtpRoute'));
-app.use('/',require('./routes/user_app_routes/auth/verifyOtp'));
-app.use('/',require('./routes/user_app_routes/auth/registerUser'));
-app.use('/',require('./routes/user_app_routes/auth/checkPassword'));
-app.use('/',require('./routes/user_app_routes/order/getOrders'));
-app.use('/',require('./routes/user_app_routes/updateFCMToken'));
-app.use('/',require('./routes/user_app_routes/order/getOrder'));
-app.use('/',require('./routes/user_app_routes/getCartMetaData'));
-app.use('/',require('./routes/user_app_routes/getBannerImages'));
-app.use('/',require('./routes/user_app_routes/postFeedback'));
-app.use('/',require('./routes/user_app_routes/payment/getOrderId'));
-app.use('/',require('./routes/user_app_routes/getPickAndDropDetails'))
-app.use('/',require('./routes/user_app_routes/getShopData'))
-app.use('/',require('./routes/user_app_routes/getServiceStatus'))
-app.use('/',require('./routes/user_app_routes/getShopPhoneNo'))
-app.use('/',require('./routes/user_app_routes/getBannerAnimation'))
+app.use('/', require('./routes/user_app_routes/getCategoryItems'));
+app.use('/', require('./routes/user_app_routes/getShopItems'));
+app.use('/', require('./routes/user_app_routes/getDistance'));
+app.use('/', require('./routes/user_app_routes/getOffers'));
+app.use('/', require('./routes/user_app_routes/searchRoute'));
+app.use('/', require('./routes/user_app_routes/order/checkoutRoute'));
+app.use('/', require('./routes/user_app_routes/getReviews'));
+app.use('/', require('./routes/user_app_routes/auth/checkUserExsists'));
+app.use('/', require('./routes/user_app_routes/auth/sendOtpRoute'));
+app.use('/', require('./routes/user_app_routes/auth/verifyOtp'));
+app.use('/', require('./routes/user_app_routes/auth/registerUser'));
+app.use('/', require('./routes/user_app_routes/auth/checkPassword'));
+app.use('/', require('./routes/user_app_routes/order/getOrders'));
+app.use('/', require('./routes/user_app_routes/updateFCMToken'));
+app.use('/', require('./routes/user_app_routes/order/getOrder'));
+app.use('/', require('./routes/user_app_routes/getCartMetaData'));
+app.use('/', require('./routes/user_app_routes/getBannerImages'));
+app.use('/', require('./routes/user_app_routes/postFeedback'));
+app.use('/', require('./routes/user_app_routes/payment/getOrderId'));
+app.use('/', require('./routes/user_app_routes/getPickAndDropDetails'));
+app.use('/', require('./routes/user_app_routes/getShopData'));
+app.use('/', require('./routes/user_app_routes/getServiceStatus'));
+app.use('/', require('./routes/user_app_routes/getShopPhoneNo'));
+app.use('/', require('./routes/user_app_routes/getBannerAnimation'));
+app.use('/', require('./routes/user_app_routes/getFreeDeliveryOffers'));
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
 app.use('/', require('./routes/delivery_sathi/sendLocationUpdates'));
-app.use('/', require('./routes/delivery_sathi/getDeliveryOrders'))
-app.use('/', require('./routes/delivery_sathi/getDeliverySathiInfo'))
+app.use('/', require('./routes/delivery_sathi/getDeliveryOrders'));
+app.use('/', require('./routes/delivery_sathi/getDeliverySathiInfo'));
 app.use('/', require('./routes/delivery_sathi/updateItemsOnTheWayPrice'));
 app.use('/', require('./routes/delivery_sathi/cancelItemsOnTheWay'));
 app.use('/', require('./routes/delivery_sathi/getCashInHand'));
 app.use('/', require('./routes/delivery_sathi/auth/login'));
-app.use('/', require('./routes/delivery_sathi/earnings/getDeliverySathiDayInfo'))
-app.use('/', require('./routes/delivery_sathi/updateOrderStatusSathi'))
-app.use('/', require('./routes/delivery_sathi/orders/acceptOrder'))
-app.use('/', require('./routes/delivery_sathi/orders/rejectOrder'))
-app.use('/', require('./routes/delivery_sathi/getNotRespondedOrders'))
+app.use(
+  '/',
+  require('./routes/delivery_sathi/earnings/getDeliverySathiDayInfo')
+);
+app.use('/', require('./routes/delivery_sathi/updateOrderStatusSathi'));
+app.use('/', require('./routes/delivery_sathi/orders/acceptOrder'));
+app.use('/', require('./routes/delivery_sathi/orders/rejectOrder'));
+app.use('/', require('./routes/delivery_sathi/getNotRespondedOrders'));
 
 // partner app routes
 app.use('/', require('./routes/partner_routes/orders/getOrders'));
@@ -179,42 +170,57 @@ app.use('/', require('./routes/partner_routes/orders/acceptOrder'));
 app.use('/', require('./routes/partner_routes/menu_items/getShopItems'));
 app.use('/', require('./routes/partner_routes/menu_items/updateShopItem'));
 app.use('/', require('./routes/partner_routes/menu_items/createNewCategory'));
-app.use('/', require('./routes/partner_routes/updateShopData'))
-app.use('/', require('./routes/partner_routes/auth/login'))
-app.use('/', require('./routes/partner_routes/offers/getShopOffers'))
-app.use('/', require('./routes/partner_routes/offers/putOffers'))
-app.use('/', require('./routes/partner_routes/orders/changeShopStatus'))
-app.use('/', require('./routes/partner_routes/offers/deleteOffers'))
-app.use('/', require('./routes/partner_routes/getShopStatus'))
-app.use('/', require('./routes/partner_routes/menu_items/editCategory'))
-app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'))
-app.use('/', require('./routes/partner_routes/registerShop'))
-app.use('/partner/subscription', require('./routes/partner_routes/subscription/router.partner.subscription'))
-app.use('/partner/payment', require('./routes/partner_routes/payment/router.partner.payment'))
-app.use('/', require('./routes/partner_routes/offers/setDisplayOffer'))
-app.use('/', require('./routes/partner_routes/menu_items/turnOffCategory'))
+app.use('/', require('./routes/partner_routes/updateShopData'));
+app.use('/', require('./routes/partner_routes/auth/login'));
+app.use('/', require('./routes/partner_routes/offers/getShopOffers'));
+app.use('/', require('./routes/partner_routes/offers/putOffers'));
+app.use('/', require('./routes/partner_routes/orders/changeShopStatus'));
+app.use('/', require('./routes/partner_routes/offers/deleteOffers'));
+app.use('/', require('./routes/partner_routes/getShopStatus'));
+app.use('/', require('./routes/partner_routes/menu_items/editCategory'));
+app.use('/', require('./routes/partner_routes/orders/getActionNeededOrders'));
+app.use('/', require('./routes/partner_routes/registerShop'));
+app.use(
+  '/partner/subscription',
+  require('./routes/partner_routes/subscription/router.partner.subscription')
+);
+app.use(
+  '/partner/payment',
+  require('./routes/partner_routes/payment/router.partner.payment')
+);
+app.use('/', require('./routes/partner_routes/offers/setDisplayOffer'));
+app.use('/', require('./routes/partner_routes/menu_items/turnOffCategory'));
 
 // admin app routes
-app.use('/', require('./routes/admin_routes/admin_shop/getPendingOrders'))
-app.use('/', require('./routes/admin_routes/sathi_routes/getAllDeliverySathisInfo'))
-app.use('/', require('./routes/admin_routes/sathi_routes/assignDeliverySathi'))
-app.use('/', require('./routes/admin_routes/admin_shop/cancelOrder'))
-app.use('/', require('./routes/admin_routes/sathi_routes/addDeliverySathiIncome'))
-app.use('/', require('./routes/admin_routes/getOrders'))
-app.use('/', require('./routes/admin_routes/user_routes/setUserAppData'))
-app.use('/', require('./routes/admin_routes/getApnaMzpReviews'))
-app.use('/', require('./routes/admin_routes/searchShop'))
-app.use('/', require('./routes/admin_routes/createShop'))
-app.use('/', require('./routes/admin_routes/user_routes/closeAppShops'))
-app.use('/', require('./routes/admin_routes/admin_shop/getshopMenuItems'))
-app.use('/', require('./routes/admin_routes/user_routes/changeBanners'))
-app.use('/', require('./routes/admin_routes/sendBulkNotification'))
-app.use('/', require('./routes/admin_routes/createDirectOrder'))
-app.use('/', require('./routes/admin_routes/changeServiceStatus'))
-app.use('/', require('./routes/admin_routes/sathi_routes/updateDeliverySathiData'))
-app.use('/', require('./routes/admin_routes/getAllShops'))
-app.use('/', require('./routes/admin_routes/subscription/updateSubscription'))
-app.use('/', require('./routes/admin_routes/updateOrderStatus'))
+app.use('/', require('./routes/admin_routes/admin_shop/getPendingOrders'));
+app.use(
+  '/',
+  require('./routes/admin_routes/sathi_routes/getAllDeliverySathisInfo')
+);
+app.use('/', require('./routes/admin_routes/sathi_routes/assignDeliverySathi'));
+app.use('/', require('./routes/admin_routes/admin_shop/cancelOrder'));
+app.use(
+  '/',
+  require('./routes/admin_routes/sathi_routes/addDeliverySathiIncome')
+);
+app.use('/', require('./routes/admin_routes/getOrders'));
+app.use('/', require('./routes/admin_routes/user_routes/setUserAppData'));
+app.use('/', require('./routes/admin_routes/getApnaMzpReviews'));
+app.use('/', require('./routes/admin_routes/searchShop'));
+app.use('/', require('./routes/admin_routes/createShop'));
+app.use('/', require('./routes/admin_routes/user_routes/closeAppShops'));
+app.use('/', require('./routes/admin_routes/admin_shop/getshopMenuItems'));
+app.use('/', require('./routes/admin_routes/user_routes/changeBanners'));
+app.use('/', require('./routes/admin_routes/sendBulkNotification'));
+app.use('/', require('./routes/admin_routes/createDirectOrder'));
+app.use('/', require('./routes/admin_routes/changeServiceStatus'));
+app.use(
+  '/',
+  require('./routes/admin_routes/sathi_routes/updateDeliverySathiData')
+);
+app.use('/', require('./routes/admin_routes/getAllShops'));
+app.use('/', require('./routes/admin_routes/subscription/updateSubscription'));
+app.use('/', require('./routes/admin_routes/updateOrderStatus'));
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
@@ -348,143 +354,134 @@ app.use('/', require('./routes/admin_routes/updateOrderStatus'))
 //     console.log(result)
 // })
 
-// const Order = require('./models/Order')
-// const Shop = require('./models/Shop')
-// const Subscription = require('./models/Subscription')
+// const Order = require('./models/Order');
+// const Shop = require('./models/Shop');
+// const Subscription = require('./models/Subscription');
 
-// Order.find({}).then(async (orders)=>{
-//     const result = {};
-//     for(let i=0;i<orders.length;i++){
-//         const order = orders[i]
-//         const createdAt = orders[i].created_at.toDateString().split(' ');
-//         const shop = await Shop.findOne({_id: order.shopID})
+// Order.find({}).then(async (orders) => {
+//   const result = {};
+//   console.log('started');
+//   for (let i = 0; i < orders.length; i++) {
+//     const order = orders[i];
+//     const createdAt = orders[i].created_at.toDateString().split(' ');
+//     const shop = await Shop.findOne({ _id: order.shopID });
 
-//         if(shop == null) continue;
+//     if (shop == null) continue;
 
-
-//         if(result[shop.name] == null){
-//             result[shop.name] = {}
-//         }
-
-//         const monthKey = (createdAt[1] + "-" + createdAt[3]).toLowerCase();
-
-//         if(result[shop.name][monthKey]){
-//             result[shop.name][monthKey].totalSales += order.billingDetails.itemTotal;
-//         } 
-//         else {
-//             const curr = {
-//                 totalSales: order.billingDetails.itemTotal,
-//                 amountPaid: 0
-//             }
-//             result[shop.name][monthKey] = curr;
-//         }
-
+//     if (result[shop.name] == null) {
+//       result[shop.name] = {};
 //     }
 
-//     // const subs = await Subscription.find({});
-//     // for(let i=0;i<subs.length;i++){
-//     //     const sub = subs[i]
-//     //     const shop = await Shop.findOne({_id: sub.shopId})
+//     const monthKey = (createdAt[1] + '-' + createdAt[3]).toLowerCase();
+//     if (monthKey != 'jan-2023') continue;
 
-//     //     if(shop == null) continue;
+//     if (result[shop.name][monthKey]) {
+//       result[shop.name][monthKey].totalSales += order.billingDetails.itemTotal;
+//     } else {
+//       const curr = {
+//         totalSales: order.billingDetails.itemTotal,
+//         amountPaid: 0,
+//       };
+//       result[shop.name][monthKey] = curr;
+//     }
+//   }
 
-//     //     if(result[shop.name] == null){
-//     //         result[shop.name] = {}
-//     //     }
+//   const subs = await Subscription.find({});
+//   for (let i = 0; i < subs.length; i++) {
+//     const sub = subs[i];
+//     const shop = await Shop.findOne({ _id: sub.shopId });
 
-//     //     const createdAt = sub.startDate.toDateString().split(' ');
-//     //     const monthKey = (createdAt[1] + "-" + createdAt[3]).toLowerCase();
+//     if (shop == null) continue;
 
-//     //     if(result[shop.name][monthKey]){
-//     //         result[shop.name][monthKey].amountPaid = sub.payedAmount;
-//     //     } 
-//     //     else {
-//     //         const curr = {
-//     //             totalSales: 0,
-//     //             amountPaid: sub.payedAmount
-//     //         }
-//     //         result[shop.name][monthKey] = curr;
-//     //     }
+//     if (result[shop.name] == null) {
+//       result[shop.name] = {};
+//     }
 
-//     // }
-    
+//     const createdAt = sub.startDate.toDateString().split(' ');
+//     const monthKey = (createdAt[1] + '-' + createdAt[3]).toLowerCase();
 
-//     console.log(result)
-// })
+//     if (monthKey != 'jan-2023') continue;
 
+//     if (result[shop.name][monthKey]) {
+//       result[shop.name][monthKey].amountPaid = sub.payedAmount;
+//     } else {
+//       const curr = {
+//         totalSales: 0,
+//         amountPaid: sub.payedAmount,
+//       };
+//       result[shop.name][monthKey] = curr;
+//     }
+//   }
 
+//   console.log(result);
+// });
 
 // payment test
-const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment')
+const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment');
 
-app.get('/getToken', async (req,res,next)=>{
-    const { orderId } = req.query; 
-    const data = await generateToken(orderId);
-    console.log(data)
-    res.json({
-        token: data.body.txnToken
-    })
-})
+app.get('/getToken', async (req, res, next) => {
+  const { orderId } = req.query;
+  const data = await generateToken(orderId);
+  console.log(data);
+  res.json({
+    token: data.body.txnToken,
+  });
+});
 
-const Razorpay = require('razorpay')
-const instance = new Razorpay({ key_id: 'rzp_test_yWzsnOXTqAZItl', key_secret: 'QR5dXhIw6BJNhTX9LbFUfzN9' })
+const Razorpay = require('razorpay');
+const instance = new Razorpay({
+  key_id: 'rzp_test_yWzsnOXTqAZItl',
+  key_secret: 'QR5dXhIw6BJNhTX9LbFUfzN9',
+});
 
-app.get('/getOrderIdTest', async (req,res,next)=>{
+app.get('/getOrderIdTest', async (req, res, next) => {
+  var options = {
+    amount: 100,
+    currency: 'INR',
+    receipt: 'Up63Cafe_payment_recipt',
+    notes: {
+      email: 'vaibhavbhardwaaj@gmail.com',
+    },
+  };
 
-    var options = {
-		amount: 100,  
-		currency: "INR",
-		receipt: "Up63Cafe_payment_recipt",
-		notes:{
-		  email: "vaibhavbhardwaaj@gmail.com"
-		 }
-	};
+  try {
+    instance.orders.create(options, function (err, order) {
+      if (err) throw err;
 
-    try{
-        instance.orders.create(options,function(err,order){
-            if(err) throw err
+      console.log(order);
+      res.json(order);
+    });
 
-            console.log(order)
-            res.json(order)
-          })
+    // res.json({
+    //     success: true
+    // })
+  } catch (err) {
+    next(err);
+  }
+});
 
-        // res.json({
-        //     success: true
-        // })
+app.get('/verifypayment', async (req, res, next) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+});
 
-    }
-    catch(err){
-        next(err)
-    }
-
-})
-
-app.get('/verifypayment', async (req,res,next)=>{
-    try{
-
-    }
-    catch(err){
-        next(err)
-    }
-})
-
-
-app.get('/privacy_policy', async (req,res,next)=>{
-    res.sendFile(path.resolve(__dirname,'./views/privacyPolicy.html'))
-})
+app.get('/privacy_policy', async (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, './views/privacyPolicy.html'));
+});
 
 // global error handler
-app.use((err,req,res,next)=>{
-    res.status(err.status || 500)
-    res.json({
-        success: false,
-        status: (err.status || 500),
-        desc: (err.desc || err.message || "Something went wrong"),
-        data: err.data
-    })
-})
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    success: false,
+    status: err.status || 500,
+    desc: err.desc || err.message || 'Something went wrong',
+    data: err.data,
+  });
+});
 
-
-app.listen(process.env.PORT,()=>{
-    console.log(`Server Running At Port ${process.env.PORT}`);
-})
+app.listen(process.env.PORT, () => {
+  console.log(`Server Running At Port ${process.env.PORT}`);
+});
