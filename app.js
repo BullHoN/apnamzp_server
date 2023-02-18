@@ -68,6 +68,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(morgan('dev'));
 app.use(compression());
+app.use(express.static('views'));
 
 // mongoDB Connect
 connectDB();
@@ -417,55 +418,55 @@ app.use('/', require('./routes/admin_routes/updateOrderStatus'));
 // });
 
 // payment test
-const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment');
+// const generateToken = require('./routes/user_app_routes/payment/initOnlinePayment');
 
-app.get('/getToken', async (req, res, next) => {
-  const { orderId } = req.query;
-  const data = await generateToken(orderId);
-  console.log(data);
-  res.json({
-    token: data.body.txnToken,
-  });
-});
+// app.get('/getToken', async (req, res, next) => {
+//   const { orderId } = req.query;
+//   const data = await generateToken(orderId);
+//   console.log(data);
+//   res.json({
+//     token: data.body.txnToken,
+//   });
+// });
 
-const Razorpay = require('razorpay');
-const instance = new Razorpay({
-  key_id: 'rzp_test_yWzsnOXTqAZItl',
-  key_secret: 'QR5dXhIw6BJNhTX9LbFUfzN9',
-});
+// const Razorpay = require('razorpay');
+// const instance = new Razorpay({
+//   key_id: 'rzp_test_yWzsnOXTqAZItl',
+//   key_secret: 'QR5dXhIw6BJNhTX9LbFUfzN9',
+// });
 
-app.get('/getOrderIdTest', async (req, res, next) => {
-  var options = {
-    amount: 100,
-    currency: 'INR',
-    receipt: 'Up63Cafe_payment_recipt',
-    notes: {
-      email: 'vaibhavbhardwaaj@gmail.com',
-    },
-  };
+// app.get('/getOrderIdTest', async (req, res, next) => {
+//   var options = {
+//     amount: 100,
+//     currency: 'INR',
+//     receipt: 'Up63Cafe_payment_recipt',
+//     notes: {
+//       email: 'vaibhavbhardwaaj@gmail.com',
+//     },
+//   };
 
-  try {
-    instance.orders.create(options, function (err, order) {
-      if (err) throw err;
+//   try {
+//     instance.orders.create(options, function (err, order) {
+//       if (err) throw err;
 
-      console.log(order);
-      res.json(order);
-    });
+//       console.log(order);
+//       res.json(order);
+//     });
 
-    // res.json({
-    //     success: true
-    // })
-  } catch (err) {
-    next(err);
-  }
-});
+//     // res.json({
+//     //     success: true
+//     // })
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
-app.get('/verifypayment', async (req, res, next) => {
-  try {
-  } catch (err) {
-    next(err);
-  }
-});
+// app.get('/verifypayment', async (req, res, next) => {
+//   try {
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 app.get('/privacy_policy', async (req, res, next) => {
   res.sendFile(path.resolve(__dirname, './views/privacyPolicy.html'));
@@ -480,6 +481,10 @@ app.use((err, req, res, next) => {
     desc: err.desc || err.message || 'Something went wrong',
     data: err.data,
   });
+});
+
+app.all('/', async (req, res) => {
+  res.sendFile(path.resolve(__dirname, './views/index.html'));
 });
 
 app.listen(process.env.PORT, () => {
