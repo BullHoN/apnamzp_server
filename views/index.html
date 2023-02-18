@@ -12,23 +12,31 @@
     <link rel="icon" href="./images/main_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     
     <nav id="navbar">
         <h2><a href="#" id="nav-heading"><img src="./images/main_icon.png" /> Apna MZP</a></h2>
         <ul id="menu-routes">
-            <li><a href="#">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="#about">About Us</a></li>
             <li><a href="#menu">Menu</a></li>
             <li><a href="#contact">Contact Us</a></li>
         </ul>
-        <h5 id="number">+91 9653090858</h5>
+        <h5 id="number">+91 9566810009</h5>
     </nav>    
 
     <section id="main-heading">
         <div class="container" id="main_content">
-            <img src="./images/banner_image.png" id="banner" alt="up63cafe banner image">
+            <div class="owl-carousel owl-theme" id="banner">
+                <img src="./images/banner_image.png" id="banner_img" alt="up63cafe banner image"> 
+                <img src="./images/6d366638-8125-447d-8320-f863384d5b9e.jpg" id="banner_img" alt="up63cafe banner image"> 
+                <img src="./images/d8b33745-0782-474e-bee8-315f04fa3b92.jpg" id="banner_img" alt="up63cafe banner image"> 
+                <img src="./images/f0374f64-4f33-47dc-8657-3a54afee4dd5.jpg" id="banner_img" alt="up63cafe banner image"> 
+            </div>
             <div id="banner-content">
                 <div id="divider"></div>
                 <div id="content-text">
@@ -141,8 +149,8 @@
             </div>            
             <div id="connect" class="footer-item">
                 <h3>CONNECT</h3>
-                <h4>+91 9653090858</h4>
-                <h4>+91 9794110044 ( For Technical )</h4>
+                <h4>+91 9565820009</h4>
+                <h4>+91 9565810009 ( For Technical )</h4>
                 <h4 style="font-size: 13px;">apnamzp63@gmail.com</h4>
                 <h4><a href="https://www.instagram.com/apnamzp63/">Instagram</a></h4>
                 <h4><a href="https://www.facebook.com/profile.php?id=100085538875075">Facebook</a></h4>
@@ -150,8 +158,8 @@
             <div id="legal" class="footer-item">
                 <h3>LEGAL</h3>
                 <h4><a href="./privacy-policy.html">Privacy Policy</a></h4>
-                <h4><a href="/refund-and-cancellation.html">Refund & Cancellation</a></h4>
-                <h4><a href="/terms-and-condition.html">Terms & Condition</a></h4>
+                <h4><a href="./refund-and-cancellation.html">Refund & Cancellation</a></h4>
+                <h4><a href="./terms-and-condition.html">Terms & Condition</a></h4>
             </div>    
             <div id="download" class="footer-item">
                 <a href="https://play.google.com/store/apps/details?id=com.avit.apnamzp"><img id="google" src="./images/download.png" alt="up63cafe download from playstore"></a>
@@ -159,6 +167,17 @@
         </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script>
+        $(document).ready(function(){
+  $('.owl-carousel').owlCarousel({
+    loop: true,
+    autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:true,
+    margin:10,
+    items:1
+  });
+});
+    </script>
 </body>
 </html>
