@@ -143,6 +143,8 @@ app.use('/', require('./routes/user_app_routes/getServiceStatus'));
 app.use('/', require('./routes/user_app_routes/getShopPhoneNo'));
 app.use('/', require('./routes/user_app_routes/getBannerAnimation'));
 app.use('/', require('./routes/user_app_routes/getFreeDeliveryOffers'));
+app.use('/', require('./routes/user_app_routes/order/createOrder'));
+app.use('/', require('./routes/user_app_routes/payment/paymentConfimation'))
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
