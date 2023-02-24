@@ -4,7 +4,7 @@ const Shop = require('../../models/Shop');
 
 router.get('/user/free-delivery-offers', async (req, res, next) => {
   try {
-    const shops = await Shop.find({});
+    const shops = await Shop.find({ showShop: true });
     let result = [];
     shops.forEach((shop) => {
       let temp = Number.parseInt(shop.pricingDetails.minFreeDeliveryPrice);
@@ -16,6 +16,12 @@ router.get('/user/free-delivery-offers', async (req, res, next) => {
           discountAbove: shop.pricingDetails.minFreeDeliveryPrice,
         });
       }
+    });
+
+    result.sort((a, b) => {
+      return (
+        Number.parseInt(a.discountAbove) - Number.parseInt(b.discountAbove)
+      );
     });
 
     res.json(result);
