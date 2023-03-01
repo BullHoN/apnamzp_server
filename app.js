@@ -304,28 +304,29 @@ app.use('/', require('./routes/admin_routes/updateOrderStatus'));
 //     console.log('done')
 // })
 
-// const User = require('./models/User')
-// const Order = require('./models/Order')
-// const Shop = require('./models/Shop')
+// const User = require('./models/User');
+// const Order = require('./models/Order');
+// const Shop = require('./models/Shop');
 
-// User.find({}).then(async (users)=>{
-//     for(let i=0;i<users.length;i++){
-//         const user = users[i]
-//         const orders = await Order.find({userId: user.phoneNo})
+// User.find({}).then(async (users) => {
+//   console.log('sarted');
+//   for (let i = 0; i < users.length; i++) {
+//     const user = users[i];
+//     const orders = await Order.find({ userId: user.phoneNo });
 
-//         if(orders.length == 0){
-//             console.log(`${user.phoneNo}, join date: ${user.created_at}`)
-//         }
+//     // if(orders.length == 0){
+//     //     console.log(`${user.phoneNo}, join date: ${user.created_at}`)
+//     // }
 
-//         // if(orders.length != 1) continue;
+//     // if(orders.length != 1) continue;
 
-//         // const shop = await Shop.findOne({_id: orders[0].shopID})
-//         // if(orders.length > 1 && user.name != shop.name){
-//         //     console.log(`${user.phoneNo} , ${user.name} , ${shop.name} , ${orders.length} , ${orders[0].created_at}`)
-//         // }
+//     // const shop = await Shop.findOne({_id: orders[0].shopID})
+//     if (orders.length >= 20) {
+//       console.log(`${user.phoneNo} , ${user.name} , ${orders.length} `);
 //     }
-//     console.log('done')
-// })
+//   }
+//   console.log('done');
+// });
 
 // const Order = require('./models/Order')
 // const Shop = require('./models/Shop')
