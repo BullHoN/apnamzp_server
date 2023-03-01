@@ -144,7 +144,7 @@ app.use('/', require('./routes/user_app_routes/getShopPhoneNo'));
 app.use('/', require('./routes/user_app_routes/getBannerAnimation'));
 app.use('/', require('./routes/user_app_routes/getFreeDeliveryOffers'));
 app.use('/', require('./routes/user_app_routes/order/createOrder'));
-app.use('/', require('./routes/user_app_routes/payment/paymentConfimation'))
+app.use('/', require('./routes/user_app_routes/payment/paymentConfimation'));
 
 // delivery boy routes
 app.use('/', require('./routes/delivery_sathi/getDeliveryPricing'));
@@ -344,18 +344,24 @@ app.use('/', require('./routes/admin_routes/updateOrderStatus'));
 //     })
 // })
 
-// const Order = require('./models/Order')
-// Order.find({}).then((orders)=>{
-//     const result = {};
-//     for(let i=0;i<orders.length;i++){
-//         const createdAt = orders[i].created_at.toDateString().split(' ');
-//         const key = (createdAt[1] + "-" + createdAt[3]).toLowerCase();
+// const Order = require('./models/Order');
+// Order.find({}).then((orders) => {
+//   const result = {};
+//   for (let i = 0; i < orders.length; i++) {
+//     const createdAt = orders[i].created_at.toDateString().split(' ');
+//     const key = (createdAt[1] + '-' + createdAt[3]).toLowerCase();
 
-//         if(result[key]) result[key]++;
-//         else result[key] = 1;
-//     }
-//     console.log(result)
-// })
+//     if (result[key]) {
+//       result[key].total_orders += 1;
+//       result[key].total_amount += orders[i].billingDetails.totalPay;
+//     } else
+//       result[key] = {
+//         total_orders: 1,
+//         total_amount: orders[i].billingDetails.totalPay,
+//       };
+//   }
+//   console.log(result);
+// });
 
 // const Order = require('./models/Order');
 // const Shop = require('./models/Shop');
