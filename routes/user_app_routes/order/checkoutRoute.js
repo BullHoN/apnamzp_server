@@ -56,7 +56,7 @@ router.post('/checkout', async (req, res, next) => {
 
     if (!shopData.allowCheckout) {
       throw createError.BadRequest(
-        'Shop is currently unavaible for delivery service'
+        'Due To High Traffic Shop is Currently Unavailable'
       );
     }
 

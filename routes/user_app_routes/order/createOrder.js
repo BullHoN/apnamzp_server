@@ -18,6 +18,12 @@ router.post('/user/online/getOrderId', async (req, res, next) => {
       throw httpErrors.BadRequest('Shop is currently Closed');
     }
 
+    if (!shop.allowCheckout) {
+      throw createError.BadRequest(
+        'Due To High Traffic Shop is Currently Unavailable'
+      );
+    }
+
     var options = {
       amount: req.body.amount,
       currency: 'INR',

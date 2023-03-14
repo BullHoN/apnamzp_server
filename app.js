@@ -224,21 +224,22 @@ app.use(
 app.use('/', require('./routes/admin_routes/getAllShops'));
 app.use('/', require('./routes/admin_routes/subscription/updateSubscription'));
 app.use('/', require('./routes/admin_routes/updateOrderStatus'));
+app.use('/', require('./routes/admin_routes/toggleCheckout'))
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
 // })
 
 // test
-// const DeliverySathi = require('./models/DeliverySathi')
+// const DeliverySathi = require('./models/DeliverySathi');
 // const deliverySathi = new DeliverySathi({
-//     phoneNo: "9140200390",
-//     password: "ashwaniApnamzp@324sathi",
-//     isVerified: true
-// })
-// deliverySathi.save().then(()=>{
-//     console.log('saved')
-// })
+//   phoneNo: '7860860330',
+//   password: 'apnamzp@Delivery860p',
+//   isVerified: true,
+// });
+// deliverySathi.save().then(() => {
+//   console.log('saved');
+// });
 
 // db.getCollection('users').find({created_at: { $gte: ISODate("2022-12-18") }}).count()
 // const Shop = require('./models/Shop')
