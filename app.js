@@ -48,7 +48,7 @@ SearchDB.loadData();
 setInterval(() => {
   console.log('Loading Data Into Search Bar');
   SearchDB.loadData();
-}, 1000 * 60 * 30);
+}, 1000 * 60 * 5);
 
 // require('./util/localDB/localDB')
 
@@ -224,7 +224,7 @@ app.use(
 app.use('/', require('./routes/admin_routes/getAllShops'));
 app.use('/', require('./routes/admin_routes/subscription/updateSubscription'));
 app.use('/', require('./routes/admin_routes/updateOrderStatus'));
-app.use('/', require('./routes/admin_routes/toggleCheckout'))
+app.use('/', require('./routes/admin_routes/toggleCheckout'));
 
 // app.use(async (req,res,next)=>{
 //     next(createError.NotFound("This Route Does Not Exsist"));
