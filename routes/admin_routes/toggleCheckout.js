@@ -8,11 +8,8 @@ router.post('/apna_mzp/admin/toogle_checkout', async (req, res, next) => {
     const allShops = req.query.allShops;
 
     if (allShops == 'true') {
-      const shops = await Shop.find({});
-      for (let i = 0; i < shops.length; i++) {
-        shops[i].allowCheckout = !shops[i].allowCheckout;
-        await shops[i].save();
-      }
+      const action = req.query.action == 'true';
+      await Shop.updateMany({}, { allowCheckout: action });
     } else {
       const body = req.body;
 
