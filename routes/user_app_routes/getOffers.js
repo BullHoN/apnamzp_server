@@ -39,6 +39,7 @@ router.get('/getOffers', async (req, res, next) => {
       res.json(data);
     } else {
       const data = await Offer.find({
+        showShop: true,
         $or: [
           {
             isApnaMzpDiscount: true,
