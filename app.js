@@ -311,22 +311,46 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 
 // User.find({}).then(async (users) => {
 //   console.log('sarted');
+//   let data = {};
 //   for (let i = 0; i < users.length; i++) {
 //     const user = users[i];
-//     const orders = await Order.find({ userId: user.phoneNo });
+//     const orders = await Order.find({
+//       userId: user.phoneNo,
+//       orderStatus: 6,
+//     });
 
 //     // if(orders.length == 0){
 //     //     console.log(`${user.phoneNo}, join date: ${user.created_at}`)
 //     // }
 
-//     // if(orders.length != 1) continue;
+//     // if (orders.length != 1) continue;
 
-//     // const shop = await Shop.findOne({_id: orders[0].shopID})
-//     if (orders.length >= 20) {
-//       console.log(`${user.phoneNo} , ${user.name} , ${orders.length} `);
+//     // const shop = await Shop.findOne({ _id: orders[0].shopID });
+//     // const createdAt = orders[0].created_at.toString();
+//     // if (orders.length == 1 && createdAt.includes('2023')) {
+//     //   console.log(
+//     //     `${user.phoneNo} , ${user.name} , ${shop.name} , ${createdAt}`
+//     //   );
+//     // }
+
+//     if (orders.length >= 10) {
+//       for (let i = 0; i < orders.length; i++) {
+//         const createdAt = orders[i].created_at.toDateString().split(' ');
+//         const key = (createdAt[1] + '-' + createdAt[3]).toLowerCase();
+
+//         if (!key.includes('2023')) continue;
+
+//         if (!data[key]) {
+//           data[key][user.phoneNo]++;
+//         } else {
+//           data[key][user.phoneNo] = 1;
+//         }
+
+//         console.log(data[key]);
+//       }
 //     }
 //   }
-//   console.log('done');
+//   console.log(data);
 // });
 
 // const Order = require('./models/Order')
