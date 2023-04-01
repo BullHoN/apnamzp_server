@@ -1,95 +1,105 @@
 const express = require('express');
-const Order = require('../../models/Order')
-const Shop = require('../../models/Shop')
-const User = require('../../models/User')
+const Order = require('../../models/Order');
+const Shop = require('../../models/Shop');
+const User = require('../../models/User');
 const router = express.Router();
 
-router.get('/sathi/orders/:delivery_sathi',async (req,res,next)=>{
-    const delivery_sathi = req.params.delivery_sathi;
-    const order_status = req.query.order_status;
+router.get('/sathi/orders/:delivery_sathi', async (req, res, next) => {
+  const delivery_sathi = req.params.delivery_sathi;
+  const order_status = req.query.order_status;
 
-    try{
-        let orders;
-        if(order_status == 5){
-            orders = await Order.find({assignedDeliveryBoy: delivery_sathi,
-                orderStatus: Number.parseInt(order_status), orderAcceptedByDeliverySathi: true});
-        }
-        else {
-            orders = await Order.find({assignedDeliveryBoy: delivery_sathi,
-                orderStatus: {
-                    $lte: Number.parseInt(order_status)
-                },
-                orderAcceptedByDeliverySathi: true
-            });
-        }
-        
-    
-        let mappedOrders = []
-        for(let i=0;i<orders.length;i++){
-            const order = orders[i];
-            const shop = await Shop.findOne({_id: order.shopID})
-            const customer = await User.findOne({phoneNo: order.userId})
-            
-            let customerName = customer ? customer.name : "No-Name";
-
-            mappedOrders.push({
-                _id: order._id.toString(),
-                orderItems: order.orderItems,
-                shopInfo: {
-                    name: shop.name,
-                    latitude: shop.addressData.latitude,
-                    longitude: shop.addressData.longitude,
-                    phoneNo: shop.phoneNO,
-                    rawAddress: shop.addressData.mainAddress
-                },
-                userInfo: {
-                    name: customerName,
-                    latitude: order.deliveryAddress.latitude,
-                    longitude: order.deliveryAddress.longitude,
-                    phoneNo: order.userId,
-                    rawAddress: order.deliveryAddress.rawAddress,
-                    landmark: order.deliveryAddress.landmark,
-                    houseNo: order.deliveryAddress.houseNo
-                },
-                itemsOnTheWay: order.itemsOnTheWay,
-                totalAmountToTake: order.billingDetails.totalPay,
-                orderStatus: order.orderStatus,
-                isPaid: order.isPaid,
-                totalAmountToGive: totalAmountToGive(order),
-                itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
-                itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost,
-                deliverySathiIncome: order.deliverySathiIncome
-            })
-        }
-
-        res.json(mappedOrders);
-    }
-    catch(error){
-        next(error)
+  try {
+    let orders;
+    if (order_status == 5) {
+      orders = await Order.find({
+        assignedDeliveryBoy: delivery_sathi,
+        orderStatus: Number.parseInt(order_status),
+        orderAcceptedByDeliverySathi: true,
+        tempOrder: false,
+      });
+    } else {
+      orders = await Order.find({
+        assignedDeliveryBoy: delivery_sathi,
+        orderStatus: {
+          $lte: Number.parseInt(order_status),
+        },
+        orderAcceptedByDeliverySathi: true,
+        tempOrder: false,
+      });
     }
 
-})
+    let mappedOrders = [];
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      const shop = await Shop.findOne({ _id: order.shopID });
+      const customer = await User.findOne({ phoneNo: order.userId });
 
-function totalAmountToGive(order){
-    let totalReceivingAmount = 0;
-    if(order.offerCode != null && !order.offerCode.includes("APNA")){
-        totalReceivingAmount =  order.billingDetails.itemTotal + order.billingDetails.totalTaxesAndPackingCharge  - order.billingDetails.totalDiscount;
-    }
-    else {
-        totalReceivingAmount =  order.billingDetails.itemTotal +  order.billingDetails.totalTaxesAndPackingCharge  - order.billingDetails.totalDiscount - order.billingDetails.offerDiscountedAmount;
+      let customerName = customer ? customer.name : 'No-Name';
+
+      mappedOrders.push({
+        _id: order._id.toString(),
+        orderItems: order.orderItems,
+        shopInfo: {
+          name: shop.name,
+          latitude: shop.addressData.latitude,
+          longitude: shop.addressData.longitude,
+          phoneNo: shop.phoneNO,
+          rawAddress: shop.addressData.mainAddress,
+        },
+        userInfo: {
+          name: customerName,
+          latitude: order.deliveryAddress.latitude,
+          longitude: order.deliveryAddress.longitude,
+          phoneNo: order.userId,
+          rawAddress: order.deliveryAddress.rawAddress,
+          landmark: order.deliveryAddress.landmark,
+          houseNo: order.deliveryAddress.houseNo,
+        },
+        itemsOnTheWay: order.itemsOnTheWay,
+        totalAmountToTake: order.billingDetails.totalPay,
+        orderStatus: order.orderStatus,
+        isPaid: order.isPaid,
+        totalAmountToGive: totalAmountToGive(order),
+        itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
+        itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost,
+        deliverySathiIncome: order.deliverySathiIncome,
+      });
     }
 
-    if(order.billingDetails.itemTotal >= order.billingDetails.freeDeliveryPrice){
-        totalReceivingAmount -= order.billingDetails.deliveryCharge;
-    }
+    res.json(mappedOrders);
+  } catch (error) {
+    next(error);
+  }
+});
 
-    return  totalReceivingAmount;
+function totalAmountToGive(order) {
+  let totalReceivingAmount = 0;
+  if (order.offerCode != null && !order.offerCode.includes('APNA')) {
+    totalReceivingAmount =
+      order.billingDetails.itemTotal +
+      order.billingDetails.totalTaxesAndPackingCharge -
+      order.billingDetails.totalDiscount;
+  } else {
+    totalReceivingAmount =
+      order.billingDetails.itemTotal +
+      order.billingDetails.totalTaxesAndPackingCharge -
+      order.billingDetails.totalDiscount -
+      order.billingDetails.offerDiscountedAmount;
+  }
+
+  if (
+    order.billingDetails.itemTotal >= order.billingDetails.freeDeliveryPrice
+  ) {
+    totalReceivingAmount -= order.billingDetails.deliveryCharge;
+  }
+
+  return totalReceivingAmount;
 }
 
 // function mapOrders(orders){
 //     return new Promise((resolve,reject)=>{
-        
-//     })    
+
+//     })
 // }
 
 module.exports = router;

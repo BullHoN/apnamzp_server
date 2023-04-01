@@ -29,6 +29,7 @@ router.post('/user/payment/verification', async (req, res, next) => {
       const order = await Order.findOne({ paymentId: orderPaymentId });
       if (order != null) {
         order.paymentId = paymentId;
+        order.tempOrder = false;
         await order.save();
 
         const shopData = await Shop.findOne({ _id: order.shopID });

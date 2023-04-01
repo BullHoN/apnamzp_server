@@ -39,6 +39,7 @@ router.post('/user/online/getOrderId', async (req, res, next) => {
         if (err) throw err;
 
         new_order.paymentId = createdOrder.id;
+        new_order.tempOrder = true;
         const order = await Order.create(new_order);
 
         console.log('order created', order._id);
