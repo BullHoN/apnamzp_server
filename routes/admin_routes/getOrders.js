@@ -12,20 +12,20 @@ router.get('/apna_mzp/admin/orders', async (req, res, next) => {
       orders = await Order.find({
         userId: phoneNo,
         orderStatus: { $gte: 0, $lt: 6 },
+        tempOrder: false,
       });
     } else if (orderId) {
       orders = await Order.find({ _id: orderId });
     } else {
-      orders = await Order.find({ orderStatus: { $gte: 0, $lt: 6 } });
+      orders = await Order.find({
+        orderStatus: { $gte: 0, $lt: 6 },
+        tempOrder: false,
+      });
     }
 
     let mappedOrders = [];
     for (let i = 0; i < orders.length; i++) {
       const order = orders[i];
-
-      if (order.tempOrder) {
-        continue;
-      }
 
       const shop = await Shop.findOne({ _id: order.shopID });
       const user = await User.findOne({ phoneNo: order.userId });
