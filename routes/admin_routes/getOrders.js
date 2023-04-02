@@ -23,7 +23,7 @@ router.get('/apna_mzp/admin/orders', async (req, res, next) => {
     for (let i = 0; i < orders.length; i++) {
       const order = orders[i];
 
-      if (order.paymentId != null && order.paymentId.includes('order')) {
+      if (order.tempOrder) {
         continue;
       }
 
