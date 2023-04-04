@@ -233,12 +233,17 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 // test
 // const DeliverySathi = require('./models/DeliverySathi');
 // const deliverySathi = new DeliverySathi({
-//   phoneNo: '7860860330',
-//   password: 'apnamzp@Delivery860p',
+//   phoneNo: '7985914177',
+//   password: 'sathi@Rajan@591##',
 //   isVerified: true,
 // });
 // deliverySathi.save().then(() => {
 //   console.log('saved');
+// });
+
+// const Order = require('./models/Order');
+// Order.updateMany({}, { tempOrder: false }).then(() => {
+//   console.log('sfdsdgsdg');
 // });
 
 // db.getCollection('users').find({created_at: { $gte: ISODate("2022-12-18") }}).count()

@@ -40,6 +40,11 @@ router.post('/user/online/getOrderId', async (req, res, next) => {
 
         new_order.paymentId = createdOrder.id;
         new_order.tempOrder = true;
+
+        if (new_order.adminShopService) {
+          new_order.expectedDeliveryTime = '15min';
+        }
+
         const order = await Order.create(new_order);
 
         console.log('order created', order._id);

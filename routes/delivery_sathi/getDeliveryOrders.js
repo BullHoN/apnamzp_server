@@ -59,7 +59,10 @@ router.get('/sathi/orders/:delivery_sathi', async (req, res, next) => {
         totalAmountToTake: order.billingDetails.totalPay,
         orderStatus: order.orderStatus,
         isPaid: order.isPaid,
-        totalAmountToGive: totalAmountToGive(order),
+        totalAmountToGive: getTotalAmountToGiveShop(
+          order.billingDetails,
+          order.offerCode
+        ),
         itemsOnTheWayCancelled: order.itemsOnTheWayCancelled,
         itemsOnTheWayActualCost: order.billingDetails.itemsOnTheWayActualCost,
         deliverySathiIncome: order.deliverySathiIncome,
@@ -72,25 +75,17 @@ router.get('/sathi/orders/:delivery_sathi', async (req, res, next) => {
   }
 });
 
-function totalAmountToGive(order) {
-  let totalReceivingAmount = 0;
-  if (order.offerCode != null && !order.offerCode.includes('APNA')) {
-    totalReceivingAmount =
-      order.billingDetails.itemTotal +
-      order.billingDetails.totalTaxesAndPackingCharge -
-      order.billingDetails.totalDiscount;
-  } else {
-    totalReceivingAmount =
-      order.billingDetails.itemTotal +
-      order.billingDetails.totalTaxesAndPackingCharge -
-      order.billingDetails.totalDiscount -
-      order.billingDetails.offerDiscountedAmount;
+function getTotalAmountToGiveShop(billingDetails, offerCode) {
+  let totalReceivingAmount =
+    billingDetails.itemTotal +
+    billingDetails.totalTaxesAndPackingCharge +
+    billingDetails.totalTaxesAndPackingCharge;
+  if (offerCode != null && offerCode != '' && !offerCode.includes('APNA')) {
+    totalReceivingAmount -= billingDetails.offerDiscountedAmount;
   }
 
-  if (
-    order.billingDetails.itemTotal >= order.billingDetails.freeDeliveryPrice
-  ) {
-    totalReceivingAmount -= order.billingDetails.deliveryCharge;
+  if (billingDetails.itemTotal >= billingDetails.freeDeliveryPrice) {
+    totalReceivingAmount -= billingDetails.deliveryCharge;
   }
 
   return totalReceivingAmount;
