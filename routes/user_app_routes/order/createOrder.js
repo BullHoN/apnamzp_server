@@ -56,7 +56,7 @@ router.post('/user/online/getOrderId', async (req, res, next) => {
             console.log('order deleted', order._id);
             await Order.findOneAndDelete({ _id: order._id.toString() });
           }
-        }, 1000 * 60 * 2);
+        }, 1000 * 60 * 5);
 
         res.json({
           paymentId: createdOrder.id,
