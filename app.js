@@ -260,6 +260,11 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 // })
 // .catch(err => console.log(err))
 
+const Shop = require('./models/Shop');
+Shop.updateMany({}, { isNewShop: false }).then((out) => {
+  console.log('done');
+});
+
 // const sendNotificationByTopic = require('./util/sendNotificationOnTopic')
 // sendNotificationByTopic("apnamzp_admin", {
 //     "type": "review_created",

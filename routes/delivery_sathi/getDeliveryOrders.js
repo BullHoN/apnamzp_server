@@ -77,9 +77,8 @@ router.get('/sathi/orders/:delivery_sathi', async (req, res, next) => {
 
 function getTotalAmountToGiveShop(billingDetails, offerCode) {
   let totalReceivingAmount =
-    billingDetails.itemTotal +
-    billingDetails.totalTaxesAndPackingCharge +
-    billingDetails.totalTaxesAndPackingCharge;
+    billingDetails.itemTotal + billingDetails.totalTaxesAndPackingCharge;
+
   if (offerCode != null && offerCode != '' && !offerCode.includes('APNA')) {
     totalReceivingAmount -= billingDetails.offerDiscountedAmount;
   }
