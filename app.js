@@ -15,6 +15,7 @@ require('./util/init_redis');
 const path = require('path');
 const createError = require('http-errors');
 const subscriptionSchedular = require('./schedulers/subscription.scheduler');
+const AllRoutes = require('./routes/main');
 
 // const storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
@@ -116,6 +117,9 @@ subscriptionSchedular();
 // }
 
 // sendNotificationToAllUser()
+
+// all routes import
+app.use('/', AllRoutes);
 
 // user app routes
 app.use('/', require('./routes/user_app_routes/getCategoryItems'));
@@ -260,10 +264,10 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 // })
 // .catch(err => console.log(err))
 
-const Shop = require('./models/Shop');
-Shop.updateMany({}, { isNewShop: false }).then((out) => {
-  console.log('done');
-});
+// const Shop = require('./models/Shop');
+// Shop.updateMany({}, { isNewShop: false }).then((out) => {
+//   console.log('done');
+// });
 
 // const sendNotificationByTopic = require('./util/sendNotificationOnTopic')
 // sendNotificationByTopic("apnamzp_admin", {

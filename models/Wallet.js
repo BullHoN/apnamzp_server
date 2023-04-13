@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const walletSchema = mongoose.Schema({
-  userId: {
+  phoneNo: {
     type: String,
     required: true,
+    index: true,
   },
   amount: {
     type: Number,
