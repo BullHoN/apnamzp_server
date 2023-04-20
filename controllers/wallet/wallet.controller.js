@@ -1,6 +1,8 @@
 const httpErrors = require('http-errors');
 const Wallet = require('../../service/wallet/wallet.service');
 const Transaction = require('../../service/transaction/transaction.service');
+const sendNotification = require('../../util/sendNotification');
+const User = require('../../models/User');
 
 module.exports = {
   getWalletByPhoneNo: async (req, res, next) => {
@@ -42,6 +44,13 @@ module.exports = {
       await Wallet.updateWalletAmount(phoneNo, amount);
 
       await Transaction.createNewTransaction(phoneNo, wallet._id, amount);
+
+      const user = await User.findOne({ phoneNo });
+
+      sendNotification(user.fcmId, {
+        title: 'points aa gy friends',
+        desc: 'points aa gy',
+      });
 
       res.json({ success: true });
     } catch (err) {

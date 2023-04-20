@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     otp: String,
+    invitedBy: String,
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );

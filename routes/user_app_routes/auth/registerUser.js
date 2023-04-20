@@ -6,6 +6,7 @@ const User = require('../../../models/User');
 router.post('/registerUser', async (req, res, next) => {
   // Add Some Way to authenticate the token
   const { username, password, phoneNo, name } = req.body;
+  const { invitedBy } = req.query;
 
   try {
     const user = await User.findOne({ phoneNo: phoneNo });
@@ -14,6 +15,8 @@ router.post('/registerUser', async (req, res, next) => {
       throw HttpErrors.BadRequest(
         'You already have account on our Partner/Sathi App'
       );
+    } else if (invitedBy && invitedBy.length > 0) {
+      user.invitedBy = invitedBy;
     }
 
     user.name = username;
