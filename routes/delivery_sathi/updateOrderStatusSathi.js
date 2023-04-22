@@ -83,16 +83,16 @@ router.post('/sathi/order/updateStatus', async (req, res, next) => {
     const notificationKey =
       order.orderStatus == 5 ? 'rider_on_the_way' : 'order_delivered';
 
-    if (order.orderStatus == 6 && user.invitedBy) {
-      const invitedBy = user.invitedBy;
-      user.invitedBy = undefined;
-      await user.save();
+    // if (order.orderStatus == 6 && user.invitedBy) {
+    //   const invitedBy = user.invitedBy;
+    //   user.invitedBy = undefined;
+    //   await user.save();
 
-      await axios.post('https://apnamzp.in/wallet/', {
-        phoneNo: invitedBy,
-        amount: 20, // GET FROM REDIS
-      });
-    }
+    //   await axios.post('https://apnamzp.in/wallet/', {
+    //     phoneNo: invitedBy,
+    //     amount: 20, // GET FROM REDIS
+    //   });
+    // }
 
     if (user && user.fcmId) {
       sendNotification(user.fcmId, {
