@@ -245,6 +245,20 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 //   console.log('saved');
 // });
 
+const User = require('./models/User');
+User.findOne({ phoneNo: '1234567890' }).then((user) => {
+  if (!user) {
+    User.create({
+      phoneNo: '1234567890',
+      name: 'Test',
+      isVerified: true,
+      otp: '1234',
+    }).then(() => {
+      console.log('Google play test user created');
+    });
+  }
+});
+
 // const Order = require('./models/Order');
 // Order.updateMany({}, { tempOrder: false }).then(() => {
 //   console.log('sfdsdgsdg');
@@ -255,6 +269,26 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 // Shop.updateMany({},{allowSelfPickup: true,allowSelfPickupCOD: false}).then(()=>{
 //     console.log("done")
 // })
+
+// const Order = require('./models/Order');
+
+// Order.find({ created_at: { $gte: new Date('2023-04-26') } }).then((orders) => {
+//   const res = {};
+//   orders.forEach((o) => {
+//     const currKey = o.created_at
+//       .toString()
+//       .split(' 2023')[0]
+//       .replaceAll(' ', '-');
+
+//     if (res[currKey] != null) {
+//       res[currKey] += o.billingDetails.itemTotal;
+//     } else {
+//       res[currKey] = o.billingDetails.itemTotal;
+//     }
+//   });
+
+//   console.log(res);
+// });
 
 // const ShopItem = require('./models/ShopItem')
 // ShopItem.findByIdAndUpdate(
