@@ -36,9 +36,9 @@ router.get('/partner/accept_order', async (req, res, next) => {
     if (waitingTime <= 0) {
       await assignDeliverySathi(order);
     } else {
-      // setTimeout(async ()=>{
-      await assignDeliverySathi(order);
-      // },waitingTime * 60 * 1000)
+      setTimeout(async () => {
+        await assignDeliverySathi(order);
+      }, 60 * 1000);
     }
 
     User.findOne({ phoneNo: user_id })
