@@ -353,6 +353,15 @@ User.findOne({ phoneNo: '1234567890' }).then((user) => {
 //     console.log('done')
 // })
 
+// const Order = require('./models/Order');
+// Order.find({
+//   shopID: '636e0d7538e19c86c0d436d1',
+//   created_at: { $gte: new Date('2023-05-01') },
+//   isPaid: true,
+// }).then((orders) => {
+//   console.log(orders);
+// });
+
 // const User = require('./models/User');
 // const Order = require('./models/Order');
 // const Shop = require('./models/Shop');
