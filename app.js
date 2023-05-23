@@ -237,8 +237,8 @@ app.use('/', require('./routes/admin_routes/toggleCheckout'));
 // test
 // const DeliverySathi = require('./models/DeliverySathi');
 // const deliverySathi = new DeliverySathi({
-//   phoneNo: '7985914177',
-//   password: 'sathi@Rajan@591##',
+//   phoneNo: '9026507295',
+//   password: 'krishna@DeliberySathi#63',
 //   isVerified: true,
 // });
 // deliverySathi.save().then(() => {
